@@ -9,20 +9,28 @@
 	<title>Gerenciador Panylanches</title>
 </h:head>
 <h:body>
+	<div id="logo">
+		<ui:insert name="logo">
+			<h:commandLink action="#{request.contextPath}" >
+				<h:graphicImage library="imagens" name="logo.PNG" />
+			</h:commandLink>
+		</ui:insert>
+	</div>
 	<div id="top">
 		<ui:insert name="top">
-			<ui:include src="pages/menu.xhtml"></ui:include>
-		</ui:insert>		
+			<ui:include src="menu.xhtml"></ui:include>
+		</ui:insert>
 	</div>
-	
+
 	<div id="content">
 		<ui:insert name="content">
 		</ui:insert>
 	</div>
-	
-	<div style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center;">
+
+	<div
+		style="position: fixed; left: 0; bottom: 0; width: 90%; text-align: center; border-bottom: inherit;">
 		<ui:insert name="footer">
-			<ui:include src="pages/footer.xhtml"></ui:include>
+			<ui:include src="footer.xhtml"></ui:include>
 		</ui:insert>
 	</div>
 

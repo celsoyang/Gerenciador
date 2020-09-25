@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="template.xhtml">
+
+
+	<ui:define name="content">
+
+		<h:form id="caixaDiarioForm">
+
+			<h:panelGrid columns="3" cellspacing="0" cellpadding="10">
+				<h:panelGrid>
+					<p:outputLabel value="Data:" />
+					<p:datePicker id="data" value="#{caixaDiarioControler.bean.data}"
+						pattern="dd/MM/yyyy" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Entrada:" />
+					<p:inputText id="entrada"
+						value="#{caixaDiarioControler.bean.entrada}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Saída:" />
+					<p:inputText id="saida" value="#{caixaDiarioControler.bean.saida}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:commandButton action="#{caixaDiarioControler.inserir}"
+						value="Inserir" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
