@@ -4,28 +4,27 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	template="template.xhtml">
+	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
 
 
 	<ui:define name="content">
 
 		<h:form id="caixaDiarioForm">
 
-			<h:panelGrid columns="3" cellspacing="0" cellpadding="10">
-				<h:panelGrid>
+			<h:panelGrid columns="4" cellspacing="0" cellpadding="10" width="50%">
+				<h:panelGrid columns="2">
 					<p:outputLabel value="Data:" />
 					<p:datePicker id="data" value="#{caixaDiarioControler.bean.data}"
 						pattern="dd/MM/yyyy" />
 				</h:panelGrid>
 
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:outputLabel value="Entrada:" />
 					<p:inputText id="entrada"
 						value="#{caixaDiarioControler.bean.entrada}" />
 				</h:panelGrid>
 
-				<h:panelGrid>
+				<h:panelGrid columns="2">
 					<p:outputLabel value="Saída:" />
 					<p:inputText id="saida" value="#{caixaDiarioControler.bean.saida}" />
 				</h:panelGrid>
@@ -34,6 +33,30 @@
 					<p:commandButton action="#{caixaDiarioControler.inserir}"
 						value="Inserir" />
 				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid width="60%" cellpadding="10">
+
+				<p:dataTable value="#{caixaDiarioControler.listaMes}" id="tabela"
+					var="dia" style="background-color: #EEDD82" scrollable="true" paginator="true" rows="15">
+					<f:facet name="top">Controle Diário</f:facet>
+					<p:column headerText="Dia" style="text-align: center;">
+						<h:outputText converter="javax.faces.DateTime"
+							value="#{dia.data}" />
+					</p:column>
+					<p:column headerText="Entrada" style="text-align: right;">
+						<h:outputText value="R$ #{dia.entrada}">
+							<f:convertNumber maxFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Saída" style="text-align: right;">
+						<h:outputText value="R$ #{dia.saida}" />
+					</p:column>
+					<p:column headerText="Saldo" style="text-align: right;">
+						<h:outputText value="R$ #{dia.saida - dia.entrada}" />
+					</p:column>
+				</p:dataTable>
+
 			</h:panelGrid>
 
 		</h:form>
