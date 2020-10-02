@@ -23,16 +23,16 @@ public class PeristenceUtils {
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("select cd from CaixaDiarioBean cd");
+		sql.append("select cd from CaixaDiarioBean cd order by cd.data");
 
-		Query query = retornaEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
+		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
 
 		retorno = (List<CaixaDiarioBean>) query.getResultList();
 
 		return retorno;
 	}
 			
-	private static EntityManager retornaEntityManager() {
+	private static EntityManager returnEntityManager() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Gerenciador");
 		entitiManager = factory.createEntityManager();
 		

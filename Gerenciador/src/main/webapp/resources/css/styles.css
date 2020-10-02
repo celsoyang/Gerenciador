@@ -1,6 +1,12 @@
 @charset "UTF-8";
 
-#tableLabel{
-text-align: right;
-background-color: #EEDD82
+table {
+	background-color: #EEDD82;
+	border-bottom-color: black;
+}
+
+radioButton {
+	width: 16px;
+	text-align: center;
+	background-color: orange;
 }

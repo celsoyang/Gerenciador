@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
 
-
 	<ui:define name="content">
 
 		<h:form id="caixaDiarioForm">
 
 			<h:panelGrid columns="4" cellspacing="0" cellpadding="10" width="50%">
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="2" styleClass="tabela">
 					<p:outputLabel value="Data:" />
 					<p:datePicker id="data" value="#{caixaDiarioControler.bean.data}"
-						pattern="dd/MM/yyyy" />
+						style="width:auto" showIcon="true" pattern="dd/MM/yyyy" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
@@ -30,23 +30,28 @@
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:commandButton action="#{caixaDiarioControler.inserir}"
-						value="Inserir" />
+					<p:commandButton action="#{caixaDiarioControler.confirmar}"
+						ajax="false" value="Confirmar" />
 				</h:panelGrid>
 			</h:panelGrid>
 
 			<h:panelGrid width="60%" cellpadding="10">
 
 				<p:dataTable value="#{caixaDiarioControler.listaMes}" id="tabela"
-					var="dia" style="background-color: #EEDD82" scrollable="true" paginator="true" rows="15">
-					<f:facet name="top">Controle Diário</f:facet>
+					rows="15" var="dia"
+					selection="#{caixaDiarioControler.diaSelecionado}"
+					rowKey="#{dia.data}" paginator="true" paginatorPosition="bottom">
+					<f:facet name="header">
+						Caixa Diário
+					</f:facet>
+					<p:column selectionMode="single"
+						style="width:16px;text-align:center" />
 					<p:column headerText="Dia" style="text-align: center;">
-						<h:outputText converter="javax.faces.DateTime"
-							value="#{dia.data}" />
+						<h:outputText converter="javax.faces.DateTime" value="#{dia.data}" />
 					</p:column>
 					<p:column headerText="Entrada" style="text-align: right;">
 						<h:outputText value="R$ #{dia.entrada}">
-							<f:convertNumber maxFractionDigits="2" />
+							<f:convertNumber pattern="#,##0.00" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Saída" style="text-align: right;">
@@ -55,8 +60,22 @@
 					<p:column headerText="Saldo" style="text-align: right;">
 						<h:outputText value="R$ #{dia.saida - dia.entrada}" />
 					</p:column>
+					<f:facet name="footer">
+						<h:outputText value="Total: 5000" style="text-align: right" />
+					</f:facet>
 				</p:dataTable>
 
+			</h:panelGrid>
+			
+			<h:panelGrid>
+				<p:chart type="line" id="graficoDiario" model="#{caixaDiarioControler.graficoDiario}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:commandButton id="alterar" value="Alterar"
+					action="#{caixaDiarioControler.alterar}" ajax="false" />
+				<p:commandButton id="Excluir" value="Excluir"
+					action="#{caixaDiarioControler.excluir}" ajax="false" />
 			</h:panelGrid>
 
 		</h:form>
