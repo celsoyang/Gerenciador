@@ -23,7 +23,7 @@ public class PeristenceUtils {
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("select cd from CaixaDiarioBean cd order by cd.data");
+		sql.append("SELECT CD FROM CaixaDiarioBean CD ORDER BY CD.data");
 
 		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
 
@@ -31,11 +31,11 @@ public class PeristenceUtils {
 
 		return retorno;
 	}
-			
+
 	private static EntityManager returnEntityManager() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Gerenciador");
 		entitiManager = factory.createEntityManager();
-		
+
 		return entitiManager;
 	}
 
@@ -45,6 +45,27 @@ public class PeristenceUtils {
 
 	public static void setEntitiManager(EntityManager entitiManager) {
 		PeristenceUtils.entitiManager = entitiManager;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<CaixaDiarioBean> pesquisarPorMeses(List<String> mesesSelecionados) {
+		List<CaixaDiarioBean> retorno = new ArrayList<CaixaDiarioBean>();
+
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT cd FROM CaixaDiarioBean cd");
+		sql.append(" WHERE DATE_PART('MONTH', cd.data) IN(");
+		for (String mes : mesesSelecionados) {
+			sql.append("'" + mes + "',");
+		}
+		sql.deleteCharAt(sql.length() - 1);
+		sql.append(")");
+
+		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
+
+		retorno = query.getResultList();
+
+		return retorno;
 	}
 
 }

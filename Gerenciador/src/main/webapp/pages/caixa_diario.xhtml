@@ -11,7 +11,8 @@
 
 		<h:form id="caixaDiarioForm">
 
-			<h:panelGrid columns="4" cellspacing="0" cellpadding="10" width="50%">
+			<h:panelGrid columns="4" cellspacing="0" cellpadding="10" width="50%"
+				id="gridControles">
 				<h:panelGrid columns="2" styleClass="tabela">
 					<p:outputLabel value="Data:" />
 					<p:datePicker id="data" value="#{caixaDiarioControler.bean.data}"
@@ -35,7 +36,7 @@
 				</h:panelGrid>
 			</h:panelGrid>
 
-			<h:panelGrid width="60%" cellpadding="10">
+			<h:panelGrid width="100%" cellpadding="10" id="gridTabela">
 
 				<p:dataTable value="#{caixaDiarioControler.listaMes}" id="tabela"
 					rows="15" var="dia"
@@ -61,22 +62,30 @@
 						<h:outputText value="R$ #{dia.saida - dia.entrada}" />
 					</p:column>
 					<f:facet name="footer">
-						<h:outputText value="Total: 5000" style="text-align: right" />
+						<h:outputText value="Total: R$" />
+						<h:outputText value="#{caixaDiarioControler.totalDouble}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
 					</f:facet>
 				</p:dataTable>
 
 			</h:panelGrid>
-			
-			<h:panelGrid>
-				<p:chart type="line" id="graficoDiario" model="#{caixaDiarioControler.graficoDiario}" />
-			</h:panelGrid>
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:commandButton id="alterar" value="Alterar"
-					action="#{caixaDiarioControler.alterar}" ajax="false" />
-				<p:commandButton id="Excluir" value="Excluir"
-					action="#{caixaDiarioControler.excluir}" ajax="false" />
-			</h:panelGrid>
+			<!-- <h:panelGrid>
+				<p:chart type="line" id="graficoDiario" model="#{caixaDiarioControler.graficoDiario}" />
+			</h:panelGrid> -->
+
+			<div align="center">
+				<h:panelGrid columns="2" cellpadding="5" style="">
+
+					<p:commandButton id="alterar" value="Alterar"
+						action="#{caixaDiarioControler.alterar}" ajax="false" />
+
+					<p:commandButton id="Excluir" value="Excluir"
+						action="#{caixaDiarioControler.excluir}" ajax="false" />
+
+				</h:panelGrid>
+			</div>
 
 		</h:form>
 
