@@ -14,24 +14,6 @@ public class PeristenceUtils {
 
 	private static EntityManager entitiManager;
 
-	public PeristenceUtils() {
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<CaixaDiarioBean> retornaCaixaDiario() {
-		List<CaixaDiarioBean> retorno = new ArrayList<CaixaDiarioBean>();
-
-		StringBuilder sql = new StringBuilder();
-
-		sql.append("SELECT CD FROM CaixaDiarioBean CD ORDER BY CD.data");
-
-		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
-
-		retorno = (List<CaixaDiarioBean>) query.getResultList();
-
-		return retorno;
-	}
-
 	private static EntityManager returnEntityManager() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Gerenciador");
 		entitiManager = factory.createEntityManager();
@@ -64,6 +46,23 @@ public class PeristenceUtils {
 		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
 
 		retorno = query.getResultList();
+
+		return retorno;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<CaixaDiarioBean> retornaCaixaDiario() {
+		List<CaixaDiarioBean> retorno = new ArrayList<CaixaDiarioBean>();
+
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT CD FROM CaixaDiarioBean CD");
+		sql.append(" WHERE DATE_PART('MONTH',CD.data) = DATE_PART('MONTH', CURRENT_DATE)");
+		sql.append(" ORDER BY CD.data");
+
+		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
+
+		retorno = (List<CaixaDiarioBean>) query.getResultList();
 
 		return retorno;
 	}
