@@ -1,14 +1,14 @@
 package br.com.bean;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 public class CaixaMesBean {
 
 	private String nomeMes;
 
 	private Integer numeroMes;
-
-	private List<CaixaDiarioBean> diasMes;
+	
+	private BigDecimal totalMes;
 
 	public String getNomeMes() {
 		return nomeMes;
@@ -26,11 +26,11 @@ public class CaixaMesBean {
 		this.numeroMes = numeroMes;
 	}
 
-	public List<CaixaDiarioBean> getDiasMes() {
-		return diasMes;
+	public BigDecimal getTotalMes() {
+		return totalMes;
 	}
 
-	public void setDiasMes(List<CaixaDiarioBean> diasMes) {
-		this.diasMes = diasMes;
+	public void setTotalMes(BigDecimal totalMes) {
+		this.totalMes = totalMes;
 	}
 }

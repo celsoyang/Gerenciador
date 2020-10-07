@@ -66,5 +66,25 @@ public class PeristenceUtils {
 
 		return retorno;
 	}
+	
+
+
+	@SuppressWarnings("unchecked")
+	public static List<Object[]> retornaTotalMeses() {
+		List<Object[]> retorno = new ArrayList<Object[]>();
+
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT DISTINCT DATE_PART('MONTH', DIA), SUM(SAIDA-ENTRADA)");
+		sql.append(" FROM CONTROLE_DIARIO");
+		sql.append(" GROUP BY DATE_PART('MONTH', DIA)");
+		sql.append(" ORDER BY DATE_PART('MONTH', DIA)");
+		
+		Query query = returnEntityManager().createNativeQuery(sql.toString());
+
+		retorno = query.getResultList();
+
+		return retorno;
+	}
 
 }

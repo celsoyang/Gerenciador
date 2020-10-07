@@ -19,35 +19,46 @@
 						<f:selectItems value="#{caixaMensalControler.listaMeses}" />
 					</p:selectCheckboxMenu>
 				</h:panelGrid>
-				
+
 				<h:panelGrid>
-					<p:commandButton value="Pesquisar" action="#{caixaMensalControler.pesquisar}"/>
+					<p:commandButton value="Pesquisar"
+						action="#{caixaMensalControler.pesquisar}" />
 				</h:panelGrid>
-				
+
 			</h:panelGrid>
-			
-			
-			<h:panelGrid width="40%" cellpadding="10" cellspacing="10">
-				<p:dataTable id="tabelaAnual" var="mes" value="#">
+
+
+			<h:panelGrid width="30%" cellpadding="10" cellspacing="10">
+				<p:dataTable id="tabelaAnual" var="mes"
+					value="#{caixaMensalControler.meses}">
 
 					<f:facet name="header">
 						<h:outputText value="Resumo anual" />
 					</f:facet>
 
-					<p:column id="colunaMes">
-						<h:outputText value="Mês" />
+					<p:column id="colunaMes" headerText="Mês" width="20%">
+						<h:outputText value="#{mes.nomeMes}" />
 					</p:column>
 
-					<p:column id="colunaValor">
-						<h:outputText value="Valor" />
+					<p:column id="colunaValor" headerText="Valor"
+						style="text-align: right" width="80%">
+						<h:outputText value="R$" />
+						<h:outputText value="#{mes.totalMes}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
 					</p:column>
 
 				</p:dataTable>
 			</h:panelGrid>
 
-			<h:panelGrid>
-				<p:chart type="line" id="graficoDiario"
-					model="#{caixaDiarioControler.graficoDiario}" />
+			<!-- <h:panelGrid width="60%">
+				<p:chart type="line" id="grafico" rendered="true"
+					model="#{caixaMensalControler.graficoDiario}" />
+			</h:panelGrid> -->
+			
+			<h:panelGrid width="50%">
+				<p:chart type="bar" id="graficoBar" rendered="true"
+					model="#{caixaMensalControler.graficoBarra}" />
 			</h:panelGrid>
 
 		</h:form>
