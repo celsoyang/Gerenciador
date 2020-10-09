@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
+
+
+	<ui:define name="content">
+		<h:form>
+
+			<h:panelGrid columns="1">
+
+				<h:panelGrid columns="5">
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Número:" />
+						<p:inputText maxlength="4" id="valor">
+							<f:convertNumber pattern="#,##0.00" />
+							<f:validator validatorId="MoedaValidator" />
+							<p:ajax event="blur" update="valor" />
+						</p:inputText>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Beneficiário:" />
+						<p:inputText />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Valor:" />
+						<p:inputText />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Data Emissão:" />
+						<p:datePicker pattern="dd/MM/yyyy" showIcon="true" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Data Pagamento:" />
+						<p:datePicker pattern="dd/MM/yyyy" showIcon="true" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+
+					<h:panelGrid columns="1">
+						<p:outputLabel value="Observação:" />
+						<p:inputTextarea cols="50" rows="5" maxlength="250" />
+					</h:panelGrid>
+
+					<p:panelGrid>
+						<p:commandButton value="Confirmar" />
+					</p:panelGrid>
+
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid width="100%">
+				<p:dataTable>
+					<f:facet name="header">
+						<p:outputLabel value="Cheques" />
+					</f:facet>
+
+					<p:column width="10%">
+						<f:facet name="header">
+							<p:outputLabel value="Número" />
+						</f:facet>
+					</p:column>
+					<p:column width="20%">
+						<f:facet name="header">
+							<p:outputLabel value="Beneficiário" />
+						</f:facet>
+					</p:column>
+					<p:column width="15%">
+						<f:facet name="header">
+							<p:outputLabel value="Valor" />
+						</f:facet>
+					</p:column>
+					<p:column width="15%">
+						<f:facet name="header">
+							<p:outputLabel value="Data Emissão" />
+						</f:facet>
+					</p:column>
+					<p:column width="15%">
+						<f:facet name="header">
+							<p:outputLabel value="Data Pagamento" />
+						</f:facet>
+					</p:column>
+					<p:column width="25%">
+						<f:facet name="header">
+							<p:outputLabel value="Observação" />
+						</f:facet>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

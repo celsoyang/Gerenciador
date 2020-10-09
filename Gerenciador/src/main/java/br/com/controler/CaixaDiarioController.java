@@ -15,8 +15,8 @@ import org.primefaces.model.chart.LineChartSeries;
 import br.com.bean.CaixaDiarioBean;
 import br.com.utils.PeristenceUtils;
 
-@ManagedBean(name = "caixaDiarioControler")
-public class CaixaDiarioControler {
+@ManagedBean(name = "caixaDiarioController")
+public class CaixaDiarioController {
 
 	private CaixaDiarioBean bean;
 
@@ -26,7 +26,7 @@ public class CaixaDiarioControler {
 	private BigDecimal total;
 	private Double totalDouble;
 
-	public CaixaDiarioControler() {
+	public CaixaDiarioController() {
 		this.bean = new CaixaDiarioBean();
 		total = new BigDecimal(0);
 		totalDouble = 0d;
@@ -98,7 +98,7 @@ public class CaixaDiarioControler {
 	}
 
 	public void excluir() {
-		System.out.println("Exluído com sucesso");
+
 	}
 
 	public CaixaDiarioBean getBean() {

@@ -15,32 +15,32 @@
 				id="gridControles">
 				<h:panelGrid columns="2" styleClass="tabela">
 					<p:outputLabel value="Data:" />
-					<p:datePicker id="data" value="#{caixaDiarioControler.bean.data}"
+					<p:datePicker id="data" value="#{caixaDiarioController.bean.data}"
 						style="width:auto" showIcon="true" pattern="dd/MM/yyyy" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Entrada:" />
 					<p:inputText id="entrada"
-						value="#{caixaDiarioControler.bean.entrada}" />
+						value="#{caixaDiarioController.bean.entrada}" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Saída:" />
-					<p:inputText id="saida" value="#{caixaDiarioControler.bean.saida}" />
+					<p:inputText id="saida" value="#{caixaDiarioController.bean.saida}" />
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:commandButton action="#{caixaDiarioControler.confirmar}"
+					<p:commandButton action="#{caixaDiarioController.confirmar}"
 						ajax="false" value="Confirmar" />
 				</h:panelGrid>
 			</h:panelGrid>
 
 			<h:panelGrid width="100%" cellpadding="10" id="gridTabela">
 
-				<p:dataTable value="#{caixaDiarioControler.listaMes}" id="tabela"
+				<p:dataTable value="#{caixaDiarioController.listaMes}" id="tabela"
 					rows="15" var="dia"
-					selection="#{caixaDiarioControler.diaSelecionado}"
+					selection="#{caixaDiarioController.diaSelecionado}"
 					rowKey="#{dia.data}" paginator="true" paginatorPosition="bottom">
 					<f:facet name="header">
 						Caixa Diário
@@ -63,7 +63,7 @@
 					</p:column>
 					<f:facet name="footer">
 						<h:outputText value="Total: R$" />
-						<h:outputText value="#{caixaDiarioControler.totalDouble}">
+						<h:outputText value="#{caixaDiarioController.totalDouble}">
 							<f:convertNumber pattern="#,##0.00" />
 						</h:outputText>
 					</f:facet>
@@ -75,10 +75,10 @@
 				<h:panelGrid columns="2" cellpadding="5" style="">
 
 					<p:commandButton id="alterar" value="Alterar"
-						action="#{caixaDiarioControler.alterar}" ajax="false" />
+						action="#{caixaDiarioController.alterar}" ajax="false" />
 
 					<p:commandButton id="Excluir" value="Excluir"
-						action="#{caixaDiarioControler.excluir}" ajax="false" />
+						action="#{caixaDiarioController.excluir}" ajax="false" />
 
 				</h:panelGrid>
 			</div>

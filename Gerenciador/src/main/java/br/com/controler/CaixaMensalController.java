@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.model.chart.Axis;
@@ -14,15 +16,14 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
-import com.sun.faces.mgbean.ManagedBeanPreProcessingException.Type;
-
-import br.com.bean.CaixaDiarioBean;
 import br.com.bean.CaixaMesBean;
 import br.com.enums.MesesEnum;
+import br.com.utils.ColorUtils;
+import br.com.utils.NumberUtils;
 import br.com.utils.PeristenceUtils;
 
-@ManagedBean(name = "caixaMensalControler")
-public class CaixaMensalControler {
+@ManagedBean(name = "caixaMensalController")
+public class CaixaMensalController {
 
 	private List<CaixaMesBean> meses;
 
@@ -34,7 +35,7 @@ public class CaixaMensalControler {
 
 	private BarChartModel graficoBarra;
 
-	public CaixaMensalControler() {
+	public CaixaMensalController() {
 		loadTable();
 		gerarComboBox();
 		gerarGrafico();
@@ -105,14 +106,14 @@ public class CaixaMensalControler {
 
 		graficoBarra.setTitle("Resumo Anual");
 		graficoBarra.setLegendPosition("n");
-		graficoBarra.setSeriesColors("FFA500");
+		graficoBarra.setSeriesColors(ColorUtils.LARANJA);
 		graficoBarra.setShowPointLabels(true);
-		
+
 		Axis y = graficoBarra.getAxis(AxisType.Y);
-		y.setMax(60000);
+		y.setMax(NumberUtils.maximoGraficoBarra);
 		y.setMin(0);
 		y.setLabel("Valor");
-		
+
 		Axis x = graficoBarra.getAxis(AxisType.X);
 		x.setLabel("Mês");
 		x.setTickFormat("%d");
@@ -135,7 +136,37 @@ public class CaixaMensalControler {
 	}
 
 	public void pesquisar() {
-		List<CaixaDiarioBean> meses = PeristenceUtils.pesquisarPorMeses(mesesSelecionados);
+		if (verificarMesesSelecionados()) {
+			List<Object[]> listaRetorno = PeristenceUtils.pesquisarPorMeses(mesesSelecionados);
+			CaixaMesBean mes;
+			meses.clear();
+
+			for (Object[] m : listaRetorno) {
+				mes = new CaixaMesBean();
+
+				mes.setNomeMes(MesesEnum.getBayNumero((int) ((double) m[0])).getNomeMes());
+				mes.setNumeroMes((int) ((double) m[0]));
+				mes.setTotalMes(new BigDecimal(String.valueOf(m[1])));
+
+				meses.add(mes);
+			}
+
+			gerarGraficoBarra();
+		}
+	}
+
+	private boolean verificarMesesSelecionados() {
+		Boolean retorno = Boolean.TRUE;
+
+		if (mesesSelecionados.isEmpty()) {
+			retorno = Boolean.FALSE;
+
+			FacesContext pesquisarVazio = FacesContext.getCurrentInstance();
+			pesquisarVazio.addMessage("pesquisarVazio",
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "", "É necessário selecionar ao menos um mês"));
+		}
+
+		return retorno;
 	}
 
 	public LineChartModel getGraficoDiario() {

@@ -30,20 +30,23 @@ public class PeristenceUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<CaixaDiarioBean> pesquisarPorMeses(List<String> mesesSelecionados) {
-		List<CaixaDiarioBean> retorno = new ArrayList<CaixaDiarioBean>();
+	public static List<Object[]> pesquisarPorMeses(List<String> mesesSelecionados) {
+		List<Object[]> retorno = new ArrayList<Object[]>();
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("SELECT cd FROM CaixaDiarioBean cd");
-		sql.append(" WHERE DATE_PART('MONTH', cd.data) IN(");
+		sql.append("SELECT DISTINCT DATE_PART('MONTH', DIA), SUM(SAIDA-ENTRADA)");
+		sql.append(" FROM CONTROLE_DIARIO");
+		sql.append(" WHERE DATE_PART('MONTH', DIA) IN(");
 		for (String mes : mesesSelecionados) {
 			sql.append("'" + mes + "',");
 		}
 		sql.deleteCharAt(sql.length() - 1);
 		sql.append(")");
+		sql.append(" GROUP BY DATE_PART('MONTH', DIA)");
+		sql.append(" ORDER BY DATE_PART('MONTH', DIA)");
 
-		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
+		Query query = returnEntityManager().createNativeQuery(sql.toString());
 
 		retorno = query.getResultList();
 
@@ -66,20 +69,18 @@ public class PeristenceUtils {
 
 		return retorno;
 	}
-	
-
 
 	@SuppressWarnings("unchecked")
 	public static List<Object[]> retornaTotalMeses() {
 		List<Object[]> retorno = new ArrayList<Object[]>();
 
 		StringBuilder sql = new StringBuilder();
-		
+
 		sql.append("SELECT DISTINCT DATE_PART('MONTH', DIA), SUM(SAIDA-ENTRADA)");
 		sql.append(" FROM CONTROLE_DIARIO");
 		sql.append(" GROUP BY DATE_PART('MONTH', DIA)");
 		sql.append(" ORDER BY DATE_PART('MONTH', DIA)");
-		
+
 		Query query = returnEntityManager().createNativeQuery(sql.toString());
 
 		retorno = query.getResultList();
