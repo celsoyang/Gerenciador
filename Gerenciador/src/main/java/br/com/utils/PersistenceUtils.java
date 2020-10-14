@@ -100,7 +100,7 @@ public class PersistenceUtils {
 		return retorno;
 	}
 
-	public static String salvar(CaixaDiarioBean objeto) {
+	public static String salvar(Object objeto) {
 		try {
 			if (!getEntitiManager().getTransaction().isActive()) {
 				getEntitiManager().getTransaction().begin();
@@ -112,6 +112,16 @@ public class PersistenceUtils {
 			getEntitiManager().getTransaction().rollback();
 			return StringUtils.MSG_PROBLEMA_SALVAR;
 		}
+	}
+
+	public static String delete(Object cd) {
+			try {
+				getEntitiManager().remove(cd);
+				getEntitiManager().getTransaction().commit();
+				return StringUtils.MSG_REMOVIDO_SUCESSO;
+			} catch (Exception e) {
+				return StringUtils.MSG_PROBLEMA_SALVAR;
+			}
 	}
 
 }

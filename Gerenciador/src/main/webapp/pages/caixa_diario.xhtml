@@ -62,19 +62,26 @@
 						<h:outputText converter="javax.faces.DateTime" value="#{dia.data}" />
 					</p:column>
 					<p:column headerText="Entrada" style="text-align: right;">
-						<h:outputText value="R$ #{dia.entrada}">
+						<h:outputText value="R$" />
+						<h:outputText value="#{dia.entrada}">
 							<f:convertNumber pattern="#,##0.00" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Saída" style="text-align: right;">
-						<h:outputText value="R$ #{dia.saida}" />
+						<h:outputText value="R$" />
+						<h:outputText value="#{dia.saida}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Saldo" style="text-align: right;">
-						<h:outputText value="R$ #{dia.saida - dia.entrada}" />
+						<h:outputText value="R$" />
+						<h:outputText value="#{dia.saida - dia.entrada}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
 					</p:column>
 					<f:facet name="footer">
 						<h:outputText value="Total: R$" />
-						<h:outputText value="#{caixaDiarioController.totalDouble}">
+						<h:outputText value="#{caixaDiarioController.total}">
 							<f:convertNumber pattern="#,##0.00" />
 						</h:outputText>
 					</f:facet>
