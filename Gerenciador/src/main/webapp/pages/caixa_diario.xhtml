@@ -7,6 +7,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
 
+	<h:head>
+		<script src="jquery.js" type="text/javascript"></script>
+		<script src="jquery.maskedinput.js" type="text/javascript"></script>
+	</h:head>
+
 	<ui:define name="content">
 
 		<h:form id="caixaDiarioForm">
@@ -21,13 +26,16 @@
 
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Entrada:" />
-					<p:inputText id="entrada"
-						value="#{caixaDiarioController.bean.entrada}" />
+					<p:inputNumber id="entrada" dir="rtl"
+						value="#{caixaDiarioController.bean.entrada}" decimalSeparator="," symbol="R$"
+						thousandSeparator=".">
+					</p:inputNumber>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Saída:" />
-					<p:inputText id="saida" value="#{caixaDiarioController.bean.saida}" />
+					<p:inputNumber id="saida" dir="rtl"
+						value="#{caixaDiarioController.bean.saida}" decimalSeparator="," thousandSeparator="." symbol="R$"/>
 				</h:panelGrid>
 
 				<h:panelGrid>
