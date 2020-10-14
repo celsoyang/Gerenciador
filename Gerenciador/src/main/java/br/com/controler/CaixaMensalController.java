@@ -20,7 +20,7 @@ import br.com.bean.CaixaMesBean;
 import br.com.enums.MesesEnum;
 import br.com.utils.ColorUtils;
 import br.com.utils.NumberUtils;
-import br.com.utils.PeristenceUtils;
+import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "caixaMensalController")
 public class CaixaMensalController {
@@ -45,7 +45,7 @@ public class CaixaMensalController {
 	private void loadTable() {
 		meses = new ArrayList<CaixaMesBean>();
 		List<Object[]> listaMeses = new ArrayList<Object[]>();
-		listaMeses = PeristenceUtils.retornaTotalMeses();
+		listaMeses = PersistenceUtils.retornaTotalMeses();
 		CaixaMesBean mes;
 
 		for (Object[] m : listaMeses) {
@@ -137,7 +137,7 @@ public class CaixaMensalController {
 
 	public void pesquisar() {
 		if (verificarMesesSelecionados()) {
-			List<Object[]> listaRetorno = PeristenceUtils.pesquisarPorMeses(mesesSelecionados);
+			List<Object[]> listaRetorno = PersistenceUtils.pesquisarPorMeses(mesesSelecionados);
 			CaixaMesBean mes;
 			meses.clear();
 

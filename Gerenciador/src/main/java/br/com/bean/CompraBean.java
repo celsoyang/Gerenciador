@@ -5,7 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 public class CompraBean {
 
 	@Id
+	@GeneratedValue
+	@SequenceGenerator(name = "sequence_compras", initialValue = 416)
 	@Column(name = "codigo")
 	private Integer codigo;
 	

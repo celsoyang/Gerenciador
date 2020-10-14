@@ -68,4 +68,8 @@ public class StringUtils {
     
     public static final String LABEL_INCLUIR = "Incluir";
 
+	public static final String MSG_SALVO_SUCESSO = "Salvo com Sucesso!";
+
+	public static final String MSG_PROBLEMA_SALVAR = "Problema ao salvar, contate o administrador";
+
 }

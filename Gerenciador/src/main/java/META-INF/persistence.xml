@@ -11,6 +11,7 @@
 			<property name="javax.persistence.jdbc.password" value="Celso200823094"/>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>
 	</persistence-unit>
 </persistence>

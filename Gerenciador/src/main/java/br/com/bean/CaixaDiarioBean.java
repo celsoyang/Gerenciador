@@ -7,56 +7,58 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "controle_diario")
 public class CaixaDiarioBean {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "codigo")
-    private Integer codigo;
-    
-    @Column(name = "dia")
-    private Date data;
+	@Id
+	@GeneratedValue
+	@SequenceGenerator(name = "sequence_caixa_diario", initialValue = 256)
+	@Column(name = "codigo")
+	private Integer codigo;
 
-    @Column(name = "entrada")
-    private BigDecimal entrada;
+	@Column(name = "dia")
+	private Date data;
 
-    @Column(name = "saida")
-    private BigDecimal saida;
+	@Column(name = "entrada")
+	private BigDecimal entrada;
 
-    public Integer getCodigo() {
-        return codigo;
-    }
+	@Column(name = "saida")
+	private BigDecimal saida;
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
+	public Integer getCodigo() {
+		return codigo;
+	}
 
-    public Date getData() {
-        return data;
-    }
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+	public Date getData() {
+		return data;
+	}
 
-    public BigDecimal getEntrada() {
-        return entrada;
-    }
+	public void setData(Date data) {
+		this.data = data;
+	}
 
-    public void setEntrada(BigDecimal entrada) {
-        this.entrada = entrada;
-    }
+	public BigDecimal getEntrada() {
+		return entrada;
+	}
 
-    public BigDecimal getSaida() {
-        return saida;
-    }
+	public void setEntrada(BigDecimal entrada) {
+		this.entrada = entrada;
+	}
 
-    public void setSaida(BigDecimal saida) {
-        this.saida = saida;
-    }
+	public BigDecimal getSaida() {
+		return saida;
+	}
+
+	public void setSaida(BigDecimal saida) {
+		this.saida = saida;
+	}
 
 }

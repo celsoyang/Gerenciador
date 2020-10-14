@@ -27,15 +27,16 @@
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Entrada:" />
 					<p:inputNumber id="entrada" dir="rtl"
-						value="#{caixaDiarioController.bean.entrada}" decimalSeparator="," symbol="R$"
-						thousandSeparator=".">
+						value="#{caixaDiarioController.bean.entrada}" decimalSeparator=","
+						symbol="R$" thousandSeparator=".">
 					</p:inputNumber>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Saída:" />
 					<p:inputNumber id="saida" dir="rtl"
-						value="#{caixaDiarioController.bean.saida}" decimalSeparator="," thousandSeparator="." symbol="R$"/>
+						value="#{caixaDiarioController.bean.saida}" decimalSeparator=","
+						thousandSeparator="." symbol="R$" />
 				</h:panelGrid>
 
 				<h:panelGrid>
@@ -44,7 +45,9 @@
 				</h:panelGrid>
 			</h:panelGrid>
 
-			<h:panelGrid width="100%" cellpadding="10" id="gridTabela">
+			<p:messages showIcon="true" closable="true" showDetail="true" />
+
+			<h:panelGrid layout="grid" id="gridTabela" cellpadding="10">
 
 				<p:dataTable value="#{caixaDiarioController.listaMes}" id="tabela"
 					rows="15" var="dia"
@@ -90,6 +93,11 @@
 
 				</h:panelGrid>
 			</div>
+
+			<h:inputHidden value="#{caixaDiarioController.bean.codigo}"
+				id="codigo" />
+			<h:inputHidden value="#{caixaDiarioController.alteracao}"
+				id="alteracao" />
 
 		</h:form>
 

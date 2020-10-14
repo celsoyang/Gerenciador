@@ -10,7 +10,7 @@ import javax.persistence.Query;
 
 import br.com.bean.CaixaDiarioBean;
 
-public class PeristenceUtils {
+public class PersistenceUtils {
 
 	private static EntityManager entitiManager;
 
@@ -26,7 +26,19 @@ public class PeristenceUtils {
 	}
 
 	public static void setEntitiManager(EntityManager entitiManager) {
-		PeristenceUtils.entitiManager = entitiManager;
+		PersistenceUtils.entitiManager = entitiManager;
+	}
+
+	public static void openTransaction() {
+		getEntitiManager().getTransaction().begin();
+	}
+
+	public static void commitTransaction() {
+		getEntitiManager().getTransaction().commit();
+	}
+
+	public static void rollbackTransaction() {
+		getEntitiManager().getTransaction().rollback();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -86,6 +98,20 @@ public class PeristenceUtils {
 		retorno = query.getResultList();
 
 		return retorno;
+	}
+
+	public static String salvar(CaixaDiarioBean objeto) {
+		try {
+			if (!getEntitiManager().getTransaction().isActive()) {
+				getEntitiManager().getTransaction().begin();
+			}
+			getEntitiManager().persist(objeto);
+			getEntitiManager().getTransaction().commit();
+			return StringUtils.MSG_SALVO_SUCESSO;
+		} catch (Exception e) {
+			getEntitiManager().getTransaction().rollback();
+			return StringUtils.MSG_PROBLEMA_SALVAR;
+		}
 	}
 
 }

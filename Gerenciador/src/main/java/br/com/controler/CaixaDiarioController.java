@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -13,7 +15,7 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
 import br.com.bean.CaixaDiarioBean;
-import br.com.utils.PeristenceUtils;
+import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "caixaDiarioController")
 public class CaixaDiarioController {
@@ -25,6 +27,7 @@ public class CaixaDiarioController {
 	private LineChartModel graficoDiario;
 	private BigDecimal total;
 	private Double totalDouble;
+	private Boolean alteracao = Boolean.FALSE;
 
 	public CaixaDiarioController() {
 		this.bean = new CaixaDiarioBean();
@@ -58,7 +61,7 @@ public class CaixaDiarioController {
 	public LineChartModel getModel() {
 		LineChartModel model = new LineChartModel();
 		LineChartSeries serieValor = new LineChartSeries("Valor");
-		List<CaixaDiarioBean> listaDiaria = PeristenceUtils.retornaCaixaDiario();
+		List<CaixaDiarioBean> listaDiaria = PersistenceUtils.retornaCaixaDiario();
 		int i = 0;
 		for (CaixaDiarioBean cd : listaDiaria) {
 			serieValor.getData().put(i, cd.getSaida().subtract(cd.getEntrada()));
@@ -72,7 +75,7 @@ public class CaixaDiarioController {
 
 	private void loadTable() {
 		listaMes = new ArrayList<CaixaDiarioBean>();
-		listaMes = PeristenceUtils.retornaCaixaDiario();
+		listaMes = PersistenceUtils.retornaCaixaDiario();
 
 		somar(listaMes);
 	}
@@ -87,14 +90,60 @@ public class CaixaDiarioController {
 	}
 
 	public void alterar() {
-		getBean().setCodigo(getDiaSelecionado().getCodigo());
-		getBean().setData(getDiaSelecionado().getData());
-		getBean().setEntrada(getDiaSelecionado().getEntrada());
-		getBean().setSaida(getDiaSelecionado().getSaida());
+		bean = diaSelecionado;
+		setAlteracao(Boolean.TRUE);
 	}
 
 	public void confirmar() {
-		getListaMes().set(bean.getCodigo(), getBean());
+		if (validarCampos()) {
+			CaixaDiarioBean cd = null;
+			if (alteracao) {
+				PersistenceUtils.openTransaction();
+				cd = PersistenceUtils.getEntitiManager().find(CaixaDiarioBean.class, bean.getCodigo());
+			}
+			cd.setData(bean.getData());
+			cd.setEntrada(bean.getEntrada());
+			cd.setSaida(bean.getSaida());
+			String msg = PersistenceUtils.salvar(cd);
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage("msgSalvo", new FacesMessage(msg));
+
+			alteracao = Boolean.FALSE;
+			loadTable();
+			apagarCampos();
+		}
+	}
+
+	private boolean validarCampos() {
+		Boolean retorno = Boolean.TRUE;
+
+		if (bean.getData() == null) {
+			retorno = Boolean.FALSE;
+		}
+
+		if (bean.getEntrada() == null) {
+			retorno = Boolean.FALSE;
+		}
+
+		if (bean.getSaida() == null) {
+			retorno = Boolean.FALSE;
+		}
+
+		if (!retorno) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage("msgSalvo",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Preencha todos os campos"));
+		}
+
+		return retorno;
+	}
+
+	private void apagarCampos() {
+		bean.setCodigo(null);
+		bean.setData(new Date());
+		bean.setEntrada(null);
+		bean.setSaida(null);
 	}
 
 	public void excluir() {
@@ -147,5 +196,13 @@ public class CaixaDiarioController {
 
 	public void setTotalDouble(Double totalDouble) {
 		this.totalDouble = totalDouble;
+	}
+
+	public Boolean getAlteracao() {
+		return alteracao;
+	}
+
+	public void setAlteracao(Boolean alteracao) {
+		this.alteracao = alteracao;
 	}
 }
