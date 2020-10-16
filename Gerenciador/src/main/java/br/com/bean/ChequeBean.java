@@ -5,18 +5,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name = "Cheque")
+@Entity()
 @Table(name = "cheque")
 public class ChequeBean {
 
 	@Id
-	@GeneratedValue
-	@SequenceGenerator(name = "sequence_cheque", initialValue = 113)
 	@Column(name = "num_cheque")
 	private Integer numCheque;
 

@@ -20,8 +20,8 @@
 				id="gridControles">
 				<h:panelGrid columns="2" styleClass="tabela">
 					<p:outputLabel value="Data:" />
-					<p:datePicker id="data" value="#{caixaDiarioController.bean.data}"
-						style="width:auto" showIcon="true" pattern="dd/MM/yyyy" />
+					<p:calendar id="data" value="#{caixaDiarioController.bean.data}"
+						pattern="dd/MM/yyyy" readonlyInput="true"/>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">

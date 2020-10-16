@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.model.chart.LineChartModel;
 
 import br.com.bean.CaixaDiarioBean;
+import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "caixaDiarioController")
@@ -64,8 +63,7 @@ public class CaixaDiarioController {
 			cd.setSaida(bean.getSaida());
 			String msg = PersistenceUtils.salvar(cd);
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage("msgSalvo", new FacesMessage(msg));
+			MessagesUtils.infoMessage(msg);
 
 			alteracao = Boolean.FALSE;
 			update();
@@ -88,9 +86,7 @@ public class CaixaDiarioController {
 		}
 
 		if (!retorno) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage("msgSalvo",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Preencha todos os campos"));
+			MessagesUtils.errorMessage("Preencha todos os Campos");
 		}
 
 		return retorno;
@@ -110,8 +106,7 @@ public class CaixaDiarioController {
 
 		String msg = PersistenceUtils.delete(cd);
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage("msgSalvo", new FacesMessage(msg));
+		MessagesUtils.infoMessage(msg);
 
 		update();
 	}

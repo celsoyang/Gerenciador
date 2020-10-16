@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.bean.CaixaDiarioBean;
+import br.com.bean.ChequeBean;
 
 public class PersistenceUtils {
 
@@ -39,6 +40,30 @@ public class PersistenceUtils {
 
 	public static void rollbackTransaction() {
 		getEntitiManager().getTransaction().rollback();
+	}
+
+	public static String salvar(Object objeto) {
+		try {
+			if (!getEntitiManager().getTransaction().isActive()) {
+				getEntitiManager().getTransaction().begin();
+			}
+			getEntitiManager().persist(objeto);
+			getEntitiManager().getTransaction().commit();
+			return StringUtils.MSG_SALVO_SUCESSO;
+		} catch (Exception e) {
+			getEntitiManager().getTransaction().rollback();
+			return StringUtils.MSG_PROBLEMA_SALVAR;
+		}
+	}
+
+	public static String delete(Object cd) {
+		try {
+			getEntitiManager().remove(cd);
+			getEntitiManager().getTransaction().commit();
+			return StringUtils.MSG_REMOVIDO_SUCESSO;
+		} catch (Exception e) {
+			return StringUtils.MSG_PROBLEMA_SALVAR;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,28 +125,20 @@ public class PersistenceUtils {
 		return retorno;
 	}
 
-	public static String salvar(Object objeto) {
-		try {
-			if (!getEntitiManager().getTransaction().isActive()) {
-				getEntitiManager().getTransaction().begin();
-			}
-			getEntitiManager().persist(objeto);
-			getEntitiManager().getTransaction().commit();
-			return StringUtils.MSG_SALVO_SUCESSO;
-		} catch (Exception e) {
-			getEntitiManager().getTransaction().rollback();
-			return StringUtils.MSG_PROBLEMA_SALVAR;
-		}
-	}
+	@SuppressWarnings("unchecked")
+	public static List<ChequeBean> pesquisarUltimosCheques() {
+		List<ChequeBean> retorno = new ArrayList<ChequeBean>();
+		StringBuilder sql = new StringBuilder();
 
-	public static String delete(Object cd) {
-			try {
-				getEntitiManager().remove(cd);
-				getEntitiManager().getTransaction().commit();
-				return StringUtils.MSG_REMOVIDO_SUCESSO;
-			} catch (Exception e) {
-				return StringUtils.MSG_PROBLEMA_SALVAR;
-			}
+		sql.append("SELECT CHEQUE FROM ChequeBean CHEQUE");
+		sql.append(" ORDER BY CHEQUE.numCheque DESC");
+
+		Query query = returnEntityManager().createQuery(sql.toString(), ChequeBean.class);
+		query.setMaxResults(10);
+
+		retorno = query.getResultList();
+
+		return retorno;
 	}
 
 }

@@ -10,14 +10,22 @@
 	<ui:define name="content">
 		<h:form>
 
-			<h:panelGrid>
+			<h:panelGrid cellpadding="10">
 
-				<p:selectOneRadio>
-					<f:selectItem itemLabel="Data Pagamento" itemValue="1" />
-					<f:selectItem itemLabel="Data Emissão" itemValue="2" />
-				</p:selectOneRadio>
+				<h:panelGrid>
+					<p:selectOneRadio>
+						<f:selectItem itemLabel="Data Pagamento" itemValue="1" />
+						<f:selectItem itemLabel="Data Emissão" itemValue="2" />
+					</p:selectOneRadio>
+				</h:panelGrid>
 
-				<p:datePicker showIcon="true" pattern="dd/MM/yyyy" />
+				<h:panelGrid columns="4">
+					<p:outputLabel value="De:" />
+					<p:calendar pattern="dd/MM/yyyy" id="de" />
+					<p:outputLabel value="Até:" />
+					<p:calendar pattern="dd/MM/yyyy" id="ate" />
+				</h:panelGrid>
+
 			</h:panelGrid>
 
 		</h:form>

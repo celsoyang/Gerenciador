@@ -16,85 +16,108 @@
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Número:" />
-						<p:inputText maxlength="4" id="valor">
-							<f:convertNumber pattern="#,##0.00" />
-							<f:validator validatorId="MoedaValidator" />
-							<p:ajax event="blur" update="valor" />
-						</p:inputText>
+						<p:inputNumber id="numero" maxValue="9999"
+							value="#{controleChequesInserirController.bean.numCheque}">
+						</p:inputNumber>
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Beneficiário:" />
-						<p:inputText />
+						<p:inputText id="beneficiario"
+							value="#{controleChequesInserirController.bean.beneficiario}" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Valor:" />
-						<p:inputText />
+						<p:inputNumber id="valor" dir="rtl"
+							value="#{controleChequesInserirController.bean.valor}"
+							decimalSeparator="," symbol="R$" thousandSeparator=".">
+						</p:inputNumber>
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Data Emissão:" />
-						<p:datePicker pattern="dd/MM/yyyy" showIcon="true" />
+						<p:calendar id="emissao" pattern="dd/MM/yyyy" readonlyInput="true"
+							value="#{controleChequesInserirController.bean.dataEmissao}" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Data Pagamento:" />
-						<p:datePicker pattern="dd/MM/yyyy" showIcon="true" />
+						<p:calendar id="pagamento" pattern="dd/MM/yyyy"
+							value="#{controleChequesInserirController.bean.dataPagamento}"
+							readonlyInput="true" />
 					</h:panelGrid>
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="1">
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Observação:" />
-						<p:inputTextarea cols="50" rows="5" maxlength="250" />
+						<p:inputTextarea cols="50" rows="5" maxlength="250"
+							value="#{controleChequesInserirController.bean.observacao}" />
 					</h:panelGrid>
 
-					<p:panelGrid>
-						<p:commandButton value="Confirmar" />
+					<p:panelGrid style="align: right">
+						<p:commandButton value="Inserir" id="inserir"
+							action="#{controleChequesInserirController.inserir}" ajax="false" />
 					</p:panelGrid>
 
 				</h:panelGrid>
 
 			</h:panelGrid>
 
+			<p:messages id="msg" closable="true" showDetail="true" />
+
 			<h:panelGrid width="100%">
-				<p:dataTable>
+				<p:dataTable id="ultimosCheques" var="cheque"
+					value="#{controleChequesInserirController.listaCheques}">
 					<f:facet name="header">
-						<p:outputLabel value="Cheques" />
+						<p:outputLabel value="Últimos Cheques" />
 					</f:facet>
 
 					<p:column width="10%">
 						<f:facet name="header">
 							<p:outputLabel value="Número" />
 						</f:facet>
+						<h:outputText value="#{cheque.numCheque}" />
 					</p:column>
 					<p:column width="20%">
 						<f:facet name="header">
 							<p:outputLabel value="Beneficiário" />
 						</f:facet>
+						<h:outputText value="#{cheque.beneficiario}" />
 					</p:column>
-					<p:column width="15%">
+					<p:column width="15%" style="text-align: right;">
 						<f:facet name="header">
 							<p:outputLabel value="Valor" />
 						</f:facet>
+						<h:outputText value="R$" />
+						<h:outputText value="#{cheque.valor}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
 					</p:column>
-					<p:column width="15%">
+					<p:column width="15%" style="text-align: right;">
 						<f:facet name="header">
 							<p:outputLabel value="Data Emissão" />
 						</f:facet>
+						<h:outputText value="#{cheque.dataEmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
-					<p:column width="15%">
+					<p:column width="15%" style="text-align: right;">
 						<f:facet name="header">
 							<p:outputLabel value="Data Pagamento" />
 						</f:facet>
+						<h:outputText value="#{cheque.dataPagamento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 					<p:column width="25%">
 						<f:facet name="header">
 							<p:outputLabel value="Observação" />
 						</f:facet>
+						<h:outputText value="#{cheque.observacao}" />
 					</p:column>
 				</p:dataTable>
 			</h:panelGrid>
