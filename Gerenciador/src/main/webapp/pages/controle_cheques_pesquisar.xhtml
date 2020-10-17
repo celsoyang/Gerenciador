@@ -10,21 +10,32 @@
 	<ui:define name="content">
 		<h:form>
 
-			<h:panelGrid cellpadding="10">
+			<h:panelGrid cellpadding="10" columns="4">
 
 				<h:panelGrid>
-					<p:selectOneRadio>
-						<f:selectItem itemLabel="Data Pagamento" itemValue="1" />
-						<f:selectItem itemLabel="Data Emissão" itemValue="2" />
-					</p:selectOneRadio>
+					<p:outputLabel value="Pesquisar Por:" />
+					<p:selectOneMenu id="tipoPesquisa" onchange="submit()"
+						value="#{controleChequesPesquisarController.opcaoSelecionada}">
+						<f:selectItems
+							value="#{controleChequesPesquisarController.listaOpcoes}" />
+					</p:selectOneMenu>
 				</h:panelGrid>
 
-				<h:panelGrid columns="4">
+				<h:panelGrid>
+					<p:outputLabel value="Valor:" />
+					<p:inputText
+						value="#{controleChequesPesquisarController.parametro}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
 					<p:outputLabel value="De:" />
 					<p:calendar pattern="dd/MM/yyyy" id="de" />
-					<p:outputLabel value="Até:" />
+				</h:panelGrid>
+				<h:panelGrid>
+					<p:outputLabel value=" Até:" />
 					<p:calendar pattern="dd/MM/yyyy" id="ate" />
 				</h:panelGrid>
+
 
 			</h:panelGrid>
 
