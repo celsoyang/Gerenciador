@@ -31,7 +31,7 @@ public class PersistenceUtils {
 	}
 
 	public static void openTransaction() {
-		getEntitiManager().getTransaction().begin();
+		returnEntityManager().getTransaction().begin();
 	}
 
 	public static void commitTransaction() {
@@ -45,9 +45,25 @@ public class PersistenceUtils {
 	public static String salvar(Object objeto) {
 		try {
 			if (!getEntitiManager().getTransaction().isActive()) {
-				getEntitiManager().getTransaction().begin();
+				openTransaction();
 			}
 			getEntitiManager().persist(objeto);
+			getEntitiManager().getTransaction().commit();
+			return StringUtils.MSG_SALVO_SUCESSO;
+		} catch (Exception e) {
+			getEntitiManager().getTransaction().rollback();
+			return StringUtils.MSG_PROBLEMA_SALVAR;
+		}
+	}
+
+	public static String salvarlista(Object[] lista) {
+		try {
+			if (!getEntitiManager().getTransaction().isActive()) {
+				getEntitiManager().getTransaction().begin();
+			}
+			for (Object objeto : lista) {
+				getEntitiManager().persist(objeto);
+			}
 			getEntitiManager().getTransaction().commit();
 			return StringUtils.MSG_SALVO_SUCESSO;
 		} catch (Exception e) {
@@ -139,6 +155,10 @@ public class PersistenceUtils {
 		retorno = query.getResultList();
 
 		return retorno;
+	}
+
+	public static void importarCheques(List<ChequeBean> listaCheques) {
+
 	}
 
 }

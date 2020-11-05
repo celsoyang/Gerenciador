@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
@@ -19,21 +20,14 @@ public class ControleChequesPesquisarController {
 
 	private Integer opcaoSelecionada;
 
-	private Date dataEmissao;
+	private Date dataDe;
 
-	private Date dataPagamento;
+	private Date dataAte;
 
-	private String parametro;
-	
-	private HtmlInputText campoParametro;
-	
-	private HtmlInputText campoDe;
-	
-	private HtmlInputText campoAte;
+	private String parametro = new String();
 
 	public ControleChequesPesquisarController() {
 		loadOpcoes();
-		opcaoSelecionada = 4;
 	}
 
 	private void loadOpcoes() {
@@ -44,6 +38,14 @@ public class ControleChequesPesquisarController {
 		listaOpcoes.add(new SelectItem(2, "Data de Emissão"));
 		listaOpcoes.add(new SelectItem(3, "Número"));
 		listaOpcoes.add(new SelectItem(4, "Beneficiário"));
+	}
+
+	public void pesquisar() {
+		if (opcaoSelecionada.equals(1) || opcaoSelecionada.equals(2)) {
+
+		} else {
+
+		}
 	}
 
 	public List<ChequeBean> getListaCheques() {
@@ -62,22 +64,6 @@ public class ControleChequesPesquisarController {
 		this.listaOpcoes = listaOpcoes;
 	}
 
-	public Date getDataEmissao() {
-		return dataEmissao;
-	}
-
-	public void setDataEmissao(Date dataEmissao) {
-		this.dataEmissao = dataEmissao;
-	}
-
-	public Date getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(Date dataPagamento) {
-		this.dataPagamento = dataPagamento;
-	}
-
 	public Integer getOpcaoSelecionada() {
 		return opcaoSelecionada;
 	}
@@ -92,6 +78,22 @@ public class ControleChequesPesquisarController {
 
 	public void setParametro(String parametro) {
 		this.parametro = parametro;
+	}
+
+	public Date getDataDe() {
+		return dataDe;
+	}
+
+	public void setDataDe(Date dataDe) {
+		this.dataDe = dataDe;
+	}
+
+	public Date getDataAte() {
+		return dataAte;
+	}
+
+	public void setDataAte(Date dataAte) {
+		this.dataAte = dataAte;
 	}
 
 }
