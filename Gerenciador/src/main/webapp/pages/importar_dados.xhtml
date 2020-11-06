@@ -18,7 +18,12 @@
 
 					<p:selectOneMenu id="tipoImportacao"
 						value="#{importarDadosController.tipoSelecionado}">
-						<f:selectItems value="#{importarDadosController.tipoArquivo}" />
+
+						<f:selectItem itemValue="0" itemLabel="Teste1" />
+						<f:selectItem itemValue="1" itemLabel="Teste2" />
+						<f:selectItem itemValue="2" itemLabel="Teste3" />
+						<f:selectItem itemValue="3" itemLabel="Teste4" />
+						<!-- <f:selectItems value="#{importarDadosController.tipoArquivo}" /> -->
 					</p:selectOneMenu>
 				</h:panelGrid>
 

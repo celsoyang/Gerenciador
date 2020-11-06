@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "compra_diaria")
+@Table(name = "compras_internas")
 public class CompraBean {
 
 	@Id
@@ -19,22 +19,33 @@ public class CompraBean {
 	@SequenceGenerator(name = "sequence_compras", initialValue = 416)
 	@Column(name = "codigo")
 	private Integer codigo;
-	
-	@Column(name = "descricao")
-	private String descricao;
+
+	@Column(name = "vendedor")
+	private String vendedor;
 
 	@Column(name = "valor")
 	private BigDecimal valor;
 
-	@Column(name = "dia")
-	private Date dia;
+	@Column(name = "data_compra")
+	private Date dataCompra;
 
-	public String getDescricao() {
-		return descricao;
+	@Column(name = "data_pagamento")
+	private Date dataPagamento;
+
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public BigDecimal getValor() {
@@ -45,12 +56,20 @@ public class CompraBean {
 		this.valor = valor;
 	}
 
-	public Date getDia() {
-		return dia;
+	public Date getDataCompra() {
+		return dataCompra;
 	}
 
-	public void setDia(Date dia) {
-		this.dia = dia;
+	public void setDataCompra(Date dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
 
 }
