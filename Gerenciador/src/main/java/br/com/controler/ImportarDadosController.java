@@ -3,7 +3,10 @@ package br.com.controler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
@@ -12,26 +15,37 @@ import br.com.enums.TipoImportacaoEnum;
 import br.com.utils.ImportacaoUtils;
 
 @ManagedBean(name = "importarDadosController")
+@SessionScoped
 public class ImportarDadosController {
+
 	private List<SelectItem> tipoArquivo;
 
 	private String tipoSelecionado;
 
 	public ImportarDadosController() {
+		tipoArquivo = new ArrayList<SelectItem>();
 		carregarTipoArquivo();
 	}
 
 	private void carregarTipoArquivo() {
 		tipoArquivo = new ArrayList<SelectItem>();
-		tipoArquivo.add(new SelectItem(0, "Selecione..."));
+		SelectItem item;
+		tipoArquivo.add(new SelectItem("0", "Selecione..."));
 		for (TipoImportacaoEnum tie : TipoImportacaoEnum.values()) {
-			tipoArquivo.add(new SelectItem(tie.getCodigo(), tie.getDescicao()));
+			item = new SelectItem();
+			item.setValue(String.valueOf(tie.getCodigo()));
+			item.setLabel(tie.getDescicao());
+			tipoArquivo.add(item); 
 		}
 	}
 
 	public void importar(FileUploadEvent event) {
 		if (validarImportacao()) {
 			ImportacaoUtils.importar(event, Integer.parseInt(tipoSelecionado));
+			
+			FacesContext pesquisarVazio = FacesContext.getCurrentInstance();
+			pesquisarVazio.addMessage("sucesso",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Importado com Sucesso"));
 		}
 	}
 

@@ -34,11 +34,6 @@ public class ImportacaoUtils {
 	private static List<CaixaDiarioBean> listaCaixa;
 
 	public ImportacaoUtils() {
-		listaCaixa = new ArrayList<CaixaDiarioBean>();
-		listaCheques = new ArrayList<ChequeBean>();
-		listaCompras = new ArrayList<CompraBean>();
-		listaGastos = new ArrayList<GastoBean>();
-
 	}
 
 	public static void importar(FileUploadEvent event, Integer tipoImportacao) {
@@ -54,6 +49,7 @@ public class ImportacaoUtils {
 
 	private static void importarCaixa(FileUploadEvent event) {
 		try {
+			listaCaixa = new ArrayList<CaixaDiarioBean>();
 			arquivo = event.getFile();
 			worlbook = new XSSFWorkbook(arquivo.getInputstream());
 
@@ -97,6 +93,7 @@ public class ImportacaoUtils {
 
 	private static void importarCheque(FileUploadEvent event) {
 		try {
+			listaCheques = new ArrayList<ChequeBean>();
 			arquivo = event.getFile();
 			worlbook = new XSSFWorkbook(arquivo.getInputstream());
 
@@ -143,8 +140,7 @@ public class ImportacaoUtils {
 				}
 			}
 			PersistenceUtils.openTransaction();
-			PersistenceUtils.salvarlista(listaCheques.toArray());
-
+			PersistenceUtils.salvarlista(listaCheques.toArray());			
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -152,6 +148,7 @@ public class ImportacaoUtils {
 
 	private static void importarGasto(FileUploadEvent event) {
 		try {
+			listaGastos = new ArrayList<GastoBean>();
 			arquivo = event.getFile();
 			worlbook = new XSSFWorkbook(arquivo.getInputstream());
 
@@ -195,6 +192,7 @@ public class ImportacaoUtils {
 
 	private static void importarCompra(FileUploadEvent event) {
 		try {
+			listaCompras = new ArrayList<CompraBean>();
 			arquivo = event.getFile();
 			worlbook = new XSSFWorkbook(arquivo.getInputstream());
 

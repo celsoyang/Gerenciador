@@ -8,33 +8,30 @@
 
 
 	<ui:define name="content">
-		<h:form>
+		<h:form enctype="multipart/form-data">
 
-			<h:panelGrid columns="1" cellpadding="10" cellspacing="0">
+			<p:messages showIcon="true" closable="true" showDetail="true"
+				id="sucesso" />
+
+			<h:panelGrid columns="1" cellpadding="10">
 
 				<h:panelGrid columns="1">
+					<p:outputLabel value="Tipo de Importação:"
+						style="font-weight: bold" />
 
-					<p:outputLabel value="Tipo de Importação:" />
-
-					<p:selectOneMenu id="tipoImportacao"
+					<p:selectOneMenu id="tipoArquivoSelecionado" onchange="submit()"
 						value="#{importarDadosController.tipoSelecionado}">
-
-						<f:selectItem itemValue="0" itemLabel="Teste1" />
-						<f:selectItem itemValue="1" itemLabel="Teste2" />
-						<f:selectItem itemValue="2" itemLabel="Teste3" />
-						<f:selectItem itemValue="3" itemLabel="Teste4" />
-						<!-- <f:selectItems value="#{importarDadosController.tipoArquivo}" /> -->
+						<f:selectItems value="#{importarDadosController.tipoArquivo}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 
-				<h:panelGrid columns="1">
-					<p:outputLabel value="Arquivo:" />
+				<h:panelGrid>
+					<p:outputLabel value="Arquivo:" style="font-weight: bold" />
+
 					<p:fileUpload id="arquivo" uploadLabel="Importar"
 						label="Selecionar" cancelLabel="Cancelar"
-						value="#{importarDadosController.arquivo}"
 						fileUploadListener="#{importarDadosController.importar}" />
 				</h:panelGrid>
-
 
 			</h:panelGrid>
 		</h:form>
