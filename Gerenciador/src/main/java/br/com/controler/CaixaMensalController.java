@@ -50,12 +50,14 @@ public class CaixaMensalController {
 
 		for (Object[] m : listaMeses) {
 			mes = new CaixaMesBean();
+			
+			if (m[0] != null) {
+				mes.setNomeMes(MesesEnum.getBayNumero((int) ((double) m[0])).getNomeMes());
+				mes.setNumeroMes((int) ((double) m[0]));
+				mes.setTotalMes(new BigDecimal(String.valueOf(m[1])));
 
-			mes.setNomeMes(MesesEnum.getBayNumero((int) ((double) m[0])).getNomeMes());
-			mes.setNumeroMes((int) ((double) m[0]));
-			mes.setTotalMes(new BigDecimal(String.valueOf(m[1])));
-
-			meses.add(mes);
+				meses.add(mes);
+			}
 		}
 	}
 

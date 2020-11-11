@@ -1,6 +1,8 @@
 package br.com.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -159,6 +161,23 @@ public class PersistenceUtils {
 
 	public static void importarCheques(List<ChequeBean> listaCheques) {
 
+	}
+
+	public static Boolean dataCaixaExiste(Date data) {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT CAIXA FROM CaixaDiarioBean CAIXA");
+		sql.append(" WHERE CAIXA.data = '" + new SimpleDateFormat("dd/MM/yyyy").format(data) + "'");
+		
+		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
+		
+		Integer c = query.getResultList().size();
+		
+		if(c > 0) {
+			return Boolean.TRUE;
+		}
+
+		return Boolean.FALSE;
 	}
 
 }

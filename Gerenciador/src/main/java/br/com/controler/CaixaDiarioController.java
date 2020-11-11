@@ -52,7 +52,7 @@ public class CaixaDiarioController {
 	}
 
 	public void confirmar() {
-		if (validarCampos()) {
+		if (validarCampos() && validarData()) {
 			CaixaDiarioBean cd = new CaixaDiarioBean();
 			if (alteracao) {
 				PersistenceUtils.openTransaction();
@@ -68,6 +68,25 @@ public class CaixaDiarioController {
 			alteracao = Boolean.FALSE;
 			update();
 		}
+	}
+
+	private boolean validarData() {
+		Boolean retorno = Boolean.TRUE;
+
+		if (bean.getData() == null) {
+			retorno = Boolean.FALSE;
+		}
+
+		if (PersistenceUtils.dataCaixaExiste(bean.getData()) && !alteracao) {
+			MessagesUtils.errorMessage("Data já inserida, faça uma alteração");
+			return Boolean.FALSE;
+		}
+
+		if (!retorno) {
+			MessagesUtils.errorMessage("Data Incorreta");
+		}
+
+		return retorno;
 	}
 
 	private boolean validarCampos() {
