@@ -12,7 +12,7 @@ import javax.faces.model.SelectItem;
 import br.com.bean.ChequeBean;
 
 @ManagedBean(name = "controleChequesPesquisarController")
-public class ControleChequesPesquisarController {
+public class ChequesPesquisarController {
 
 	private List<ChequeBean> listaCheques;
 
@@ -26,7 +26,7 @@ public class ControleChequesPesquisarController {
 
 	private String parametro = new String();
 
-	public ControleChequesPesquisarController() {
+	public ChequesPesquisarController() {
 		loadOpcoes();
 	}
 

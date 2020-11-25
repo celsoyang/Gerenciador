@@ -12,10 +12,12 @@
 <h:body>
 	<div id="logo">
 		<ui:insert name="logo">
-			<h:commandLink>
+			<p:panelGrid columns="2" styleClass="ui-noborder">
 				<h:graphicImage library="imagens" name="logo_camisa.PNG" width="405"
 					height="145" />
-			</h:commandLink>
+
+				<p:clock pattern="dd/MM/yyyy HH:mm" mode="client"/>
+			</p:panelGrid>
 		</ui:insert>
 	</div>
 	<div id="top">

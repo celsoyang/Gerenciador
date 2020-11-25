@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import br.com.bean.CaixaDiarioBean;
 import br.com.bean.ChequeBean;
+import br.com.bean.CompradorConjuntoBean;
 
 public class PersistenceUtils {
 
@@ -168,16 +169,31 @@ public class PersistenceUtils {
 
 		sql.append("SELECT CAIXA FROM CaixaDiarioBean CAIXA");
 		sql.append(" WHERE CAIXA.data = '" + new SimpleDateFormat("dd/MM/yyyy").format(data) + "'");
-		
+
 		Query query = returnEntityManager().createQuery(sql.toString(), CaixaDiarioBean.class);
-		
+
 		Integer c = query.getResultList().size();
-		
-		if(c > 0) {
+
+		if (c > 0) {
 			return Boolean.TRUE;
 		}
 
 		return Boolean.FALSE;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<CompradorConjuntoBean> retornaCompradoresConjuntos() {
+		List<CompradorConjuntoBean> retorno = new ArrayList<CompradorConjuntoBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT COMPRADOR FROM CompradorConjuntoBean COMPRADOR");
+		sql.append(" ORDER BY COMPRADOR.nome");
+
+		Query query = returnEntityManager().createQuery(sql.toString(), CompradorConjuntoBean.class);
+
+		retorno = query.getResultList();
+
+		return retorno;
 	}
 
 }

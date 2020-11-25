@@ -12,25 +12,25 @@
 
 			<h:panelGrid columns="1">
 
-				<h:panelGrid columns="5">
+				<h:panelGrid columns="6">
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Número:" />
 						<p:inputNumber id="numero" maxValue="9999"
-							value="#{controleChequesInserirController.bean.numCheque}">
+							value="#{chequesInserirController.bean.numCheque}">
 						</p:inputNumber>
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Beneficiário:" />
 						<p:inputText id="beneficiario"
-							value="#{controleChequesInserirController.bean.beneficiario}" />
+							value="#{chequesInserirController.bean.beneficiario}" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Valor:" />
 						<p:inputNumber id="valor" dir="rtl"
-							value="#{controleChequesInserirController.bean.valor}"
+							value="#{chequesInserirController.bean.valor}"
 							decimalSeparator="," symbol="R$" thousandSeparator=".">
 						</p:inputNumber>
 					</h:panelGrid>
@@ -38,40 +38,94 @@
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Data Emissão:" />
 						<p:calendar id="emissao" pattern="dd/MM/yyyy" readonlyInput="true"
-							value="#{controleChequesInserirController.bean.dataEmissao}" />
+							value="#{chequesInserirController.bean.dataEmissao}" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Data Pagamento:" />
 						<p:calendar id="pagamento" pattern="dd/MM/yyyy"
-							value="#{controleChequesInserirController.bean.dataPagamento}"
+							value="#{chequesInserirController.bean.dataPagamento}"
 							readonlyInput="true" />
 					</h:panelGrid>
 
 				</h:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
 
 				<h:panelGrid columns="1">
-
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Observação:" />
-						<p:inputTextarea cols="50" rows="5" maxlength="250"
-							value="#{controleChequesInserirController.bean.observacao}" />
+						<p:inputTextarea cols="50" rows="10" maxlength="250"
+							value="#{chequesInserirController.bean.observacao}" />
 					</h:panelGrid>
-
-					<p:panelGrid style="align: right">
-						<p:commandButton value="Inserir" id="inserir"
-							action="#{controleChequesInserirController.inserir}" ajax="false" />
-					</p:panelGrid>
-
 				</h:panelGrid>
 
+				<h:panelGrid columns="1">
+					<h:panelGrid>
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Adicionar Outro Comprador?" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Nome: " />
+							<p:selectOneMenu id="outrosCompradores" multiple="true"
+								value="#{chequesInserirController.compradorSelecionado}">
+								<f:selectItems value="#{chequesInserirController.listaCombo}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Valor: " />
+							<p:outputLabel value="" />
+							<p:inputNumber dir="rtl" decimalSeparator="," symbol="R$"
+								thousandSeparator="."
+								value="#{chequesInserirController.valorOutroComprador}" />
+
+							<p:commandButton value="+" title="Adicionar"
+								action="#{chequesInserirController.adicionarOutroComprador}"
+								ajax="false" onclick="submit"/>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1" width="20%">
+							<p:dataTable id="CompradoresSelecionado" var="comprador"
+								value="#{chequesInserirController.listaOutrosCompradoresSelecionados}">
+								<f:facet name="header">
+									<p:outputLabel value="Outros Compradores" />
+								</f:facet>
+
+								<p:column>
+									<f:facet name="header">
+										<p:outputLabel value="Nome" />
+									</f:facet>
+									<p:outputLabel value="#{comprador.codigo}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<p:outputLabel value="Valor" />
+									</f:facet>
+									<p:outputLabel value="#{comprador.valor}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="1">
+				<p:commandButton value="Inserir" id="inserir"
+					action="#{chequesInserirController.inserir}" ajax="false" />
 			</h:panelGrid>
 
 			<p:messages id="msg" closable="true" showDetail="true" />
 
 			<h:panelGrid width="100%">
 				<p:dataTable id="ultimosCheques" var="cheque"
-					value="#{controleChequesInserirController.listaCheques}">
+					value="#{chequesInserirController.listaCheques}">
 					<f:facet name="header">
 						<p:outputLabel value="Últimos Cheques" />
 					</f:facet>

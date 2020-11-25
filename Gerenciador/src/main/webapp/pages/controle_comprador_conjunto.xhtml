@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
+
+
+	<ui:define name="content">
+		<h:form>
+
+			<h:panelGrid columns="3" cellspacing="10" width="20%">
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{compradorConjuntoController.bean.nome}" />
+
+				<p:commandButton value="Inserir" />
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="1" cellspacing="10" width="30%">
+
+				<p:dataTable id="listaCompradores"
+					value="#{compradorConjuntoController.listaCompradores}"
+					rowKey="#{comprador.codigo}"
+					selection="#{compradorConjuntoController.compradorSelecionado}"
+					var="comprador" rows="5" paginator="true">
+
+					<f:facet name="header">
+						<p:outputLabel value="Compradores Conjuntos" />
+					</f:facet>
+
+					<p:column selectionMode="single"
+						style="width:16px;text-align:center" />
+
+					<p:column width="20%">
+						<f:facet name="header">
+							<p:outputLabel value="Codigo" />
+						</f:facet>
+						<p:outputLabel value="#{comprador.codigo}" />
+					</p:column>
+
+					<p:column width="70%">
+						<f:facet name="header">
+							<p:outputLabel value="Nome" />
+						</f:facet>
+						<p:outputLabel value="#{comprador.nome}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellspacing="10">
+				<p:commandButton value="Editar" />
+				<p:commandButton value="Excluir" />
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

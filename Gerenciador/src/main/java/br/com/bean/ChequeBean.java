@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity()
+@Entity
 @Table(name = "cheque")
 public class ChequeBean {
 
@@ -30,6 +30,9 @@ public class ChequeBean {
 
 	@Column(name = "observacao")
 	private String observacao;
+
+	@Column(name = "compra_conjunta")
+	private Integer compraConjunta;
 
 	public Integer getNumCheque() {
 		return numCheque;
@@ -77,6 +80,14 @@ public class ChequeBean {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public Integer getCompraConjunta() {
+		return compraConjunta;
+	}
+
+	public void setCompraConjunta(Integer compraConjunta) {
+		this.compraConjunta = compraConjunta;
 	}
 
 }
