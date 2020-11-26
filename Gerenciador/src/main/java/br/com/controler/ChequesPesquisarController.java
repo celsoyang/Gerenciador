@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
 
 @ManagedBean(name = "controleChequesPesquisarController")
+@SessionScoped
 public class ChequesPesquisarController {
 
 	private List<ChequeBean> listaCheques;

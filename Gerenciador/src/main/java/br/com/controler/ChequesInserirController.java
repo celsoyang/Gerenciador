@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
@@ -13,6 +14,7 @@ import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "chequesInserirController")
+@SessionScoped
 public class ChequesInserirController {
 
 	private List<ChequeBean> listaCheques;
@@ -23,9 +25,9 @@ public class ChequesInserirController {
 
 	private List<CompradorConjuntoBean> listaOutrosCompradoresSelecionados;
 
-	private List<SelectItem> listaCombo;
+	private List<CompradorConjuntoBean> listaCombo;
 
-	private Integer compradorSelecionado;
+	private CompradorConjuntoBean compradorSelecionado;
 
 	private BigDecimal valorOutroComprador;
 
@@ -40,10 +42,9 @@ public class ChequesInserirController {
 		listaOutrosCompradores = new ArrayList<CompradorConjuntoBean>();
 		listaOutrosCompradores.addAll(PersistenceUtils.retornaCompradoresConjuntos());
 
-		listaCombo = new ArrayList<SelectItem>();
-		listaCombo.add(new SelectItem(0, "Selecione..."));
+		listaCombo = new ArrayList<CompradorConjuntoBean>();
 		for (CompradorConjuntoBean comprador : listaOutrosCompradores) {
-			listaCombo.add(new SelectItem(comprador.getCodigo(), comprador.getNome()));
+			listaCombo.add(comprador);
 		}
 	}
 
@@ -53,10 +54,10 @@ public class ChequesInserirController {
 
 	public void adicionarOutroComprador() {
 		CompradorConjuntoBean comp = new CompradorConjuntoBean();
-
-		comp.setCodigo(compradorSelecionado);
+		comp.setCodigo(compradorSelecionado.getCodigo());
+		comp.setNome(compradorSelecionado.toString());
 		comp.setValor(valorOutroComprador);
-
+		comp.setDataPagamento(bean.getDataPagamento());
 		listaOutrosCompradoresSelecionados.add(comp);
 	}
 
@@ -78,8 +79,11 @@ public class ChequesInserirController {
 		}
 	}
 
-	private void apagarCampos() {
+	public void apagarCampos() {
 		setBean(new ChequeBean());
+		listaOutrosCompradoresSelecionados = new ArrayList<CompradorConjuntoBean>();
+		valorOutroComprador = new BigDecimal(0);
+		compradorSelecionado = null;
 	}
 
 	private Boolean validarPreenchimento() {
@@ -141,14 +145,6 @@ public class ChequesInserirController {
 		this.listaOutrosCompradores = listaOutrosCompradores;
 	}
 
-	public List<SelectItem> getListaCombo() {
-		return listaCombo;
-	}
-
-	public void setListaCombo(List<SelectItem> listaCombo) {
-		this.listaCombo = listaCombo;
-	}
-
 	public List<CompradorConjuntoBean> getListaOutrosCompradoresSelecionados() {
 		return listaOutrosCompradoresSelecionados;
 	}
@@ -165,11 +161,19 @@ public class ChequesInserirController {
 		this.valorOutroComprador = valorOutroComprador;
 	}
 
-	public Integer getCompradorSelecionado() {
+	public List<CompradorConjuntoBean> getListaCombo() {
+		return listaCombo;
+	}
+
+	public void setListaCombo(List<CompradorConjuntoBean> listaCombo) {
+		this.listaCombo = listaCombo;
+	}
+
+	public CompradorConjuntoBean getCompradorSelecionado() {
 		return compradorSelecionado;
 	}
 
-	public void setCompradorSelecionado(Integer compradorSelecionado) {
+	public void setCompradorSelecionado(CompradorConjuntoBean compradorSelecionado) {
 		this.compradorSelecionado = compradorSelecionado;
 	}
 

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.chart.LineChartModel;
 
@@ -14,6 +15,7 @@ import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "caixaDiarioController")
+@SessionScoped
 public class CaixaDiarioController {
 
 	private CaixaDiarioBean bean;

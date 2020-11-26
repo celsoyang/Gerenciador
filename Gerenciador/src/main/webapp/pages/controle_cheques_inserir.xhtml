@@ -49,20 +49,16 @@
 					</h:panelGrid>
 
 				</h:panelGrid>
-			</h:panelGrid>
-
-			<h:panelGrid columns="2">
 
 				<h:panelGrid columns="1">
-					<h:panelGrid columns="1">
+
+					<h:panelGrid columns="1" width="50%">
 						<p:outputLabel value="Observação:" />
-						<p:inputTextarea cols="50" rows="10" maxlength="250"
+						<p:inputTextarea cols="50" rows="5" maxlength="250"
 							value="#{chequesInserirController.bean.observacao}" />
 					</h:panelGrid>
-				</h:panelGrid>
 
-				<h:panelGrid columns="1">
-					<h:panelGrid>
+					<h:panelGrid columns="1">
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Adicionar Outro Comprador?" />
 						</h:panelGrid>
@@ -70,7 +66,7 @@
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Nome: " />
 							<p:selectOneMenu id="outrosCompradores" multiple="true"
-								value="#{chequesInserirController.compradorSelecionado}">
+								value="#{chequesInserirController.compradorSelecionado}" >
 								<f:selectItems value="#{chequesInserirController.listaCombo}" />
 							</p:selectOneMenu>
 						</h:panelGrid>
@@ -83,9 +79,12 @@
 								value="#{chequesInserirController.valorOutroComprador}" />
 
 							<p:commandButton value="+" title="Adicionar"
-								action="#{chequesInserirController.adicionarOutroComprador}"
-								ajax="false" onclick="submit"/>
+								actionListener="#{chequesInserirController.adicionarOutroComprador}"
+								ajax="false" />
 						</h:panelGrid>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
 
 						<h:panelGrid columns="1" width="20%">
 							<p:dataTable id="CompradoresSelecionado" var="comprador"
@@ -98,7 +97,7 @@
 									<f:facet name="header">
 										<p:outputLabel value="Nome" />
 									</f:facet>
-									<p:outputLabel value="#{comprador.codigo}" />
+									<p:outputLabel value="#{comprador.nome}" />
 								</p:column>
 
 								<p:column>
@@ -111,69 +110,71 @@
 							</p:dataTable>
 
 						</h:panelGrid>
+
 					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:commandButton value="Inserir" id="inserir"
+							action="#{chequesInserirController.inserir}" ajax="false" />
+						<p:commandButton value="Limpar"
+							action="#{chequesInserirController.apagarCampos}" ajax="false" />
+					</h:panelGrid>
+
 				</h:panelGrid>
 
-			</h:panelGrid>
+				<h:panelGrid width="100%">
+					<p:dataTable id="ultimosCheques" var="cheque"
+						value="#{chequesInserirController.listaCheques}">
+						<f:facet name="header">
+							<p:outputLabel value="Últimos Cheques" />
+						</f:facet>
 
-			<h:panelGrid columns="1">
-				<p:commandButton value="Inserir" id="inserir"
-					action="#{chequesInserirController.inserir}" ajax="false" />
-			</h:panelGrid>
+						<p:column width="10%">
+							<f:facet name="header">
+								<p:outputLabel value="Número" />
+							</f:facet>
+							<h:outputText value="#{cheque.numCheque}" />
+						</p:column>
+						<p:column width="20%">
+							<f:facet name="header">
+								<p:outputLabel value="Beneficiário" />
+							</f:facet>
+							<h:outputText value="#{cheque.beneficiario}" />
+						</p:column>
+						<p:column width="15%" style="text-align: right;">
+							<f:facet name="header">
+								<p:outputLabel value="Valor" />
+							</f:facet>
+							<h:outputText value="R$" />
+							<h:outputText value="#{cheque.valor}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+						</p:column>
+						<p:column width="15%" style="text-align: right;">
+							<f:facet name="header">
+								<p:outputLabel value="Data Emissão" />
+							</f:facet>
+							<h:outputText value="#{cheque.dataEmissao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column width="15%" style="text-align: right;">
+							<f:facet name="header">
+								<p:outputLabel value="Data Pagamento" />
+							</f:facet>
+							<h:outputText value="#{cheque.dataPagamento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column width="25%">
+							<f:facet name="header">
+								<p:outputLabel value="Observação" />
+							</f:facet>
+							<h:outputText value="#{cheque.observacao}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
 
-			<p:messages id="msg" closable="true" showDetail="true" />
-
-			<h:panelGrid width="100%">
-				<p:dataTable id="ultimosCheques" var="cheque"
-					value="#{chequesInserirController.listaCheques}">
-					<f:facet name="header">
-						<p:outputLabel value="Últimos Cheques" />
-					</f:facet>
-
-					<p:column width="10%">
-						<f:facet name="header">
-							<p:outputLabel value="Número" />
-						</f:facet>
-						<h:outputText value="#{cheque.numCheque}" />
-					</p:column>
-					<p:column width="20%">
-						<f:facet name="header">
-							<p:outputLabel value="Beneficiário" />
-						</f:facet>
-						<h:outputText value="#{cheque.beneficiario}" />
-					</p:column>
-					<p:column width="15%" style="text-align: right;">
-						<f:facet name="header">
-							<p:outputLabel value="Valor" />
-						</f:facet>
-						<h:outputText value="R$" />
-						<h:outputText value="#{cheque.valor}">
-							<f:convertNumber pattern="#,##0.00" />
-						</h:outputText>
-					</p:column>
-					<p:column width="15%" style="text-align: right;">
-						<f:facet name="header">
-							<p:outputLabel value="Data Emissão" />
-						</f:facet>
-						<h:outputText value="#{cheque.dataEmissao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-					<p:column width="15%" style="text-align: right;">
-						<f:facet name="header">
-							<p:outputLabel value="Data Pagamento" />
-						</f:facet>
-						<h:outputText value="#{cheque.dataPagamento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-					<p:column width="25%">
-						<f:facet name="header">
-							<p:outputLabel value="Observação" />
-						</f:facet>
-						<h:outputText value="#{cheque.observacao}" />
-					</p:column>
-				</p:dataTable>
 			</h:panelGrid>
 
 		</h:form>

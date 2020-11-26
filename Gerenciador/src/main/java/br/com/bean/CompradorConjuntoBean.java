@@ -58,4 +58,8 @@ public class CompradorConjuntoBean {
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
+	
+	public String toString() {
+		return nome;		
+	} 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -23,6 +24,7 @@ import br.com.utils.NumberUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "caixaMensalController")
+@SessionScoped
 public class CaixaMensalController {
 
 	private List<CaixaMesBean> meses;
