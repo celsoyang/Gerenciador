@@ -10,34 +10,49 @@
 		<h:form>
 			<div>
 				<p:menubar style="background-color: orange">
+				
+					<p:submenu label="Clientes">
+						<p:menuitem value="Adicionar Compra"
+							url="#{request.contextPath}/pages/adicionar_compra.xhtml" />
+						<p:menuitem value="Pesquisar Compras"
+							url="#{request.contextPath}/pages/pesquisar_compras.xhtml" />
+						<p:menuitem value="Editar Clientes"
+							url="#{request.contextPath}/pages/controle_clientes.xhtml" />
+					</p:submenu>
+					
 					<p:submenu label="Caixa">
 						<p:menuitem value="Diário"
 							url="#{request.contextPath}/pages/caixa_diario.xhtml" />
 						<p:menuitem value="Mensal"
 							url="#{request.contextPath}/pages/caixa_mensal.xhtml" />
 					</p:submenu>
+					
 					<p:submenu label="Gerenciamento de Cheques">
 						<p:menuitem value="Inserir"
 							url="#{request.contextPath}/pages/controle_cheques_inserir.xhtml" />
 						<p:menuitem value="Pesquisar"
 							url="#{request.contextPath}/pages/controle_cheques_pesquisar.xhtml" />
 					</p:submenu>
+					
 					<p:submenu label="Gerenciamento de Compras">
 						<p:menuitem value="Inserir"
 							url="#{request.contextPath}/pages/controle_compras.xhtml" />
 						<p:menuitem value="Editar" />
 					</p:submenu>
+					
 					<p:submenu label="Gerenciamento de Gastos">
 						<p:menuitem value="Inserir"
 							url="#{request.contextPath}/pages/controle_gastos.xhtml" />
 						<p:menuitem value="Consultar" />
 					</p:submenu>
+					
 					<p:submenu label="Dados">
 						<p:menuitem value="Importar"
 							url="#{request.contextPath}/pages/importar_dados.xhtml" />
 						<p:menuitem value="Compradores Conjuntos"
 							url="#{request.contextPath}/pages/controle_comprador_conjunto.xhtml" />
 					</p:submenu>
+					
 				</p:menubar>
 			</div>
 		</h:form>

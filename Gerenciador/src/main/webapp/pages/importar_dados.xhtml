@@ -16,8 +16,7 @@
 			<h:panelGrid columns="1" cellpadding="10">
 
 				<h:panelGrid columns="1">
-					<p:outputLabel value="Tipo de Importação:"
-						style="font-weight: bold" />
+					<p:outputLabel value="Tipo de Importação:" />
 
 					<p:selectOneMenu id="tipoArquivoSelecionado" onchange="submit()"
 						value="#{importarDadosController.tipoSelecionado}">
@@ -26,7 +25,7 @@
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:outputLabel value="Arquivo:" style="font-weight: bold" />
+					<p:outputLabel value="Arquivo:" />
 
 					<p:fileUpload id="arquivo" uploadLabel="Importar"
 						label="Selecionar" cancelLabel="Cancelar"
