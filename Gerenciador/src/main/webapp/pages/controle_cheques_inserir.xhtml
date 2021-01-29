@@ -58,61 +58,6 @@
 							value="#{chequesInserirController.bean.observacao}" />
 					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Adicionar Outro Comprador?" />
-						</h:panelGrid>
-
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Nome: " />
-							<p:selectOneMenu id="outrosCompradores" multiple="true"
-								value="#{chequesInserirController.compradorSelecionado}" >
-								<f:selectItems value="#{chequesInserirController.listaCombo}" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-
-						<h:panelGrid columns="2">
-							<p:outputLabel value="Valor: " />
-							<p:outputLabel value="" />
-							<p:inputNumber dir="rtl" decimalSeparator="," symbol="R$"
-								thousandSeparator="."
-								value="#{chequesInserirController.valorOutroComprador}" />
-
-							<p:commandButton value="+" title="Adicionar"
-								actionListener="#{chequesInserirController.adicionarOutroComprador}"
-								ajax="false" />
-						</h:panelGrid>
-					</h:panelGrid>
-
-					<h:panelGrid columns="1">
-
-						<h:panelGrid columns="1" width="20%">
-							<p:dataTable id="CompradoresSelecionado" var="comprador"
-								value="#{chequesInserirController.listaOutrosCompradoresSelecionados}">
-								<f:facet name="header">
-									<p:outputLabel value="Outros Compradores" />
-								</f:facet>
-
-								<p:column>
-									<f:facet name="header">
-										<p:outputLabel value="Nome" />
-									</f:facet>
-									<p:outputLabel value="#{comprador.nome}" />
-								</p:column>
-
-								<p:column>
-									<f:facet name="header">
-										<p:outputLabel value="Valor" />
-									</f:facet>
-									<p:outputLabel value="#{comprador.valor}" />
-								</p:column>
-
-							</p:dataTable>
-
-						</h:panelGrid>
-
-					</h:panelGrid>
-
 					<h:panelGrid columns="2">
 						<p:commandButton value="Inserir" id="inserir"
 							action="#{chequesInserirController.inserir}" ajax="false" />

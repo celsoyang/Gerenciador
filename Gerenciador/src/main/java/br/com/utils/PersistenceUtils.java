@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 
 import br.com.bean.CaixaDiarioBean;
 import br.com.bean.ChequeBean;
+import br.com.bean.ClienteBean;
 import br.com.bean.CompradorConjuntoBean;
 
 public class PersistenceUtils {
@@ -194,6 +196,38 @@ public class PersistenceUtils {
 		retorno = query.getResultList();
 
 		return retorno;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<SelectItem> retornoClientes() {
+		List<SelectItem> retorno = new ArrayList<SelectItem>();
+		List<ClienteBean> clientes = new ArrayList<ClienteBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("select c from ClienteBean c order by c.nome");
+
+		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
+
+		clientes = q.getResultList();
+
+		for (ClienteBean cli : clientes) {
+			retorno.add(new SelectItem(cli.getCodigo(), cli.getNome()));
+		}
+
+		return retorno;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<ClienteBean> pesquisarClientes() {
+		List<ClienteBean> clientes = new ArrayList<ClienteBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("select c from ClienteBean c order by c.nome");
+
+		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
+
+		clientes = q.getResultList();
+		return clientes;
 	}
 
 }

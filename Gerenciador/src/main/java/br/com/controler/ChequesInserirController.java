@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
 import br.com.bean.CompradorConjuntoBean;
@@ -52,13 +51,15 @@ public class ChequesInserirController {
 		listaCheques = PersistenceUtils.pesquisarUltimosCheques();
 	}
 
-	public void adicionarOutroComprador() {
+	public String adicionarOutroComprador() {
 		CompradorConjuntoBean comp = new CompradorConjuntoBean();
 		comp.setCodigo(compradorSelecionado.getCodigo());
 		comp.setNome(compradorSelecionado.toString());
 		comp.setValor(valorOutroComprador);
 		comp.setDataPagamento(bean.getDataPagamento());
 		listaOutrosCompradoresSelecionados.add(comp);
+		
+		return "";
 	}
 
 	public void inserir() {

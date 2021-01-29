@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -11,39 +12,67 @@
 
 			<h:panelGrid columns="1">
 
-				<h:panelGrid columns="1">
-					<p:outputLabel value="Cliente:" />
-					<p:selectOneMenu filter="true">
-						<f:selectItem itemLabel="Selecione..." itemValue="0" />
-						<f:selectItem itemLabel="Cliente 01" itemValue="1" />
-						<f:selectItem itemLabel="Cliente 02" itemValue="2" />
-						<f:selectItem itemLabel="Cliente 03" itemValue="3" />
-					</p:selectOneMenu>
-				</h:panelGrid>
-
-				<h:panelGrid columns="1">
-					<p:outputLabel value="Data:" />
-					<p:calendar id="dataCompra" pattern="dd/MM/yyyy" />
-				</h:panelGrid>
-
-				<h:panelGrid columns="1">
-					<p:outputLabel value="Valor:" />
-					<p:inputNumber decimalSeparator="," symbol="R$"
-						thousandSeparator="." />
-				</h:panelGrid>
-
-			</h:panelGrid>
-
-			<h:panelGrid columns="1">
-
-				<h:panelGrid columns="1">
-					<p:outputLabel value="Descrição:" />
-					<p:inputTextarea cols="50" rows="10" maxlength="255" />
-				</h:panelGrid>
-
 				<h:panelGrid columns="2">
-					<p:commandButton value="Inserir" />
-					<p:commandButton value="Limpar" />
+
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Cliente:" />
+							<p:selectOneMenu filter="true">
+								<f:selectItem itemLabel="Selecione..." itemValue="0" />
+								<f:selectItems value="#{adicionarCompraController.listaCombo}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Data:" />
+							<p:calendar id="dataCompra" pattern="dd/MM/yyyy" readonlyInput="true"
+								value="#{adicionarCompraController.dataCompra}" />
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Valor:" />
+							<p:inputNumber decimalSeparator="," symbol="R$"
+								thousandSeparator="." />
+						</h:panelGrid>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Descrição:" />
+							<p:inputTextarea cols="50" rows="7" maxlength="255" />
+						</h:panelGrid>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:commandButton value="Inserir" />
+						<p:commandButton value="Limpar" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="1">
+
+					<p:dataTable>
+						<p:column width="10%">
+							<f:facet name="header">
+								<p:outputLabel value="Data" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+						<p:column width="10%">
+							<f:facet name="header">
+								<p:outputLabel value="Valor" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+						<p:column width="80%">
+							<f:facet name="header">
+								<p:outputLabel value="Descrição" />
+							</f:facet>
+							<h:outputText value="" />
+						</p:column>
+					</p:dataTable>
+
 				</h:panelGrid>
 
 			</h:panelGrid>

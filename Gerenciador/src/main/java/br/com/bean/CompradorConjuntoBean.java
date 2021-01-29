@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,7 +16,7 @@ public class CompradorConjuntoBean {
 
 	@Id
 	@Column(name = "codigo")
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigo;
 
 	@Column(name = "nome")
@@ -58,8 +59,8 @@ public class CompradorConjuntoBean {
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
-	
+
 	public String toString() {
-		return nome;		
-	} 
+		return nome;
+	}
 }

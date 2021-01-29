@@ -6,7 +6,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
 
-
 	<ui:define name="content">
 		<h:form>
 
@@ -14,21 +13,23 @@
 
 				<h:panelGrid>
 					<p:outputLabel value="CPF:" />
-					<p:inputMask mask="999.999.999-99" />
+					<p:inputMask mask="999.999.999-99"
+						value="#{clientesController.bean.cpf}" />
 				</h:panelGrid>
 
 				<h:panelGrid>
 					<p:outputLabel value="Nome:" />
-					<p:inputText />
+					<p:inputText value="#{clientesController.bean.nome}" />
 				</h:panelGrid>
 
 				<h:panelGrid>
 					<p:outputLabel value="Endereço:" />
-					<p:inputText size="50" />
+					<p:inputText size="50" value="#{clientesController.bean.endereco}" />
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:commandButton value="Confirmar" />
+					<p:commandButton value="Confirmar" ajax="false"
+						actionListener="#{clientesController.confirmar}" />
 				</h:panelGrid>
 
 			</h:panelGrid>
@@ -36,13 +37,10 @@
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Cliente:" />
 				<p:outputLabel value="" />
-				<p:selectOneMenu filter="true">
-					<f:selectItem itemLabel="Selecione..." itemValue="0" />
-					<f:selectItem itemLabel="Cliente 01" itemValue="1" />
-					<f:selectItem itemLabel="Cliente 02" itemValue="2" />
-					<f:selectItem itemLabel="Cliente 03" itemValue="3" />
+				<p:selectOneMenu filter="true"
+					value="#{clientesController.clienteSelecionado}">
+					<f:selectItems value="#{clientesController.listaComboClientes}" />
 				</p:selectOneMenu>
-				
 				<p:commandButton value="Editar" />
 			</h:panelGrid>
 
