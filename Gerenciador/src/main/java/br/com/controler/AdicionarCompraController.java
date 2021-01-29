@@ -42,11 +42,9 @@ public class AdicionarCompraController {
 	}
 
 	public void adicionarCompra() {
-
 	}
 
 	public void limpar() {
-
 	}
 
 	public List<SelectItem> getListaCombo() {
