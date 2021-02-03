@@ -40,7 +40,6 @@
 			<version>2.2.20</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>

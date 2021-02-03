@@ -9,17 +9,13 @@
 	<ui:define name="content">
 		<h:form>
 
+			<p:messages showIcon="true" closable="true" showDetail="true" />
+
 			<h:panelGrid columns="3">
 
 				<h:panelGrid>
-					<p:outputLabel value="CPF:" />
-					<p:inputMask mask="999.999.999-99"
-						value="#{clientesController.bean.cpf}" />
-				</h:panelGrid>
-
-				<h:panelGrid>
 					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{clientesController.bean.nome}" />
+					<p:inputText value="#{clientesController.bean.nome}" size="30" />
 				</h:panelGrid>
 
 				<h:panelGrid>
@@ -28,20 +24,18 @@
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:commandButton value="Confirmar" ajax="false"
-						actionListener="#{clientesController.confirmar}" />
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99"
+						value="#{clientesController.bean.cpf}" />
 				</h:panelGrid>
 
-			</h:panelGrid>
+				<h:panelGrid>
+					<p:commandButton value="Confirmar" ajax="false"
+						actionListener="#{clientesController.confirmar}" onclick="submit">
+						<f:ajax render="@all" resetValues="true" />
+					</p:commandButton>
+				</h:panelGrid>
 
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Cliente:" />
-				<p:outputLabel value="" />
-				<p:selectOneMenu filter="true"
-					value="#{clientesController.clienteSelecionado}">
-					<f:selectItems value="#{clientesController.listaComboClientes}" />
-				</p:selectOneMenu>
-				<p:commandButton value="Editar" />
 			</h:panelGrid>
 
 		</h:form>

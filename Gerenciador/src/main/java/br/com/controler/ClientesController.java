@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ClienteBean;
+import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "clientesController")
@@ -33,7 +34,6 @@ public class ClientesController {
 
 	private void update() {
 		limparCampos();
-		loadCombo();
 	}
 
 	private void limparCampos() {
@@ -41,7 +41,8 @@ public class ClientesController {
 	}
 
 	public void confirmar() {
-		PersistenceUtils.salvar(bean);
+		String msg = PersistenceUtils.salvar(bean);
+		MessagesUtils.infoMessage(msg);
 		update();
 	}
 
