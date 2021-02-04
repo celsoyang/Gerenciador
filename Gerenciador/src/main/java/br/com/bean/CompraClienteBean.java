@@ -3,14 +3,29 @@ package br.com.bean;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "compra_diaria")
 public class CompraClienteBean {
-		
+
+	@Id
+	@Column(name = "codigo")
+	private Integer codigo;
+
+	@Column(name = "dia")
 	private Date dataCompra;
-	
+
+	@Column(name = "descricao")
 	private String descicao;
-	
+
+	@Column(name = "valor")
 	private BigDecimal valor;
-	
+
+	@Column(name = "cliente")
 	private Integer codigoCliente;
 
 	public Date getDataCompra() {
@@ -43,5 +58,13 @@ public class CompraClienteBean {
 
 	public void setCodigoCliente(Integer codigoCliente) {
 		this.codigoCliente = codigoCliente;
+	}
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 }

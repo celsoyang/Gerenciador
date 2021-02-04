@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import br.com.bean.CaixaDiarioBean;
 import br.com.bean.ChequeBean;
 import br.com.bean.ClienteBean;
+import br.com.bean.CompraClienteBean;
 import br.com.bean.CompradorConjuntoBean;
 
 public class PersistenceUtils {
@@ -228,6 +229,21 @@ public class PersistenceUtils {
 
 		clientes = q.getResultList();
 		return clientes;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<CompraClienteBean> pesquisarComprasPorCliente(Object codigoCliente) {
+		List<CompraClienteBean> compras = new ArrayList<CompraClienteBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("select cc from CompraClienteBean cc");
+		sql.append(" where cc.codigoCliente = " + codigoCliente);
+		sql.append(" order by cc.dataCompra");
+
+		Query q = returnEntityManager().createQuery(sql.toString(), CompraClienteBean.class);
+
+		compras = q.getResultList();
+		return compras;
 	}
 
 }

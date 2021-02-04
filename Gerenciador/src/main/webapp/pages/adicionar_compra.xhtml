@@ -8,16 +8,19 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
 
 	<ui:define name="content">
-		<h:form id="formCompras">		
+		<h:form>
+
 
 			<h:panelGrid columns="1">
 
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="1">
 
 					<h:panelGrid columns="1">
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Cliente:" />
-							<p:selectOneMenu filter="true">
+							<p:selectOneMenu filter="true"
+								value="#{adicionarCompraController.clienteSelecionado}"
+								onchange="#{adicionarCompraController.buscarComprasCliente()}; submit();">
 								<f:selectItem itemLabel="Selecione..." itemValue="0" />
 								<f:selectItems value="#{adicionarCompraController.listaCombo}" />
 							</p:selectOneMenu>
@@ -25,7 +28,8 @@
 
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Data:" />
-							<p:calendar id="dataCompra" pattern="dd/MM/yyyy" readonlyInput="true"
+							<p:calendar id="dataCompra" pattern="dd/MM/yyyy"
+								readonlyInput="true"
 								value="#{adicionarCompraController.dataCompra}" />
 						</h:panelGrid>
 
