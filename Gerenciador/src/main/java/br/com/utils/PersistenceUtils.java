@@ -232,7 +232,7 @@ public class PersistenceUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<CompraClienteBean> pesquisarComprasPorCliente(Object codigoCliente) {
+	public static List<CompraClienteBean> pesquisarComprasPorCliente(Integer codigoCliente) {
 		List<CompraClienteBean> compras = new ArrayList<CompraClienteBean>();
 		StringBuilder sql = new StringBuilder();
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ClienteBean;
@@ -22,8 +23,8 @@ public class AdicionarCompraController {
 	private List<ClienteBean> listaClientes = new ArrayList<ClienteBean>();
 
 	private List<CompraClienteBean> listaCompras = new ArrayList<CompraClienteBean>();
-	
-	private SelectItem clienteSelecionado = new SelectItem(0, "");
+
+	private Integer clienteSelecionado = 0;
 
 	private Date dataCompra = new Date();
 
@@ -48,10 +49,10 @@ public class AdicionarCompraController {
 
 	public void limpar() {
 	}
-	
-	public void buscarComprasCliente() {
+
+	public void buscarComprasCliente(ValueChangeEvent e) {
 		listaCompras.clear();
-		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionado.getValue());
+		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionado);
 	}
 
 	public List<SelectItem> getListaCombo() {
@@ -94,20 +95,20 @@ public class AdicionarCompraController {
 		this.descricaoCompra = descricaoCompra;
 	}
 
-	public SelectItem getClienteSelecionado() {
-		return clienteSelecionado;
-	}
-
-	public void setClienteSelecionado(SelectItem clienteSelecionado) {
-		this.clienteSelecionado = clienteSelecionado;
-	}
-
 	public List<CompraClienteBean> getListaCompras() {
 		return listaCompras;
 	}
 
 	public void setListaCompras(List<CompraClienteBean> listaCompras) {
 		this.listaCompras = listaCompras;
+	}
+
+	public Integer getClienteSelecionado() {
+		return clienteSelecionado;
+	}
+
+	public void setClienteSelecionado(Integer clienteSelecionado) {
+		this.clienteSelecionado = clienteSelecionado;
 	}
 
 }

@@ -18,9 +18,10 @@
 					<h:panelGrid columns="1">
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Cliente:" />
-							<p:selectOneMenu filter="true"
+							<p:selectOneMenu filter="true" id="comboClientes"
 								value="#{adicionarCompraController.clienteSelecionado}"
-								onchange="#{adicionarCompraController.buscarComprasCliente()}; submit();">
+								onchange="submit()"
+								valueChangeListener="#{adicionarCompraController.buscarComprasCliente}">
 								<f:selectItem itemLabel="Selecione..." itemValue="0" />
 								<f:selectItems value="#{adicionarCompraController.listaCombo}" />
 							</p:selectOneMenu>
@@ -56,24 +57,26 @@
 
 				<h:panelGrid columns="1">
 
-					<p:dataTable>
+					<p:dataTable id="tabelaComprasCliente"
+						value="#{adicionarCompraController.listaCompras}" var="compra">
 						<p:column width="10%">
 							<f:facet name="header">
 								<p:outputLabel value="Data" />
 							</f:facet>
-							<h:outputText value="" />
+							<h:outputText value="#{compra.dataCompra}"
+								converter="javax.faces.DateTime" />
 						</p:column>
 						<p:column width="10%">
 							<f:facet name="header">
 								<p:outputLabel value="Valor" />
 							</f:facet>
-							<h:outputText value="" />
+							<h:outputText value="#{compra.valor}" />
 						</p:column>
 						<p:column width="80%">
 							<f:facet name="header">
 								<p:outputLabel value="Descrição" />
 							</f:facet>
-							<h:outputText value="" />
+							<h:outputText value="#{compra.descicao}" />
 						</p:column>
 					</p:dataTable>
 
