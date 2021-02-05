@@ -9,7 +9,7 @@
 
 	<ui:define name="content">
 		<h:form>
-
+			<p:messages showIcon="true" closable="true" showDetail="true" />
 			<h:panelGrid columns="1">
 
 				<h:panelGrid columns="1">
@@ -18,7 +18,7 @@
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Cliente:" />
 							<p:selectOneMenu filter="true" id="comboClientes"
-								value="#{adicionarCompraController.clienteSelecionado}"
+								value="#{adicionarCompraController.bean.codigoCliente}"
 								valueChangeListener="#{adicionarCompraController.buscarComprasCliente}"
 								onchange="submit()">
 								<f:selectItem itemLabel="Selecione..." itemValue="0" />
@@ -30,25 +30,28 @@
 							<p:outputLabel value="Data:" />
 							<p:calendar id="dataCompra" pattern="dd/MM/yyyy"
 								readonlyInput="true"
-								value="#{adicionarCompraController.dataCompra}" />
+								value="#{adicionarCompraController.bean.dataCompra}" />
 						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Valor:" />
 							<p:inputNumber decimalSeparator="," symbol="R$"
-								thousandSeparator="." />
+								thousandSeparator="."
+								value="#{adicionarCompraController.bean.valor}" />
 						</h:panelGrid>
 					</h:panelGrid>
 
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Descrição:" />
-							<p:inputTextarea cols="50" rows="7" maxlength="255" />
+							<p:inputTextarea cols="50" rows="7" maxlength="255"
+								value="#{adicionarCompraController.bean.descicao}" />
 						</h:panelGrid>
 					</h:panelGrid>
 
 					<h:panelGrid columns="2">
-						<p:commandButton value="Inserir" />
+						<p:commandButton value="Inserir" onclick="submit" ajax="false"
+							actionListener="#{adicionarCompraController.inserirCompra}" />
 						<p:commandButton value="Limpar" />
 					</h:panelGrid>
 

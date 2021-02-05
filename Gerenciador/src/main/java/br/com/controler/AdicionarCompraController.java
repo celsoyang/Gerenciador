@@ -12,27 +12,31 @@ import javax.faces.model.SelectItem;
 
 import br.com.bean.ClienteBean;
 import br.com.bean.CompraClienteBean;
+import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "adicionarCompraController")
 @SessionScoped
 public class AdicionarCompraController {
 
-	private List<SelectItem> listaCombo = new ArrayList<SelectItem>();
+	private List<SelectItem> listaCombo;
 
-	private List<ClienteBean> listaClientes = new ArrayList<ClienteBean>();
+	private List<ClienteBean> listaClientes;
 
-	private List<CompraClienteBean> listaCompras = new ArrayList<CompraClienteBean>();
-
-	private Integer clienteSelecionado = 0;
-
-	private Date dataCompra = new Date();
+	private List<CompraClienteBean> listaCompras;
 
 	private BigDecimal valorCompra = new BigDecimal(0);
 
 	private String descricaoCompra;
 
+	private CompraClienteBean bean;
+
 	public AdicionarCompraController() {
+		bean = new CompraClienteBean();
+		listaCompras = new ArrayList<CompraClienteBean>();
+		listaClientes = new ArrayList<ClienteBean>();
+		listaCombo = new ArrayList<SelectItem>();
+		bean.setDataCompra(new Date());
 		carregarClientes();
 	}
 
@@ -44,10 +48,20 @@ public class AdicionarCompraController {
 		}
 	}
 
-	public void adicionarCompra() {
+	public void inserirCompra() {
+		String msg = PersistenceUtils.salvar(bean);
+		MessagesUtils.infoMessage(msg);
+		update();
 	}
 
 	public void limpar() {
+		bean = new CompraClienteBean();
+		bean.setDataCompra(new Date());
+	}
+
+	private void update() {
+		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(bean.getCodigoCliente());
+		limpar();
 	}
 
 	public void buscarComprasCliente(ValueChangeEvent e) {
@@ -69,14 +83,6 @@ public class AdicionarCompraController {
 
 	public void setListaClientes(List<ClienteBean> listaClientes) {
 		this.listaClientes = listaClientes;
-	}
-
-	public Date getDataCompra() {
-		return dataCompra;
-	}
-
-	public void setDataCompra(Date dataCompra) {
-		this.dataCompra = dataCompra;
 	}
 
 	public BigDecimal getValorCompra() {
@@ -103,12 +109,12 @@ public class AdicionarCompraController {
 		this.listaCompras = listaCompras;
 	}
 
-	public Integer getClienteSelecionado() {
-		return clienteSelecionado;
+	public CompraClienteBean getBean() {
+		return bean;
 	}
 
-	public void setClienteSelecionado(Integer clienteSelecionado) {
-		this.clienteSelecionado = clienteSelecionado;
+	public void setBean(CompraClienteBean bean) {
+		this.bean = bean;
 	}
 
 }
