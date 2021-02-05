@@ -52,7 +52,7 @@ public class AdicionarCompraController {
 
 	public void buscarComprasCliente(ValueChangeEvent e) {
 		listaCompras.clear();
-		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionado);
+		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(e.getNewValue());
 	}
 
 	public List<SelectItem> getListaCombo() {
