@@ -11,32 +11,43 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "compra_cliente")
-public class CompraClienteBean {
+@Table(name = "pagamentos_cliente")
+public class PagamentosClienteBean {
 
 	@Id
 	@Column(name = "codigo")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer codigo;
 
-	@Column(name = "dia")
-	private Date dataCompra;
-
-	@Column(name = "descricao")
-	private String descricao;
+	@Column(name = "data")
+	private Date data;
 
 	@Column(name = "valor")
 	private BigDecimal valor;
 
-	@Column(name = "cliente")
-	private Integer codigoCliente;
+	@Column(name = "descricao")
+	private String descricao;
 
-	public Date getDataCompra() {
-		return dataCompra;
+	@Column(name = "saldo_do_dia")
+	private BigDecimal saldoDia;
+
+	@Column(name = "codigo_cliente")
+	private Integer cliente;
+
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public void setDataCompra(Date dataCompra) {
-		this.dataCompra = dataCompra;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public BigDecimal getValor() {
@@ -47,20 +58,20 @@ public class CompraClienteBean {
 		this.valor = valor;
 	}
 
-	public Integer getCodigoCliente() {
-		return codigoCliente;
+	public Integer getCliente() {
+		return cliente;
 	}
 
-	public void setCodigoCliente(Integer codigoCliente) {
-		this.codigoCliente = codigoCliente;
+	public void setCliente(Integer cliente) {
+		this.cliente = cliente;
 	}
 
-	public Integer getCodigo() {
-		return codigo;
+	public BigDecimal getSaldoDia() {
+		return saldoDia;
 	}
 
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+	public void setSaldoDia(BigDecimal saldoDia) {
+		this.saldoDia = saldoDia;
 	}
 
 	public String getDescricao() {
@@ -70,4 +81,5 @@ public class CompraClienteBean {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 }

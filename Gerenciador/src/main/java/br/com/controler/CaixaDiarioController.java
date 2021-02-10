@@ -21,9 +21,13 @@ public class CaixaDiarioController {
 	private CaixaDiarioBean bean;
 
 	private List<CaixaDiarioBean> listaMes;
+	
 	private CaixaDiarioBean diaSelecionado;
+	
 	private LineChartModel graficoDiario;
+	
 	private BigDecimal total;
+	
 	private Boolean alteracao = Boolean.FALSE;
 
 	public CaixaDiarioController() {

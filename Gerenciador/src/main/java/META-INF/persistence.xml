@@ -8,6 +8,7 @@
 		<class>br.com.bean.CompradorConjuntoBean</class>
 		<class>br.com.bean.ClienteBean</class>
 		<class>br.com.bean.CompraClienteBean</class>
+		<class>br.com.bean.PagamentosClienteBean</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gerenciador"/>

@@ -16,6 +16,7 @@ import br.com.bean.ChequeBean;
 import br.com.bean.ClienteBean;
 import br.com.bean.CompraClienteBean;
 import br.com.bean.CompradorConjuntoBean;
+import br.com.bean.PagamentosClienteBean;
 
 public class PersistenceUtils {
 
@@ -238,12 +239,27 @@ public class PersistenceUtils {
 
 		sql.append("select cc from CompraClienteBean cc");
 		sql.append(" where cc.codigoCliente = " + codigoCliente);
-		sql.append(" order by cc.dataCompra");
+		sql.append(" order by cc.dataCompra desc");
 
 		Query q = returnEntityManager().createQuery(sql.toString(), CompraClienteBean.class);
 
 		compras = q.getResultList();
 		return compras;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<PagamentosClienteBean> pesquisarPagamentosPorCliente(Integer codigoCliente) {
+		List<PagamentosClienteBean> pagamentos = new ArrayList<PagamentosClienteBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("select pc from PagamentosClienteBean pc");
+		sql.append(" where pc.cliente = " + codigoCliente);
+		sql.append(" order by pc.data desc");
+
+		Query q = returnEntityManager().createQuery(sql.toString(), PagamentosClienteBean.class);
+
+		pagamentos = q.getResultList();
+		return pagamentos;
 	}
 
 }

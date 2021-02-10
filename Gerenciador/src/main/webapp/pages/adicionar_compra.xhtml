@@ -45,7 +45,7 @@
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Descrição:" />
 							<p:inputTextarea cols="50" rows="7" maxlength="255"
-								value="#{adicionarCompraController.bean.descicao}" />
+								value="#{adicionarCompraController.bean.descricao}" />
 						</h:panelGrid>
 					</h:panelGrid>
 
@@ -57,30 +57,31 @@
 
 				</h:panelGrid>
 
-				<h:panelGrid columns="1">
+				<h:panelGrid columns="1" width="50%">
 
 					<p:dataTable id="tabelaComprasCliente" rows="10"
 						value="#{adicionarCompraController.listaCompras}" var="compra">
-						<p:column width="10%">
+						<p:column width="15%">
 							<f:facet name="header">
 								<p:outputLabel value="Data" />
 							</f:facet>
 							<h:outputText value="#{compra.dataCompra}"
 								converter="javax.faces.DateTime" />
 						</p:column>
-						<p:column width="10%">
+						<p:column width="15%">
 							<f:facet name="header">
 								<p:outputLabel value="Valor" />
 							</f:facet>
+							<h:outputText value="R$" />
 							<h:outputText value="#{compra.valor}">
 								<f:convertNumber pattern="#,##0.00" />
 							</h:outputText>
 						</p:column>
-						<p:column width="80%">
+						<p:column width="70%">
 							<f:facet name="header">
 								<p:outputLabel value="Descrição" />
 							</f:facet>
-							<h:outputText value="#{compra.descicao}" />
+							<h:outputText value="#{compra.descricao}" />
 						</p:column>
 
 					</p:dataTable>

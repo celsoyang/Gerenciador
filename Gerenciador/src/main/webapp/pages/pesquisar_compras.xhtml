@@ -16,56 +16,154 @@
 
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Cliente:" />
-						<p:selectOneMenu filter="true">
+						<p:selectOneMenu filter="true"
+							value="#{pesquisarComprasController.clienteSelecionado}">
 							<f:selectItem itemLabel="Selecione..." itemValue="0" />
-							<f:selectItem itemLabel="Cliente 01" itemValue="1" />
-							<f:selectItem itemLabel="Cliente 02" itemValue="2" />
-							<f:selectItem itemLabel="Cliente 03" itemValue="3" />
+							<f:selectItems
+								value="#{pesquisarComprasController.comboClientes}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
 					<h:panelGrid>
-						<p:commandButton value="Pesquisar" />
+						<p:commandButton value="Pesquisar" ajax="false"
+							actionListener="#{pesquisarComprasController.pesquisarComprasCliente}" />
 					</h:panelGrid>
 				</h:panelGrid>
 
-				<h:panelGrid columns="1">
+				<h:panelGrid columns="1"
+					rendered="#{not empty pesquisarComprasController.listaComprasCliente}">
 
-					<p:dataTable id="tabelaCompras" paginator="true"
-						paginatorPosition="bottom">
-						<f:facet name="header">
-							<p:outputLabel value="Compras" />
-						</f:facet>
+					<h:panelGrid>
+						<p:dataTable
+							value="#{pesquisarComprasController.listaComprasCliente}"
+							id="tabelaCompras"
+							selection="#{pesquisarComprasController.compraSelecionada}"
+							rows="5" var="compra" rowKey="#{compra.dataCompra}"
+							paginator="true" paginatorPosition="bottom">
 
-						<p:column selectionMode="single"
-							style="width:16px;text-align:center">
-						</p:column>
-
-						<p:column width="10%">
 							<f:facet name="header">
-								<p:outputLabel value="Data" />
+								<p:outputLabel value="Compras" />
 							</f:facet>
-						</p:column>
 
-						<p:column width="10%">
-							<f:facet name="header">
-								<p:outputLabel value="Valor" />
-							</f:facet>
-						</p:column>
+							<p:column selectionMode="single"
+								style="width:16px;text-align:center" />
 
-						<p:column>
-							<f:facet name="header">
-								<p:outputLabel value="Descrição" />
-							</f:facet>
-						</p:column>
+							<p:column width="7%" style="text-align: center">
+								<f:facet name="header">
+									<p:outputLabel value="Data" />
+								</f:facet>
+								<p:outputLabel value="#{compra.dataCompra}"
+									style="text-align: center">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+							</p:column>
 
-					</p:dataTable>
+							<p:column width="10%" style="text-align: right">
+								<f:facet name="header">
+									<p:outputLabel value="Valor" />
+								</f:facet>
+								<p:outputLabel value="#{compra.valor}">
+									<f:convertNumber pattern="#,##0.00" />
+								</p:outputLabel>
+							</p:column>
+
+							<p:column style="text-align: left">
+								<f:facet name="header">
+									<p:outputLabel value="Descrição" />
+								</f:facet>
+								<p:outputLabel value="#{compra.descricao}" />
+							</p:column>
+
+						</p:dataTable>						
+					</h:panelGrid>
+
+					<h:panelGrid columns="3">
+						<p:commandButton value="Realizar Pagamento" ajax="false" />
+						<p:commandButton value="Excluir Compra" ajax="false" />
+						<p:commandButton value="Alterar Compra" ajax="false" />
+					</h:panelGrid>
 
 				</h:panelGrid>
 
-				<h:panelGrid>
+				<h:panelGrid columns="1" width="100%"
+					rendered="#{not empty pesquisarComprasController.listaPagamentosCliente}">
+
+					<h:panelGrid>
+
+						<p:dataTable id="tabelaPagamentos" paginator="true" rows="5"
+							selection="#{pesquisarComprasController.pagamentoSelecionado}"
+							value="#{pesquisarComprasController.listaPagamentosCliente}"
+							rowKey="#{pagamento.codigo}" var="pagamento"
+							paginatorPosition="bottom">
+
+							<f:facet name="header">
+								<p:outputLabel value="Pagamentos" />
+							</f:facet>
+
+							<p:column selectionMode="single"
+								style="width:16px;text-align:center" />
+
+							<p:column style="text-align: center" width="7%">
+								<f:facet name="header">
+									<p:outputLabel value="Data" />
+								</f:facet>
+								<p:outputLabel value="#{pagamento.data}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+							</p:column>
+
+							<p:column style="text-align: right" width="10%">
+								<f:facet name="header">
+									<p:outputLabel value="Valor" />
+								</f:facet>
+								<p:outputLabel value="#{pagamento.valor}">
+									<f:convertNumber pattern="#,##0.00" />
+								</p:outputLabel>
+							</p:column>
+
+							<p:column width="73%" style="text-align: left">
+								<f:facet name="header">
+									<p:outputLabel value="Descrição" />
+								</f:facet>
+								<p:outputLabel value="#{pagamento.descricao}" />
+							</p:column>
+
+							<p:column style="text-align: right">
+								<f:facet name="header">
+									<p:outputLabel value="Saldo do Dia" />
+								</f:facet>
+								<p:outputLabel value="#{pagamento.saldoDia}">
+									<f:convertNumber pattern="#,##0.00" />
+								</p:outputLabel>
+							</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="3">
+						<p:commandButton value="Alterar Pagamento" ajax="false" />
+						<p:commandButton value="Excluir Pagamento" ajax="false" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="3"
+					rendered="#{not empty pesquisarComprasController.listaComprasCliente}">
 					<p:outputLabel value="Comprado: " />
+					<p:outputLabel value="R$" />
+					<p:outputLabel value="#{pesquisarComprasController.totalComprado}">
+						<f:convertNumber pattern="#,##0.00" />
+					</p:outputLabel>
 					<p:outputLabel value="Pago: " />
+					<p:outputLabel value="R$" />
+					<p:outputLabel value="#{pesquisarComprasController.totalPago}">
+						<f:convertNumber pattern="#,##0.00" />
+					</p:outputLabel>
 					<p:outputLabel value="Devedor: " />
+					<p:outputLabel value="R$" />
+					<p:outputLabel value="#{pesquisarComprasController.saldoDevedor}">
+						<f:convertNumber pattern="#,##0.00" />
+					</p:outputLabel>
 				</h:panelGrid>
 
 			</h:panelGrid>

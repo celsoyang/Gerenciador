@@ -50,17 +50,17 @@
 			<h:panelGrid layout="grid" id="gridTabela" cellpadding="10">
 
 				<p:dataTable value="#{caixaDiarioController.listaMes}" id="tabela"
-					rows="15" var="dia"
-					selection="#{caixaDiarioController.diaSelecionado}"
-					rowKey="#{dia.data}" paginator="true" paginatorPosition="bottom">
+					selection="#{caixaDiarioController.diaSelecionado}" rows="15"
+					var="dia" rowKey="#{dia.data}" paginator="true"
+					paginatorPosition="bottom">
 
 					<f:facet name="header">
-						Caixa Diário
+						<p:outputLabel value="Caixa Diário" />
 					</f:facet>
 
 					<p:column selectionMode="single"
 						style="width:16px;text-align:center" />
-						
+
 					<p:column headerText="Dia" style="text-align: center;">
 						<h:outputText converter="javax.faces.DateTime" value="#{dia.data}" />
 					</p:column>
