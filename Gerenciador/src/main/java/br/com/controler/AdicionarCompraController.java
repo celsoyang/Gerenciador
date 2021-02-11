@@ -1,6 +1,7 @@
 package br.com.controler;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,6 @@ public class AdicionarCompraController {
 		listaCompras = new ArrayList<CompraClienteBean>();
 		listaClientes = new ArrayList<ClienteBean>();
 		listaCombo = new ArrayList<SelectItem>();
-		bean.setDataCompra(new Date());
 		carregarClientes();
 	}
 
@@ -49,6 +49,7 @@ public class AdicionarCompraController {
 	}
 
 	public void inserirCompra() {
+		bean.setDataCompra(new Timestamp(System.currentTimeMillis()));
 		String msg = PersistenceUtils.salvar(bean);
 		MessagesUtils.infoMessage(msg);
 		update();
@@ -56,7 +57,7 @@ public class AdicionarCompraController {
 
 	public void limpar() {
 		bean = new CompraClienteBean();
-		bean.setDataCompra(new Date());
+		bean.setDataCompra(new Timestamp(new Date().getTime()));
 	}
 
 	private void update() {

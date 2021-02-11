@@ -47,13 +47,13 @@
 							<p:column selectionMode="single"
 								style="width:16px;text-align:center" />
 
-							<p:column width="7%" style="text-align: center">
+							<p:column width="10%" style="text-align: center">
 								<f:facet name="header">
 									<p:outputLabel value="Data" />
 								</f:facet>
 								<p:outputLabel value="#{compra.dataCompra}"
 									style="text-align: center">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
 								</p:outputLabel>
 							</p:column>
 
@@ -73,11 +73,12 @@
 								<p:outputLabel value="#{compra.descricao}" />
 							</p:column>
 
-						</p:dataTable>						
+						</p:dataTable>
 					</h:panelGrid>
 
 					<h:panelGrid columns="3">
-						<p:commandButton value="Realizar Pagamento" ajax="false" />
+						<p:commandButton value="Realizar Pagamento"
+							onclick="PF('dialogPagamento').show();" />
 						<p:commandButton value="Excluir Compra" ajax="false" />
 						<p:commandButton value="Alterar Compra" ajax="false" />
 					</h:panelGrid>
@@ -102,12 +103,12 @@
 							<p:column selectionMode="single"
 								style="width:16px;text-align:center" />
 
-							<p:column style="text-align: center" width="7%">
+							<p:column style="text-align: center" width="10%">
 								<f:facet name="header">
 									<p:outputLabel value="Data" />
 								</f:facet>
 								<p:outputLabel value="#{pagamento.data}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy hh:mm " timeZone="GMT-3" />
 								</p:outputLabel>
 							</p:column>
 
@@ -120,7 +121,7 @@
 								</p:outputLabel>
 							</p:column>
 
-							<p:column width="73%" style="text-align: left">
+							<p:column style="text-align: left">
 								<f:facet name="header">
 									<p:outputLabel value="Descrição" />
 								</f:facet>
@@ -167,6 +168,24 @@
 				</h:panelGrid>
 
 			</h:panelGrid>
+
+			<p:dialog id="dialog" widgetVar="dialogPagamento" resizable="false"
+				draggable="false" modal="true">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor: " />
+					<p:inputNumber symbol="R$" decimalSeparator=","
+						thousandSeparator="."
+						value="#{pesquisarComprasController.valorPagamento}" />
+					<p:outputLabel value="Descrição: " />
+					<p:inputText
+						value="#{pesquisarComprasController.descricaoPagamento}" />
+
+					<p:commandButton value="Confirmar"
+						actionListener="#{pesquisarComprasController.confirmarPagamento}"
+						oncomplete="PF('dialogPagamento').hide(); submit();" />
+				</h:panelGrid>
+				<p:ajax event="close" update="@all" />
+			</p:dialog>
 
 		</h:form>
 	</ui:define>

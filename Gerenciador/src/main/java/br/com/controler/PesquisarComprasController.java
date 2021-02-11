@@ -2,6 +2,7 @@ package br.com.controler;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -35,6 +36,14 @@ public class PesquisarComprasController {
 
 	private PagamentosClienteBean pagamentoSelecionado;
 
+	private PagamentosClienteBean pagamentoBean;
+
+	private CompraClienteBean compraBean;
+
+	private BigDecimal valorPagamento;
+
+	private String descricaoPagamento;
+
 	public PesquisarComprasController() {
 		comboClientes = new ArrayList<SelectItem>();
 		listaComprasCliente = new ArrayList<CompraClienteBean>();
@@ -42,6 +51,7 @@ public class PesquisarComprasController {
 		totalComprado = new BigDecimal(0);
 		totalPago = new BigDecimal(0);
 		saldoDevedor = new BigDecimal(0);
+		valorPagamento = new BigDecimal(0);
 		carregarComboClientes();
 	}
 
@@ -71,6 +81,41 @@ public class PesquisarComprasController {
 			totalPago = totalPago.add(pagamento.getValor());
 		}
 		saldoDevedor = totalComprado.subtract(totalPago);
+
+	}
+
+	public void confirmarPagamento() {
+		pagamentoBean = new PagamentosClienteBean();
+
+		pagamentoBean.setCliente(clienteSelecionado);
+		pagamentoBean.setData(new Date());
+		pagamentoBean.setValor(valorPagamento);
+		pagamentoBean.setDescricao(descricaoPagamento);
+		pagamentoBean.setSaldoDia(getSaldoDevedor().subtract(valorPagamento));
+
+		PersistenceUtils.salvar(pagamentoBean);
+		pesquisarComprasCliente();
+		limparDialog();
+	}
+
+	private void limparDialog() {
+		valorPagamento = new BigDecimal(0);
+		descricaoPagamento = "";
+	}
+
+	public void excluirPagamento() {
+
+	}
+
+	public void alterarPagamento() {
+
+	}
+
+	public void excluirCompra() {
+
+	}
+
+	public void alterarCompra() {
 
 	}
 
@@ -144,6 +189,38 @@ public class PesquisarComprasController {
 
 	public void setCompraSelecionada(CompraClienteBean compraSelecionada) {
 		this.compraSelecionada = compraSelecionada;
+	}
+
+	public PagamentosClienteBean getPagamentoBean() {
+		return pagamentoBean;
+	}
+
+	public void setPagamentoBean(PagamentosClienteBean pagamentoBean) {
+		this.pagamentoBean = pagamentoBean;
+	}
+
+	public CompraClienteBean getCompraBean() {
+		return compraBean;
+	}
+
+	public void setCompraBean(CompraClienteBean compraBean) {
+		this.compraBean = compraBean;
+	}
+
+	public BigDecimal getValorPagamento() {
+		return valorPagamento;
+	}
+
+	public void setValorPagamento(BigDecimal valorPagamento) {
+		this.valorPagamento = valorPagamento;
+	}
+
+	public String getDescricaoPagamento() {
+		return descricaoPagamento;
+	}
+
+	public void setDescricaoPagamento(String descricaoPagamento) {
+		this.descricaoPagamento = descricaoPagamento;
 	}
 
 }
