@@ -31,8 +31,7 @@
 
 				<h:panelGrid>
 					<p:commandButton value="Confirmar" ajax="false"
-						actionListener="#{clientesController.confirmar}" onclick="submit">
-						<f:ajax render="@all" resetValues="true" />
+						actionListener="#{clientesController.confirmar}" onclick="submit();" update="@all">
 					</p:commandButton>
 				</h:panelGrid>
 

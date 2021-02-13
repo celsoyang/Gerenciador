@@ -32,15 +32,18 @@ public class AdicionarCompraController {
 
 	private CompraClienteBean bean;
 
+	private ClienteBean clienteBean;
+
 	public AdicionarCompraController() {
 		bean = new CompraClienteBean();
+		clienteBean = new ClienteBean();
 		listaCompras = new ArrayList<CompraClienteBean>();
-		listaClientes = new ArrayList<ClienteBean>();
-		listaCombo = new ArrayList<SelectItem>();
 		carregarClientes();
 	}
 
 	private void carregarClientes() {
+		listaClientes = new ArrayList<ClienteBean>();
+		listaCombo = new ArrayList<SelectItem>();
 		listaClientes = PersistenceUtils.pesquisarClientes();
 
 		for (ClienteBean clienteBean : listaClientes) {
@@ -49,19 +52,29 @@ public class AdicionarCompraController {
 	}
 
 	public void inserirCompra() {
+		bean = new CompraClienteBean();
 		bean.setDataCompra(new Timestamp(System.currentTimeMillis()));
 		String msg = PersistenceUtils.salvar(bean);
-		MessagesUtils.infoMessage(msg);
 		update();
+		MessagesUtils.infoMessage(msg);
+	}
+
+	public void adicionarCliente() {
+		String msg = PersistenceUtils.salvar(clienteBean);
+		update();
+		MessagesUtils.infoMessage(msg);
+		clienteBean = new ClienteBean();
 	}
 
 	public void limpar() {
 		bean = new CompraClienteBean();
 		bean.setDataCompra(new Timestamp(new Date().getTime()));
+		clienteBean = new ClienteBean();
 	}
 
 	private void update() {
 		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(bean.getCodigoCliente());
+		carregarClientes();
 		limpar();
 	}
 
@@ -116,6 +129,14 @@ public class AdicionarCompraController {
 
 	public void setBean(CompraClienteBean bean) {
 		this.bean = bean;
+	}
+
+	public ClienteBean getClienteBean() {
+		return clienteBean;
+	}
+
+	public void setClienteBean(ClienteBean clienteBean) {
+		this.clienteBean = clienteBean;
 	}
 
 }

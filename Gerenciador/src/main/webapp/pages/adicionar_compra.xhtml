@@ -15,8 +15,11 @@
 				<h:panelGrid columns="1">
 
 					<h:panelGrid columns="1">
+
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Cliente:" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
 							<p:selectOneMenu filter="true" id="comboClientes"
 								value="#{adicionarCompraController.bean.codigoCliente}"
 								valueChangeListener="#{adicionarCompraController.buscarComprasCliente}"
@@ -24,7 +27,10 @@
 								<f:selectItem itemLabel="Selecione..." itemValue="0" />
 								<f:selectItems value="#{adicionarCompraController.listaCombo}" />
 							</p:selectOneMenu>
+							<p:commandButton value="Add" title="Adicionar Cliente"
+								onclick="PF('dialogAddCliente').show();" />
 						</h:panelGrid>
+
 
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Valor:" />
@@ -54,11 +60,11 @@
 
 					<p:dataTable id="tabelaComprasCliente" rows="10"
 						value="#{adicionarCompraController.listaCompras}" var="compra">
-						
+
 						<f:facet name="header">
 							<p:outputLabel value="Últimas Compras" />
 						</f:facet>
-						
+
 						<p:column width="20%">
 							<f:facet name="header">
 								<p:outputLabel value="Data" />
@@ -88,6 +94,46 @@
 				</h:panelGrid>
 
 			</h:panelGrid>
+
+			<p:dialog id="dialogClienteAdd" widgetVar="dialogAddCliente"
+				resizable="false" draggable="false" modal="true">
+
+				<h:panelGrid columns="4">
+					<h:panelGrid columns="1">
+						<h:panelGrid>
+							<p:outputLabel value="Nome:" />
+						</h:panelGrid>
+						<h:panelGrid>
+							<p:inputText
+								value="#{adicionarCompraController.clienteBean.nome}" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+						<h:panelGrid>
+							<p:outputLabel value="Endereço:" />
+						</h:panelGrid>
+						<h:panelGrid>
+							<p:inputText
+								value="#{adicionarCompraController.clienteBean.endereco}"
+								size="35" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+						<h:panelGrid>
+							<p:outputLabel value="CPF:" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:inputText value="#{adicionarCompraController.clienteBean.cpf}" />
+							<p:commandButton value="Confirmar"
+								oncomplete="PF('dialogAddCliente').hide(); submit();"
+								actionListener="#{adicionarCompraController.adicionarCliente}"
+								ajax="false">
+							</p:commandButton>
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:panelGrid>
+				<p:ajax event="close" update="@all" />
+			</p:dialog>
 
 		</h:form>
 	</ui:define>
