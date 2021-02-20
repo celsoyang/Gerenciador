@@ -9,9 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.PrimeFaces;
+
 import br.com.bean.ClienteBean;
 import br.com.bean.CompraClienteBean;
 import br.com.bean.PagamentosClienteBean;
+import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "pesquisarComprasController")
@@ -44,6 +47,12 @@ public class PesquisarComprasController {
 
 	private String descricaoPagamento;
 
+	private String nomeClientePesquisa;
+
+	private Integer clienteSelecionadoPesquisa = 0;
+
+	private List<ClienteBean> listaClietes;
+
 	public PesquisarComprasController() {
 		comboClientes = new ArrayList<SelectItem>();
 		listaComprasCliente = new ArrayList<CompraClienteBean>();
@@ -52,16 +61,20 @@ public class PesquisarComprasController {
 		totalPago = new BigDecimal(0);
 		saldoDevedor = new BigDecimal(0);
 		valorPagamento = new BigDecimal(0);
-		carregarComboClientes();
 	}
 
-	private void carregarComboClientes() {
-		List<ClienteBean> listaClietes = PersistenceUtils.pesquisarClientes();
-
-		for (ClienteBean cli : listaClietes) {
-			comboClientes.add(new SelectItem(cli.getCodigo(), cli.getNome()));
+	public void carregarListaClientes() {
+		listaClietes = new ArrayList<ClienteBean>();
+		listaClietes = PersistenceUtils.pesquisarClientes(nomeClientePesquisa);
+		if (listaClietes.size() > 0) {
+			abrirDialog();
+		} else {
+			MessagesUtils.waringMessage("Nenhum Registro Encontrado");
 		}
+	}
 
+	public void abrirDialog() {
+		PrimeFaces.current().executeScript("PF('dialogClientePesquisado').show();");
 	}
 
 	public void pesquisarComprasCliente() {
@@ -221,6 +234,30 @@ public class PesquisarComprasController {
 
 	public void setDescricaoPagamento(String descricaoPagamento) {
 		this.descricaoPagamento = descricaoPagamento;
+	}
+
+	public String getNomeClientePesquisa() {
+		return nomeClientePesquisa;
+	}
+
+	public void setNomeClientePesquisa(String nomeClientePesquisa) {
+		this.nomeClientePesquisa = nomeClientePesquisa;
+	}
+
+	public Integer getClienteSelecionadoPesquisa() {
+		return clienteSelecionadoPesquisa;
+	}
+
+	public void setClienteSelecionadoPesquisa(Integer clienteSelecionadoPesquisa) {
+		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
+	}
+
+	public List<ClienteBean> getListaClietes() {
+		return listaClietes;
+	}
+
+	public void setListaClietes(List<ClienteBean> listaClietes) {
+		this.listaClietes = listaClietes;
 	}
 
 }

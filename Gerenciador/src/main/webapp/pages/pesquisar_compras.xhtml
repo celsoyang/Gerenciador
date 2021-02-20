@@ -9,23 +9,20 @@
 
 	<ui:define name="content">
 		<h:form>
-
+			<p:messages showIcon="true" closable="true" showDetail="true" />
 			<h:panelGrid columns="1">
 
 				<h:panelGrid columns="2">
 
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Cliente:" />
-						<p:selectOneMenu filter="true"
-							value="#{pesquisarComprasController.clienteSelecionado}">
-							<f:selectItem itemLabel="Selecione..." itemValue="0" />
-							<f:selectItems
-								value="#{pesquisarComprasController.comboClientes}" />
-						</p:selectOneMenu>
+						<p:inputText size="30"
+							value="#{pesquisarComprasController.nomeClientePesquisa}" />
 					</h:panelGrid>
-					<h:panelGrid>
+					<h:panelGrid columns="2">
 						<p:commandButton value="Pesquisar" ajax="false"
-							actionListener="#{pesquisarComprasController.pesquisarComprasCliente}" />
+							actionListener="#{pesquisarComprasController.carregarListaClientes}">
+						</p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 
@@ -169,8 +166,8 @@
 
 			</h:panelGrid>
 
-			<p:dialog id="dialog" widgetVar="dialogPagamento" resizable="false"
-				draggable="false" modal="true">
+			<p:dialog id="dialogPagamento" widgetVar="dialogPagamento"
+				resizable="false" draggable="false" modal="true">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Valor: " />
 					<p:inputNumber symbol="R$" decimalSeparator=","
@@ -183,6 +180,36 @@
 					<p:commandButton value="Confirmar"
 						actionListener="#{pesquisarComprasController.confirmarPagamento}"
 						oncomplete="PF('dialogPagamento').hide(); submit();" />
+				</h:panelGrid>
+				<p:ajax event="close" update="@all" />
+			</p:dialog>
+
+			<p:dialog id="dialogClientePesquisado" width="50%"
+				widgetVar="dialogClientePesquisado" resizable="false"
+				draggable="false" modal="true">
+
+				<h:panelGrid columns="1">
+					<p:dataTable id="tabelaPesquisaClientes" paginator="true" rows="5"
+						selection="#{pesquisarComprasController.clienteSelecionadoPesquisa}"
+						value="#{pesquisarComprasController.listaClietes}"
+						rowKey="#{cliente}" var="cliente" paginatorPosition="bottom">
+
+						<f:facet name="heander">
+							<p:outputLabel value="Clientes" />
+						</f:facet>
+
+						<p:column selectionMode="single"
+							style="width:16px;text-align:center" />
+
+						<p:column>
+							<f:facet name="header">
+								<p:outputLabel value="Nome" />
+							</f:facet>
+							<p:outputLabel value="#{cliente.nome}" />
+						</p:column>
+
+					</p:dataTable>
+					<p:commandButton value="Confirmar" />
 				</h:panelGrid>
 				<p:ajax event="close" update="@all" />
 			</p:dialog>

@@ -220,11 +220,11 @@ public class PersistenceUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<ClienteBean> pesquisarClientes() {
+	public static List<ClienteBean> pesquisarClientes(String nomeClientePesquisa) {
 		List<ClienteBean> clientes = new ArrayList<ClienteBean>();
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("select c from ClienteBean c order by c.nome");
+		sql.append("select c from ClienteBean c where c.nome like '%" + nomeClientePesquisa + "%' order by c.nome");
 
 		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
 
@@ -260,6 +260,19 @@ public class PersistenceUtils {
 
 		pagamentos = q.getResultList();
 		return pagamentos;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<ClienteBean> pesquisarTodosClientes() {
+		List<ClienteBean> clientes = new ArrayList<ClienteBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("select c from ClienteBean c order by c.nome");
+
+		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
+
+		clientes = q.getResultList();
+		return clientes;
 	}
 
 }

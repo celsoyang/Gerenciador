@@ -44,7 +44,7 @@ public class AdicionarCompraController {
 	private void carregarClientes() {
 		listaClientes = new ArrayList<ClienteBean>();
 		listaCombo = new ArrayList<SelectItem>();
-		listaClientes = PersistenceUtils.pesquisarClientes();
+		listaClientes = PersistenceUtils.pesquisarTodosClientes();
 
 		for (ClienteBean clienteBean : listaClientes) {
 			listaCombo.add(new SelectItem(clienteBean.getCodigo(), clienteBean.getNome()));
@@ -52,11 +52,11 @@ public class AdicionarCompraController {
 	}
 
 	public void inserirCompra() {
-		bean = new CompraClienteBean();
 		bean.setDataCompra(new Timestamp(System.currentTimeMillis()));
 		String msg = PersistenceUtils.salvar(bean);
 		update();
 		MessagesUtils.infoMessage(msg);
+		bean = new CompraClienteBean();
 	}
 
 	public void adicionarCliente() {
