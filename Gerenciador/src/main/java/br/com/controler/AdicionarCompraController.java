@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
+
+import org.primefaces.PrimeFaces;
 
 import br.com.bean.ClienteBean;
 import br.com.bean.CompraClienteBean;
@@ -20,11 +20,9 @@ import br.com.utils.PersistenceUtils;
 @SessionScoped
 public class AdicionarCompraController {
 
-	private List<SelectItem> listaCombo;
+	private String nomeCliente;
 
 	private List<ClienteBean> listaClientes;
-
-	private List<CompraClienteBean> listaCompras;
 
 	private BigDecimal valorCompra = new BigDecimal(0);
 
@@ -34,29 +32,56 @@ public class AdicionarCompraController {
 
 	private ClienteBean clienteBean;
 
+	private ClienteBean clienteBeanPesquisa;
+
 	public AdicionarCompraController() {
 		bean = new CompraClienteBean();
 		clienteBean = new ClienteBean();
-		listaCompras = new ArrayList<CompraClienteBean>();
-		carregarClientes();
+		clienteBeanPesquisa = new ClienteBean();
 	}
 
-	private void carregarClientes() {
+	public void pesquisar() {
 		listaClientes = new ArrayList<ClienteBean>();
-		listaCombo = new ArrayList<SelectItem>();
-		listaClientes = PersistenceUtils.pesquisarTodosClientes();
+		listaClientes = PersistenceUtils.pesquisarClientesPorNome(nomeCliente);
 
-		for (ClienteBean clienteBean : listaClientes) {
-			listaCombo.add(new SelectItem(clienteBean.getCodigo(), clienteBean.getNome()));
+		if (listaClientes.size() > 0) {
+			abrirDialog();
+		} else {
+			MessagesUtils.waringMessage("Nenhum Registro Encontrado");
 		}
 	}
 
+	private void abrirDialog() {
+		PrimeFaces.current().executeScript("PF('dialogPesquisaCliente').show();");
+	}
+
 	public void inserirCompra() {
-		bean.setDataCompra(new Timestamp(System.currentTimeMillis()));
-		String msg = PersistenceUtils.salvar(bean);
-		update();
-		MessagesUtils.infoMessage(msg);
-		bean = new CompraClienteBean();
+		if (confirmarSelecao()) {
+			bean.setDataCompra(new Timestamp(System.currentTimeMillis()));
+			bean.setCodigoCliente(clienteBeanPesquisa.getCodigo());
+			String msg = PersistenceUtils.salvar(bean);
+			update();
+			MessagesUtils.infoMessage(msg);
+			bean = new CompraClienteBean();
+		} else {
+			MessagesUtils.errorMessage("Selecione um cliente");
+		}
+	}
+
+	public void confimarCliente() {
+		if (confirmarSelecao()) {
+			nomeCliente = br.com.utils.StringUtils.STRING_VAZIA;
+		} else {
+			MessagesUtils.errorMessage("Selecione um registro");
+		}
+	}
+
+	private Boolean confirmarSelecao() {
+		Boolean retorno = Boolean.TRUE;
+		if (clienteBeanPesquisa == null) {
+			retorno = Boolean.FALSE;
+		}
+		return retorno;
 	}
 
 	public void adicionarCliente() {
@@ -73,22 +98,7 @@ public class AdicionarCompraController {
 	}
 
 	private void update() {
-		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(bean.getCodigoCliente());
-		carregarClientes();
 		limpar();
-	}
-
-	public void buscarComprasCliente(ValueChangeEvent e) {
-		listaCompras.clear();
-		listaCompras = PersistenceUtils.pesquisarComprasPorCliente(e.getNewValue());
-	}
-
-	public List<SelectItem> getListaCombo() {
-		return listaCombo;
-	}
-
-	public void setListaCombo(List<SelectItem> listaCombo) {
-		this.listaCombo = listaCombo;
 	}
 
 	public List<ClienteBean> getListaClientes() {
@@ -115,14 +125,6 @@ public class AdicionarCompraController {
 		this.descricaoCompra = descricaoCompra;
 	}
 
-	public List<CompraClienteBean> getListaCompras() {
-		return listaCompras;
-	}
-
-	public void setListaCompras(List<CompraClienteBean> listaCompras) {
-		this.listaCompras = listaCompras;
-	}
-
 	public CompraClienteBean getBean() {
 		return bean;
 	}
@@ -137,6 +139,22 @@ public class AdicionarCompraController {
 
 	public void setClienteBean(ClienteBean clienteBean) {
 		this.clienteBean = clienteBean;
+	}
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
+
+	public ClienteBean getClienteBeanPesquisa() {
+		return clienteBeanPesquisa;
+	}
+
+	public void setClienteBeanPesquisa(ClienteBean clienteBeanPesquisa) {
+		this.clienteBeanPesquisa = clienteBeanPesquisa;
 	}
 
 }

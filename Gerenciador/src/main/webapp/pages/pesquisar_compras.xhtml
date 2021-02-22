@@ -189,27 +189,33 @@
 				draggable="false" modal="true">
 
 				<h:panelGrid columns="1">
-					<p:dataTable id="tabelaPesquisaClientes" paginator="true" rows="5"
-						selection="#{pesquisarComprasController.clienteSelecionadoPesquisa}"
-						value="#{pesquisarComprasController.listaClietes}"
-						rowKey="#{cliente}" var="cliente" paginatorPosition="bottom">
+					<h:panelGrid>
+						<p:dataTable id="tabelaPesquisaClientes" paginator="true" rows="5"
+							selection="#{pesquisarComprasController.clienteSelecionadoPesquisa}"
+							value="#{pesquisarComprasController.listaClietes}"
+							rowKey="#{cliente}" var="cliente" paginatorPosition="bottom">
 
-						<f:facet name="heander">
-							<p:outputLabel value="Clientes" />
-						</f:facet>
-
-						<p:column selectionMode="single"
-							style="width:16px;text-align:center" />
-
-						<p:column>
-							<f:facet name="header">
-								<p:outputLabel value="Nome" />
+							<f:facet name="heander">
+								<p:outputLabel value="Clientes" />
 							</f:facet>
-							<p:outputLabel value="#{cliente.nome}" />
-						</p:column>
 
-					</p:dataTable>
-					<p:commandButton value="Confirmar" />
+							<p:column selectionMode="single"
+								style="width:16px;text-align:center" />
+
+							<p:column>
+								<f:facet name="header">
+									<p:outputLabel value="Nome" />
+								</f:facet>
+								<p:outputLabel value="#{cliente.nome}" />
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:commandButton value="Confirmar" ajax="false"
+							onclick="PF('dialogClientePesquisado').hide();"
+							actionListener="#{pesquisarComprasController.pesquisarComprasCliente}" />
+					</h:panelGrid>
 				</h:panelGrid>
 				<p:ajax event="close" update="@all" />
 			</p:dialog>

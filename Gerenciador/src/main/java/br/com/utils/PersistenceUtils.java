@@ -220,11 +220,12 @@ public class PersistenceUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<ClienteBean> pesquisarClientes(String nomeClientePesquisa) {
+	public static List<ClienteBean> pesquisarClientesPorNome(String nomeClientePesquisa) {
 		List<ClienteBean> clientes = new ArrayList<ClienteBean>();
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("select c from ClienteBean c where c.nome like '%" + nomeClientePesquisa + "%' order by c.nome");
+		sql.append("select c from ClienteBean c where lower(c.nome) like lower('%" + nomeClientePesquisa
+				+ "%') order by c.nome");
 
 		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
 

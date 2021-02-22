@@ -19,18 +19,19 @@
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Cliente:" />
 						</h:panelGrid>
-						<h:panelGrid columns="2">
-							<p:selectOneMenu filter="true" id="comboClientes"
-								value="#{adicionarCompraController.bean.codigoCliente}"
-								valueChangeListener="#{adicionarCompraController.buscarComprasCliente}"
-								onchange="submit()">
-								<f:selectItem itemLabel="Selecione..." itemValue="0" />
-								<f:selectItems value="#{adicionarCompraController.listaCombo}" />
-							</p:selectOneMenu>
-							<p:commandButton value="Add" title="Adicionar Cliente"
+						<h:panelGrid columns="3">
+							<p:inputText size="30"
+								value="#{adicionarCompraController.nomeCliente}" />
+							<p:commandButton value="Pesquisar" title="Pesquisar"
+								actionListener="#{adicionarCompraController.pesquisar}" ajax="false" />
+							<p:commandButton value="+" title="Adicionar Cliente"
 								onclick="PF('dialogAddCliente').show();" />
 						</h:panelGrid>
-
+						
+						<h:panelGrid rendered="#{adicionarCompraController.clienteBeanPesquisa.codigo != null}" columns="2">
+							<p:outputLabel value="Cliente Selecionado: " style="font-weight: bold"/>
+							<p:outputLabel value="#{adicionarCompraController.clienteBeanPesquisa.nome}" style="font-weight: bold"/>
+						</h:panelGrid>
 
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Valor:" />
@@ -53,43 +54,6 @@
 							actionListener="#{adicionarCompraController.inserirCompra}" />
 						<p:commandButton value="Limpar" />
 					</h:panelGrid>
-
-				</h:panelGrid>
-
-				<h:panelGrid columns="1" width="50%">
-
-					<p:dataTable id="tabelaComprasCliente" rows="10"
-						value="#{adicionarCompraController.listaCompras}" var="compra">
-
-						<f:facet name="header">
-							<p:outputLabel value="Últimas Compras" />
-						</f:facet>
-
-						<p:column width="20%">
-							<f:facet name="header">
-								<p:outputLabel value="Data" />
-							</f:facet>
-							<p:outputLabel value="#{compra.dataCompra}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
-							</p:outputLabel>
-						</p:column>
-						<p:column width="15%" style="text-align: right">
-							<f:facet name="header">
-								<p:outputLabel value="Valor" />
-							</f:facet>
-							<p:outputLabel value="R$" />
-							<p:outputLabel value="#{compra.valor}">
-								<f:convertNumber pattern="#,##0.00" />
-							</p:outputLabel>
-						</p:column>
-						<p:column width="65%" style="text-align: left">
-							<f:facet name="header">
-								<p:outputLabel value="Descrição" />
-							</f:facet>
-							<p:outputLabel value="#{compra.descricao}" />
-						</p:column>
-
-					</p:dataTable>
 
 				</h:panelGrid>
 
@@ -133,6 +97,43 @@
 					</h:panelGrid>
 				</h:panelGrid>
 				<p:ajax event="close" update="@all" />
+			</p:dialog>
+
+			<p:dialog id="dialogPesquisaCliente" width="50%"
+				widgetVar="dialogPesquisaCliente" resizable="false"
+				draggable="false" modal="true">
+
+				<h:panelGrid columns="1">
+					<h:panelGrid>
+						<p:dataTable id="tabelaPesquisaClientes" paginator="true" rows="5"
+							selection="#{adicionarCompraController.clienteBeanPesquisa}"
+							value="#{adicionarCompraController.listaClientes}"
+							rowKey="#{cliente}" var="cliente" paginatorPosition="bottom">
+
+							<f:facet name="heander">
+								<p:outputLabel value="Clientes" />
+							</f:facet>
+
+							<p:column selectionMode="single"
+								style="width:16px;text-align:center" />
+
+							<p:column>
+								<f:facet name="header">
+									<p:outputLabel value="Nome" />
+								</f:facet>
+								<p:outputLabel value="#{cliente.nome}" />
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:commandButton value="Confirmar" ajax="false"
+							onclick="PF('dialogPesquisaCliente').hide();"
+							actionListener="#{adicionarCompraController.confimarCliente}" />
+					</h:panelGrid>
+				</h:panelGrid>
+				<p:ajax event="close" update="@all" />
+				
 			</p:dialog>
 
 		</h:form>

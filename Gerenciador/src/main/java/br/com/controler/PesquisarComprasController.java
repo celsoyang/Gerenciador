@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
 
 import org.primefaces.PrimeFaces;
 
@@ -21,8 +20,6 @@ import br.com.utils.PersistenceUtils;
 @SessionScoped
 public class PesquisarComprasController {
 
-	private List<SelectItem> comboClientes;
-
 	private List<CompraClienteBean> listaComprasCliente;
 
 	private BigDecimal totalComprado;
@@ -30,8 +27,6 @@ public class PesquisarComprasController {
 	private BigDecimal totalPago;
 
 	private BigDecimal saldoDevedor;
-
-	private Integer clienteSelecionado;
 
 	private CompraClienteBean compraSelecionada;
 
@@ -49,23 +44,22 @@ public class PesquisarComprasController {
 
 	private String nomeClientePesquisa;
 
-	private Integer clienteSelecionadoPesquisa = 0;
+	private ClienteBean clienteSelecionadoPesquisa;
 
 	private List<ClienteBean> listaClietes;
 
 	public PesquisarComprasController() {
-		comboClientes = new ArrayList<SelectItem>();
 		listaComprasCliente = new ArrayList<CompraClienteBean>();
-		clienteSelecionado = 0;
 		totalComprado = new BigDecimal(0);
 		totalPago = new BigDecimal(0);
 		saldoDevedor = new BigDecimal(0);
 		valorPagamento = new BigDecimal(0);
+		clienteSelecionadoPesquisa = new ClienteBean();
 	}
 
 	public void carregarListaClientes() {
 		listaClietes = new ArrayList<ClienteBean>();
-		listaClietes = PersistenceUtils.pesquisarClientes(nomeClientePesquisa);
+		listaClietes = PersistenceUtils.pesquisarClientesPorNome(nomeClientePesquisa);
 		if (listaClietes.size() > 0) {
 			abrirDialog();
 		} else {
@@ -78,9 +72,25 @@ public class PesquisarComprasController {
 	}
 
 	public void pesquisarComprasCliente() {
-		listaComprasCliente = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionado);
-		listaPagamentosCliente = PersistenceUtils.pesquisarPagamentosPorCliente(clienteSelecionado);
-		caucularTotais(listaComprasCliente, listaPagamentosCliente);
+		if (confirmarSelecao()) {
+			listaComprasCliente = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionadoPesquisa.getCodigo());
+			listaPagamentosCliente = PersistenceUtils
+					.pesquisarPagamentosPorCliente(clienteSelecionadoPesquisa.getCodigo());
+			caucularTotais(listaComprasCliente, listaPagamentosCliente);
+			setNomeClientePesquisa(clienteSelecionadoPesquisa.getNome());
+		} else {
+			MessagesUtils.errorMessage("Selecione um registro");
+		}
+	}
+
+	private Boolean confirmarSelecao() {
+		Boolean retorno = Boolean.TRUE;
+
+		if (clienteSelecionadoPesquisa == null) {
+			retorno = Boolean.FALSE;
+		}
+
+		return retorno;
 	}
 
 	private void caucularTotais(List<CompraClienteBean> listaCompra, List<PagamentosClienteBean> listaPagamentos) {
@@ -100,7 +110,7 @@ public class PesquisarComprasController {
 	public void confirmarPagamento() {
 		pagamentoBean = new PagamentosClienteBean();
 
-		pagamentoBean.setCliente(clienteSelecionado);
+		pagamentoBean.setCliente(clienteSelecionadoPesquisa.getCodigo());
 		pagamentoBean.setData(new Date());
 		pagamentoBean.setValor(valorPagamento);
 		pagamentoBean.setDescricao(descricaoPagamento);
@@ -132,14 +142,6 @@ public class PesquisarComprasController {
 
 	}
 
-	public List<SelectItem> getComboClientes() {
-		return comboClientes;
-	}
-
-	public void setComboClientes(List<SelectItem> comboClientes) {
-		this.comboClientes = comboClientes;
-	}
-
 	public BigDecimal getTotalComprado() {
 		return totalComprado;
 	}
@@ -162,14 +164,6 @@ public class PesquisarComprasController {
 
 	public void setSaldoDevedor(BigDecimal saldoDevedor) {
 		this.saldoDevedor = saldoDevedor;
-	}
-
-	public Integer getClienteSelecionado() {
-		return clienteSelecionado;
-	}
-
-	public void setClienteSelecionado(Integer clienteSelecionado) {
-		this.clienteSelecionado = clienteSelecionado;
 	}
 
 	public List<CompraClienteBean> getListaComprasCliente() {
@@ -244,20 +238,20 @@ public class PesquisarComprasController {
 		this.nomeClientePesquisa = nomeClientePesquisa;
 	}
 
-	public Integer getClienteSelecionadoPesquisa() {
-		return clienteSelecionadoPesquisa;
-	}
-
-	public void setClienteSelecionadoPesquisa(Integer clienteSelecionadoPesquisa) {
-		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
-	}
-
 	public List<ClienteBean> getListaClietes() {
 		return listaClietes;
 	}
 
 	public void setListaClietes(List<ClienteBean> listaClietes) {
 		this.listaClietes = listaClietes;
+	}
+
+	public ClienteBean getClienteSelecionadoPesquisa() {
+		return clienteSelecionadoPesquisa;
+	}
+
+	public void setClienteSelecionadoPesquisa(ClienteBean clienteSelecionadoPesquisa) {
+		this.clienteSelecionadoPesquisa = clienteSelecionadoPesquisa;
 	}
 
 }
