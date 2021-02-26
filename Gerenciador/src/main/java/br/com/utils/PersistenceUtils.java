@@ -17,6 +17,7 @@ import br.com.bean.ClienteBean;
 import br.com.bean.CompraClienteBean;
 import br.com.bean.CompradorConjuntoBean;
 import br.com.bean.PagamentosClienteBean;
+import br.com.bean.UsuarioBean;
 
 public class PersistenceUtils {
 
@@ -274,6 +275,21 @@ public class PersistenceUtils {
 
 		clientes = q.getResultList();
 		return clientes;
+	}
+
+	public static UsuarioBean buscarUsuario(String usuario) {
+		UsuarioBean usuarioRetorno = new UsuarioBean();
+		
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select u from UsuarioBean u where ");
+		sql.append("u.login = '" + usuario + "'");
+		
+		Query q = returnEntityManager().createQuery(sql.toString(), UsuarioBean.class);
+		
+		usuarioRetorno = (UsuarioBean) q.getSingleResult();
+		
+		return usuarioRetorno;
 	}
 
 }

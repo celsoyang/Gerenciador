@@ -63,6 +63,7 @@ public class AdicionarCompraController {
 			update();
 			MessagesUtils.infoMessage(msg);
 			bean = new CompraClienteBean();
+			clienteBeanPesquisa = new ClienteBean();
 		} else {
 			MessagesUtils.errorMessage("Selecione um cliente");
 		}

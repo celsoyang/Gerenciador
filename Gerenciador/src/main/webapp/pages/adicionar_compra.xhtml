@@ -23,15 +23,26 @@
 							<p:inputText size="30"
 								value="#{adicionarCompraController.nomeCliente}" />
 							<p:commandButton value="Pesquisar" title="Pesquisar"
-								actionListener="#{adicionarCompraController.pesquisar}" ajax="false" />
+								actionListener="#{adicionarCompraController.pesquisar}"
+								ajax="false" />
 							<p:commandButton value="+" title="Adicionar Cliente"
 								onclick="PF('dialogAddCliente').show();" />
 						</h:panelGrid>
-						
-						<h:panelGrid rendered="#{adicionarCompraController.clienteBeanPesquisa.codigo != null}" columns="2">
-							<p:outputLabel value="Cliente Selecionado: " style="font-weight: bold"/>
-							<p:outputLabel value="#{adicionarCompraController.clienteBeanPesquisa.nome}" style="font-weight: bold"/>
+
+						<h:panelGrid
+							rendered="#{adicionarCompraController.clienteBeanPesquisa.codigo != null}"
+							columns="2">
+							<p:outputLabel value="Cliente Selecionado: "
+								style="font-weight: bold" />
+							<p:outputLabel
+								value="#{adicionarCompraController.clienteBeanPesquisa.nome}"
+								style="font-weight: bold" />
 						</h:panelGrid>
+
+					</h:panelGrid>
+
+					<h:panelGrid
+						rendered="#{adicionarCompraController.clienteBeanPesquisa.codigo != null}">
 
 						<h:panelGrid columns="1">
 							<p:outputLabel value="Valor:" />
@@ -39,20 +50,20 @@
 								thousandSeparator="."
 								value="#{adicionarCompraController.bean.valor}" />
 						</h:panelGrid>
-					</h:panelGrid>
 
-					<h:panelGrid columns="2">
-						<h:panelGrid columns="1">
-							<p:outputLabel value="Descrição:" />
-							<p:inputTextarea cols="50" rows="7" maxlength="255"
-								value="#{adicionarCompraController.bean.descricao}" />
+						<h:panelGrid columns="2">
+							<h:panelGrid columns="1">
+								<p:outputLabel value="Descrição:" />
+								<p:inputTextarea cols="50" rows="7" maxlength="255"
+									value="#{adicionarCompraController.bean.descricao}" />
+							</h:panelGrid>
 						</h:panelGrid>
-					</h:panelGrid>
 
-					<h:panelGrid columns="2">
-						<p:commandButton value="Inserir" onclick="submit" ajax="false"
-							actionListener="#{adicionarCompraController.inserirCompra}" />
-						<p:commandButton value="Limpar" />
+						<h:panelGrid columns="2">
+							<p:commandButton value="Inserir" onclick="submit" ajax="false"
+								actionListener="#{adicionarCompraController.inserirCompra}" />
+							<p:commandButton value="Limpar" />
+						</h:panelGrid>
 					</h:panelGrid>
 
 				</h:panelGrid>
@@ -133,7 +144,7 @@
 					</h:panelGrid>
 				</h:panelGrid>
 				<p:ajax event="close" update="@all" />
-				
+
 			</p:dialog>
 
 		</h:form>
