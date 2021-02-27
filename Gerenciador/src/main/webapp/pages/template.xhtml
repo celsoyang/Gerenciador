@@ -10,20 +10,19 @@
 	<link rel="sortcut icon" href="../resources/imagens/logo_aba.png" />
 </h:head>
 <h:body>
-	<h:form>
-		<div id="logo">
-			<ui:insert name="logo">
-				<p:panelGrid columns="2" styleClass="ui-noborder">
-					<h:graphicImage library="imagens" name="logo_camisa.PNG"
-						width="405" height="145" />
-				</p:panelGrid>
-			</ui:insert>
-			<p:commandButton value="Sair" ajax="false"
-				rendered="#{loginBean.usuario.codigo != null}"
-				actionListener="#{loginBean.deslogar}" />
-		</div>
+
+	<div id="logo">
+		<ui:insert name="logo">
+			<p:panelGrid columns="2" styleClass="ui-noborder">
+				<h:graphicImage library="imagens" name="logo_camisa.PNG" width="405"
+					height="145" />
+			</p:panelGrid>
+		</ui:insert>
+
+	</div>
 
 
+	<h:form id="formLogar">
 		<div id="login" align="center">
 			<h:panelGrid columns="2"
 				rendered="#{loginBean.usuario.codigo == null}">
@@ -34,28 +33,31 @@
 				<p:outputLabel />
 				<p:commandButton value="Login" actionListener="#{loginBean.logar}"
 					ajax="false" />
+
 			</h:panelGrid>
 		</div>
+	</h:form>
 
-		<h:panelGrid rendered="#{loginBean.usuario.codigo != null}"
-			width="100%">
-			<div id="top">
-				<ui:insert name="top">
-					<ui:include src="menu.xhtml"></ui:include>
-				</ui:insert>
-			</div>
-			<div id="content">
-				<ui:insert name="content">
-				</ui:insert>
-			</div>
-		</h:panelGrid>
 
-		<div
-			style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; border-bottom: inherit;">
-			<ui:insert name="footer">
-				<ui:include src="footer.xhtml"></ui:include>
+	<h:panelGrid rendered="#{loginBean.usuario.codigo != null}"
+		width="100%">
+		<div id="top">
+			<ui:insert name="top">
+				<ui:include src="menu.xhtml"></ui:include>
 			</ui:insert>
 		</div>
-	</h:form>
+		<div id="content">
+			<ui:insert name="content">
+			</ui:insert>
+		</div>
+	</h:panelGrid>
+
+	<div
+		style="position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; border-bottom: inherit;">
+		<ui:insert name="footer">
+			<ui:include src="footer.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
 </h:body>
 </html>

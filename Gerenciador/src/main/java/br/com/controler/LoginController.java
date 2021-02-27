@@ -2,6 +2,7 @@ package br.com.controler;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -53,6 +54,8 @@ public class LoginController {
 
 	public void deslogar() {
 		usuario = new UsuarioBean();
+		login = "";
+		senha = "";
 	}
 
 	public UsuarioBean getUsuario() {
