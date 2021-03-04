@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ClienteBean;
@@ -13,6 +14,7 @@ import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "clientesController")
 @SessionScoped
+@ViewScoped
 public class ClientesController {
 
 	private ClienteBean bean;

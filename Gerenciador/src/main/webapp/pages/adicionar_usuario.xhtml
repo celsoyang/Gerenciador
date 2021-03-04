@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" template="template.xhtml">
+
+
+	<ui:define name="content">
+		<h:form>
+			<p:messages showIcon="true" closable="true" showDetail="true" />
+			<h:panelGrid columns="3">
+
+				<h:panelGrid>
+					<p:outputLabel value="Nome: " />
+					<p:inputText value="#{adicionarUsuarioController.nomeUsuario}"
+						size="30" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Usuário: " />
+					<p:inputText value="#{adicionarUsuarioController.username}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Senha: " />
+					<p:password value="#{adicionarUsuarioController.senha}" />
+				</h:panelGrid>
+
+				<p:commandButton
+					actionListener="#{adicionarUsuarioController.criarUsuario}"
+					ajax="false" value="Confirmar" />
+				<p:commandButton value="Alterar Senha"
+					onclick="PF('dialogAlterarSenha').show();" />
+
+			</h:panelGrid>
+
+
+			<p:dialog id="dialogAlterarSenha" modal="true" width="50%"
+				draggable="false" widgetVar="dialogAlterarSenha" resizable="false">
+
+				<h:panelGrid>
+					<p:outputLabel value="Usuário: " />
+					<p:inputText
+						value="#{adicionarUsuarioController.usernameNovaSenha}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Nova Senha: " />
+					<p:password value="#{adicionarUsuarioController.novaSenha}" />
+				</h:panelGrid>
+
+				<h:panelGrid>
+					<p:outputLabel value="Confirme Nova Senha: " />
+					<p:password value="#{adicionarUsuarioController.novaSenha2}" />
+				</h:panelGrid>
+
+				<p:commandButton
+					actionListener="#{adicionarUsuarioController.alterarSenha}"
+					ajax="false" value="Confirmar"/>
+
+
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -37,16 +37,10 @@ public class LoginController {
 
 			if (usuario.getCodigo() != null) {
 
-				MD.update(usuario.getSenha().getBytes(), 0, usuario.getSenha().length());
-				byte[] digestUsuario = MD.digest();
-				String usuarioHexa = new BigInteger(1, digestUsuario).toString(16);
-
-				if (!senhaHexa.equals(usuarioHexa)) {
+				if (!senhaHexa.equals(usuario.getSenha())) {
 					usuario = new UsuarioBean();
 				}
 			}
-
-			System.out.println(senhaHexa);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

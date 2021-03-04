@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.PrimeFaces;
 
@@ -18,13 +19,14 @@ import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "adicionarCompraController")
 @SessionScoped
+@ViewScoped
 public class AdicionarCompraController {
 
 	private String nomeCliente;
 
 	private List<ClienteBean> listaClientes;
 
-	private BigDecimal valorCompra = new BigDecimal(0);
+	private BigDecimal valorCompra;
 
 	private String descricaoCompra;
 
@@ -36,6 +38,7 @@ public class AdicionarCompraController {
 
 	public AdicionarCompraController() {
 		bean = new CompraClienteBean();
+		valorCompra = new BigDecimal(0);
 		clienteBean = new ClienteBean();
 		clienteBeanPesquisa = new ClienteBean();
 	}

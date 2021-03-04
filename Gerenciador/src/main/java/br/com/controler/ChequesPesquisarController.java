@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
 
 @ManagedBean(name = "controleChequesPesquisarController")
 @SessionScoped
+@ViewScoped
 public class ChequesPesquisarController {
 
 	private List<ChequeBean> listaCheques;

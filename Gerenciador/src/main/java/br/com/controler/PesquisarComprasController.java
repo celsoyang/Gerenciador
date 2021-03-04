@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.PrimeFaces;
 
@@ -18,6 +19,7 @@ import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "pesquisarComprasController")
 @SessionScoped
+@ViewScoped
 public class PesquisarComprasController {
 
 	private List<CompraClienteBean> listaComprasCliente;

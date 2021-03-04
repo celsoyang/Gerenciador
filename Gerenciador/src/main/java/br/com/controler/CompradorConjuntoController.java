@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.com.bean.CompradorConjuntoBean;
 import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "compradorConjuntoController")
 @SessionScoped
+@ViewScoped
 public class CompradorConjuntoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
