@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class CompraBean {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "codigo")
 	private Integer codigo;
 

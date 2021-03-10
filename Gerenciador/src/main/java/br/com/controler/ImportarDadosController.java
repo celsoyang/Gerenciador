@@ -3,17 +3,16 @@ package br.com.controler;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.enums.TipoImportacaoEnum;
 import br.com.utils.ImportacaoUtils;
+import br.com.utils.MessagesUtils;
 
 @ManagedBean(name = "importarDadosController")
 @SessionScoped
@@ -37,17 +36,14 @@ public class ImportarDadosController {
 			item = new SelectItem();
 			item.setValue(String.valueOf(tie.getCodigo()));
 			item.setLabel(tie.getDescicao());
-			tipoArquivo.add(item); 
+			tipoArquivo.add(item);
 		}
 	}
 
 	public void importar(FileUploadEvent event) {
 		if (validarImportacao()) {
-			ImportacaoUtils.importar(event, Integer.parseInt(tipoSelecionado));
-			
-			FacesContext pesquisarVazio = FacesContext.getCurrentInstance();
-			pesquisarVazio.addMessage("sucesso",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Importado com Sucesso"));
+			String msg = ImportacaoUtils.importar(event, Integer.parseInt(tipoSelecionado));
+			MessagesUtils.infoMessage(msg);
 		}
 	}
 

@@ -36,18 +36,19 @@ public class ImportacaoUtils {
 	public ImportacaoUtils() {
 	}
 
-	public static void importar(FileUploadEvent event, Integer tipoImportacao) {
+	public static String importar(FileUploadEvent event, Integer tipoImportacao) {
 		if (tipoImportacao.equals(TipoImportacaoEnum.CAIXA.getCodigo()))
-			importarCaixa(event);
+			return importarCaixa(event);
 		else if (tipoImportacao.equals(TipoImportacaoEnum.CHEQUE.getCodigo()))
-			importarCheque(event);
+			return importarCheque(event);
 		else if (tipoImportacao.equals(TipoImportacaoEnum.COMPRA.getCodigo()))
-			importarCompra(event);
+			return importarCompra(event);
 		else if (tipoImportacao.equals(TipoImportacaoEnum.GASTO.getCodigo()))
-			importarGasto(event);
+			return importarGasto(event);
+		return null;
 	}
 
-	private static void importarCaixa(FileUploadEvent event) {
+	private static String importarCaixa(FileUploadEvent event) {
 		try {
 			listaCaixa = new ArrayList<CaixaDiarioBean>();
 			arquivo = event.getFile();
@@ -83,15 +84,15 @@ public class ImportacaoUtils {
 					}
 				}
 			}
-			PersistenceUtils.openTransaction();
-			PersistenceUtils.salvarlista(listaCaixa.toArray());
+			return PersistenceUtils.salvarlista(listaCaixa.toArray());
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
+			return "Problema na criação da planilha";
 		}
 	}
 
-	private static void importarCheque(FileUploadEvent event) {
+	private static String importarCheque(FileUploadEvent event) {
 		try {
 			listaCheques = new ArrayList<ChequeBean>();
 			arquivo = event.getFile();
@@ -139,14 +140,14 @@ public class ImportacaoUtils {
 					}
 				}
 			}
-			PersistenceUtils.openTransaction();
-			PersistenceUtils.salvarlista(listaCheques.toArray());			
+			return PersistenceUtils.salvarlista(listaCheques.toArray());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
+			return "Problema na criação da planilha";
 		}
 	}
 
-	private static void importarGasto(FileUploadEvent event) {
+	private static String importarGasto(FileUploadEvent event) {
 		try {
 			listaGastos = new ArrayList<GastoBean>();
 			arquivo = event.getFile();
@@ -182,15 +183,15 @@ public class ImportacaoUtils {
 					}
 				}
 			}
-			PersistenceUtils.openTransaction();
-			PersistenceUtils.salvarlista(listaGastos.toArray());
+			return PersistenceUtils.salvarlista(listaGastos.toArray());
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
+			return "Problema na criação da planilha";
 		}
 	}
 
-	private static void importarCompra(FileUploadEvent event) {
+	private static String importarCompra(FileUploadEvent event) {
 		try {
 			listaCompras = new ArrayList<CompraBean>();
 			arquivo = event.getFile();
@@ -230,11 +231,11 @@ public class ImportacaoUtils {
 					}
 				}
 			}
-			PersistenceUtils.openTransaction();
-			PersistenceUtils.salvarlista(listaGastos.toArray());
+			return PersistenceUtils.salvarlista(listaCompras.toArray());
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
+			return "Problema na criação da planilha";
 		}
 	}
 

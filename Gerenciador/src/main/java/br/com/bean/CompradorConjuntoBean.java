@@ -16,7 +16,7 @@ public class CompradorConjuntoBean {
 
 	@Id
 	@Column(name = "codigo")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer codigo;
 
 	@Column(name = "nome")
