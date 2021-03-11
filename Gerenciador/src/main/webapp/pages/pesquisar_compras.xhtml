@@ -186,8 +186,8 @@
 			</p:dialog>
 
 			<p:dialog id="dialogClientePesquisado" width="50%"
-				widgetVar="dialogClientePesquisado" resizable="false"
-				draggable="false" modal="true">
+				header="Pesquisar Cliente" widgetVar="dialogClientePesquisado"
+				resizable="false" draggable="false" modal="true">
 
 				<h:panelGrid columns="1">
 					<h:panelGrid>
@@ -207,7 +207,7 @@
 								<f:facet name="header">
 									<p:outputLabel value="Nome" />
 								</f:facet>
-								<p:outputLabel value="#{cliente.nome}" />
+								<p:outputLabel value="#{cliente.nome} (#{cliente.apelido})" />
 							</p:column>
 
 						</p:dataTable>

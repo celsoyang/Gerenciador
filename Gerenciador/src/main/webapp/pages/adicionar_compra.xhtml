@@ -70,10 +70,10 @@
 
 			</h:panelGrid>
 
-			<p:dialog id="dialogClienteAdd" widgetVar="dialogAddCliente"
+			<p:dialog id="dialogClienteAdd" widgetVar="dialogAddCliente" header="Adicionar Cliente"
 				resizable="false" draggable="false" modal="true">
 
-				<h:panelGrid columns="4">
+				<h:panelGrid columns="5">
 					<h:panelGrid columns="1">
 						<h:panelGrid>
 							<p:outputLabel value="Nome:" />
@@ -81,6 +81,15 @@
 						<h:panelGrid>
 							<p:inputText
 								value="#{adicionarCompraController.clienteBean.nome}" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+						<h:panelGrid>
+							<p:outputLabel value="Apelido:" />
+						</h:panelGrid>
+						<h:panelGrid>
+							<p:inputText
+								value="#{adicionarCompraController.clienteBean.apelido}" />
 						</h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid columns="1">
@@ -98,7 +107,7 @@
 							<p:outputLabel value="CPF:" />
 						</h:panelGrid>
 						<h:panelGrid columns="2">
-							<p:inputText value="#{adicionarCompraController.clienteBean.cpf}" />
+							<p:inputMask value="#{adicionarCompraController.clienteBean.cpf}" mask="999.999.999-99" />
 							<p:commandButton value="Confirmar"
 								oncomplete="PF('dialogAddCliente').hide(); submit();"
 								actionListener="#{adicionarCompraController.adicionarCliente}"
@@ -110,7 +119,7 @@
 				<p:ajax event="close" update="@all" />
 			</p:dialog>
 
-			<p:dialog id="dialogPesquisaCliente" width="50%"
+			<p:dialog id="dialogPesquisaCliente" width="50%" header="Pesquisar Cliente"
 				widgetVar="dialogPesquisaCliente" resizable="false"
 				draggable="false" modal="true">
 
@@ -132,7 +141,7 @@
 								<f:facet name="header">
 									<p:outputLabel value="Nome" />
 								</f:facet>
-								<p:outputLabel value="#{cliente.nome}" />
+								<p:outputLabel value="#{cliente.nome} (#{cliente.apelido})" />
 							</p:column>
 
 						</p:dataTable>

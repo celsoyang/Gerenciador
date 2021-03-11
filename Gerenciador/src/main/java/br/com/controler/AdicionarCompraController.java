@@ -89,10 +89,25 @@ public class AdicionarCompraController {
 	}
 
 	public void adicionarCliente() {
-		String msg = PersistenceUtils.salvar(clienteBean);
+		String msg = "";
+		if (confirmarAdicao()) {
+			msg = PersistenceUtils.salvar(clienteBean);
+		}
 		update();
-		MessagesUtils.infoMessage(msg);
+		if (!msg.endsWith(""))
+			MessagesUtils.infoMessage(msg);
 		clienteBean = new ClienteBean();
+	}
+
+	private boolean confirmarAdicao() {
+		Boolean valido = Boolean.TRUE;
+
+		if (clienteBean.getNome().equals("")) {
+			valido = Boolean.FALSE;
+			MessagesUtils.errorMessage("Nome não pode ser vazio");
+		}
+
+		return valido;
 	}
 
 	public void limpar() {

@@ -226,7 +226,7 @@ public class PersistenceUtils {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append("select c from ClienteBean c where lower(c.nome) like lower('%" + nomeClientePesquisa
-				+ "%') order by c.nome");
+				+ "%') or lower(c.apelido) like lower('%" + nomeClientePesquisa + "%') order by c.nome");
 
 		Query q = returnEntityManager().createQuery(sql.toString(), ClienteBean.class);
 
@@ -279,16 +279,16 @@ public class PersistenceUtils {
 
 	public static UsuarioBean buscarUsuario(String usuario) {
 		UsuarioBean usuarioRetorno = new UsuarioBean();
-		
+
 		StringBuilder sql = new StringBuilder();
-		
+
 		sql.append("select u from UsuarioBean u where ");
 		sql.append("u.login = '" + usuario + "'");
-		
+
 		Query q = returnEntityManager().createQuery(sql.toString(), UsuarioBean.class);
-		
+
 		usuarioRetorno = (UsuarioBean) q.getSingleResult();
-		
+
 		return usuarioRetorno;
 	}
 

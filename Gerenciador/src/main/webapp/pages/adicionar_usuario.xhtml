@@ -28,12 +28,14 @@
 					<p:password value="#{adicionarUsuarioController.senha}" />
 				</h:panelGrid>
 
-				<p:commandButton
-					actionListener="#{adicionarUsuarioController.criarUsuario}"
-					ajax="false" value="Confirmar" />
-				<p:commandButton value="Alterar Senha"
-					onclick="PF('dialogAlterarSenha').show();" />
-
+				<h:panelGrid columns="2">
+					<p:commandButton
+						actionListener="#{adicionarUsuarioController.criarUsuario}"
+						ajax="false" value="Confirmar" />
+					<p:commandButton value="Alterar Senha"
+						onclick="PF('dialogAlterarSenha').show();" />
+				</h:panelGrid>
+				
 			</h:panelGrid>
 
 
@@ -58,7 +60,7 @@
 
 				<p:commandButton
 					actionListener="#{adicionarUsuarioController.alterarSenha}"
-					ajax="false" value="Confirmar"/>
+					ajax="false" value="Confirmar" />
 
 
 			</p:dialog>

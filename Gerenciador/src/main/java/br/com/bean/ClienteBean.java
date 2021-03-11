@@ -24,6 +24,9 @@ public class ClienteBean {
 
 	@Column(name = "endereco")
 	private String endereco;
+	
+	@Column(name = "apelido")
+	private String apelido;
 
 	public String getCpf() {
 		return cpf;
@@ -55,5 +58,13 @@ public class ClienteBean {
 
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
+	}
+
+	public String getApelido() {
+		return apelido;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 }
