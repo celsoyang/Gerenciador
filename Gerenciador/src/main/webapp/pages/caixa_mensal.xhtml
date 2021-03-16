@@ -13,8 +13,19 @@
 			<h:panelGrid columns="4" cellpadding="10">
 
 				<h:panelGrid columns="2">
+					<p:outputLabel value="Ano: (Falta Implementar)" />
+					<p:selectOneMenu>
+						<f:selectItem itemValue="2019" itemLabel="2019" />
+						<f:selectItem itemValue="2020" itemLabel="2020" />
+						<f:selectItem itemValue="2021" itemLabel="2021" />
+						<f:selectItem itemValue="2022" itemLabel="2022" />
+						<f:selectItem itemValue="2023" itemLabel="2023" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
 					<p:outputLabel value="Meses: " />
-					<p:selectCheckboxMenu id="listaMeses" label="Meses" filter="true" multiple="true"
+					<p:selectCheckboxMenu id="listaMeses" label="Meses" multiple="true"
 						value="#{caixaMensalController.mesesSelecionados}">
 						<f:selectItems value="#{caixaMensalController.listaMeses}" />
 					</p:selectCheckboxMenu>

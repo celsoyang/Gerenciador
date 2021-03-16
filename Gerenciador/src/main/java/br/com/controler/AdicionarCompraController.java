@@ -74,7 +74,7 @@ public class AdicionarCompraController {
 
 	public void confimarCliente() {
 		if (confirmarSelecao()) {
-			nomeCliente = br.com.utils.StringUtils.STRING_VAZIA;
+			nomeCliente = clienteBeanPesquisa.getNome();
 		} else {
 			MessagesUtils.errorMessage("Selecione um registro");
 		}

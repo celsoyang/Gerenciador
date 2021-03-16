@@ -52,10 +52,10 @@ public class PesquisarComprasController {
 
 	public PesquisarComprasController() {
 		listaComprasCliente = new ArrayList<CompraClienteBean>();
-		totalComprado = new BigDecimal(0);
-		totalPago = new BigDecimal(0);
-		saldoDevedor = new BigDecimal(0);
-		valorPagamento = new BigDecimal(0);
+//		totalComprado = new BigDecimal(0);
+//		totalPago = new BigDecimal(0);
+//		saldoDevedor = new BigDecimal(0);
+//		valorPagamento = new BigDecimal(0);
 		clienteSelecionadoPesquisa = new ClienteBean();
 	}
 
@@ -73,7 +73,7 @@ public class PesquisarComprasController {
 		PrimeFaces.current().executeScript("PF('dialogClientePesquisado').show();");
 	}
 
-	public void pesquisarComprasCliente() {
+	public void pesquisarComprasPagamentosCliente() {
 		if (confirmarSelecao()) {
 			listaComprasCliente = PersistenceUtils.pesquisarComprasPorCliente(clienteSelecionadoPesquisa.getCodigo());
 			listaPagamentosCliente = PersistenceUtils
@@ -119,29 +119,62 @@ public class PesquisarComprasController {
 		pagamentoBean.setSaldoDia(getSaldoDevedor().subtract(valorPagamento));
 
 		PersistenceUtils.salvar(pagamentoBean);
-		pesquisarComprasCliente();
 		limparDialog();
+		pesquisarComprasPagamentosCliente();
 	}
 
 	private void limparDialog() {
-		valorPagamento = new BigDecimal(0);
+		valorPagamento = null;
 		descricaoPagamento = "";
 	}
 
 	public void excluirPagamento() {
+		if (confirmarSelecaoPagamento()) {
+			try {
+				PagamentosClienteBean pagamento = PersistenceUtils.getEntitiManager().find(PagamentosClienteBean.class,
+						pagamentoSelecionado.getCodigo());
 
+				String msg = PersistenceUtils.delete(pagamento);
+				MessagesUtils.infoMessage(msg);
+				pesquisarComprasPagamentosCliente();
+			} catch (Exception e) {
+				MessagesUtils.errorMessage("Problema ao Excluir");
+			}
+		}
 	}
 
-	public void alterarPagamento() {
-
+	private Boolean confirmarSelecaoPagamento() {
+		Boolean retorno = Boolean.TRUE;
+		if (pagamentoSelecionado == null) {
+			retorno = Boolean.FALSE;
+			MessagesUtils.errorMessage("Selecione Um Pagamento");
+		}
+		return retorno;
 	}
 
 	public void excluirCompra() {
+		if (confirmarSelecaoCompra()) {
+			try {
+				CompraClienteBean compra = PersistenceUtils.getEntitiManager().find(CompraClienteBean.class,
+						compraSelecionada.getCodigo());
 
+				String msg = PersistenceUtils.delete(compra);
+
+				MessagesUtils.infoMessage(msg);
+				pesquisarComprasPagamentosCliente();
+			} catch (Exception e) {
+				MessagesUtils.errorMessage("Problema ao Excluir");
+			}
+		}
 	}
 
-	public void alterarCompra() {
-
+	private Boolean confirmarSelecaoCompra() {
+		Boolean retorno = Boolean.TRUE;
+		if (compraSelecionada == null) {
+			retorno = Boolean.FALSE;
+			MessagesUtils.errorMessage("Selecione Uma Compra");
+		}
+		return retorno;
 	}
 
 	public BigDecimal getTotalComprado() {

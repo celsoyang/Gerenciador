@@ -82,6 +82,7 @@ public class PersistenceUtils {
 
 	public static String delete(Object cd) {
 		try {
+			getEntitiManager().getTransaction().begin();
 			getEntitiManager().remove(cd);
 			getEntitiManager().getTransaction().commit();
 			return StringUtils.MSG_REMOVIDO_SUCESSO;

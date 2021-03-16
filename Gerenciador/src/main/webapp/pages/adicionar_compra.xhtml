@@ -29,16 +29,6 @@
 								onclick="PF('dialogAddCliente').show();" />
 						</h:panelGrid>
 
-						<h:panelGrid
-							rendered="#{adicionarCompraController.clienteBeanPesquisa.codigo != null}"
-							columns="2">
-							<p:outputLabel value="Cliente Selecionado: "
-								style="font-weight: bold" />
-							<p:outputLabel
-								value="#{adicionarCompraController.clienteBeanPesquisa.nome}"
-								style="font-weight: bold" />
-						</h:panelGrid>
-
 					</h:panelGrid>
 
 					<h:panelGrid

@@ -74,11 +74,12 @@
 						</p:dataTable>
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
+					<h:panelGrid columns="2">
 						<p:commandButton value="Realizar Pagamento"
 							onclick="PF('dialogPagamento').show();" />
-						<p:commandButton value="Excluir Compra" ajax="false" />
-						<p:commandButton value="Alterar Compra" ajax="false" />
+						<p:commandButton value="Excluir Compra"
+							onclick="PF('confirmDialogCompra').show();">
+						</p:commandButton>
 					</h:panelGrid>
 
 				</h:panelGrid>
@@ -139,9 +140,9 @@
 
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
-						<p:commandButton value="Alterar Pagamento" ajax="false" />
-						<p:commandButton value="Excluir Pagamento" ajax="false" />
+					<h:panelGrid columns="2">
+						<p:commandButton value="Excluir Pagamento"
+							onclick="PF('confirmDialogPagamento').show();" />
 					</h:panelGrid>
 
 				</h:panelGrid>
@@ -167,8 +168,8 @@
 
 			</h:panelGrid>
 
-			<p:dialog id="dialogPagamento" widgetVar="dialogPagamento" header="Pagamento"
-				resizable="false" draggable="false" modal="true">
+			<p:dialog id="dialogPagamento" widgetVar="dialogPagamento"
+				header="Pagamento" resizable="false" draggable="false" modal="true">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Valor: " />
 					<p:inputNumber symbol="R$" decimalSeparator=","
@@ -215,10 +216,38 @@
 					<h:panelGrid>
 						<p:commandButton value="Confirmar" ajax="false"
 							onclick="PF('dialogClientePesquisado').hide();"
-							actionListener="#{pesquisarComprasController.pesquisarComprasCliente}" />
+							actionListener="#{pesquisarComprasController.pesquisarComprasPagamentosCliente}" />
 					</h:panelGrid>
 				</h:panelGrid>
 				<p:ajax event="close" update="@all" />
+			</p:dialog>
+
+			<p:dialog widgetVar="confirmDialogCompra" id="confirmDialog"
+				modal="true" draggable="false" resizable="false" width="15%"
+				header="Excluir?">
+				<h:panelGrid>
+					<p:outputLabel value="Deseja Exluir Compra?" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Sim" ajax="false"
+						actionListener="#{pesquisarComprasController.excluirCompra}"
+						onclick="this.hide()" />
+					<p:commandButton value="Não" onclick="this.hide()" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog widgetVar="confirmDialogPagamento"
+				id="confirmDialogPagamento" modal="true" draggable="false"
+				resizable="false" width="15%" header="Excluir?">
+				<h:panelGrid>
+					<p:outputLabel value="Deseja Exluir Pagamento?" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Sim" ajax="false"
+						actionListener="#{pesquisarComprasController.excluirPagamento}"
+						onclick="this.hide()" />
+					<p:commandButton value="Não" onclick="this.hide()" />
+				</h:panelGrid>
 			</p:dialog>
 
 		</h:form>
