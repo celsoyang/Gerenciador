@@ -5,9 +5,12 @@ import java.security.MessageDigest;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.com.bean.UsuarioBean;
 import br.com.utils.PersistenceUtils;
+import br.com.utils.SessionUtil;
 
 @ManagedBean(name = "loginBean")
 @SessionScoped
@@ -19,8 +22,12 @@ public class LoginController {
 
 	private UsuarioBean usuario;
 
+	private HttpSession session;
+
 	public LoginController() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		usuario = new UsuarioBean();
+		session = (HttpSession) context.getExternalContext().getSession(true);
 	}
 
 	public void logar() {
@@ -41,6 +48,8 @@ public class LoginController {
 					usuario = new UsuarioBean();
 				}
 			}
+
+			SessionUtil.carregarUsuarioSessao(usuario.getLogin(), usuario.getNivel());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,6 +59,9 @@ public class LoginController {
 		usuario = new UsuarioBean();
 		login = "";
 		senha = "";
+
+		SessionUtil.invalidateSession();
+		SessionUtil.carregarUsuarioSessao("", 0);
 	}
 
 	public UsuarioBean getUsuario() {
@@ -74,6 +86,14 @@ public class LoginController {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
 	}
 
 }

@@ -73,5 +73,9 @@ public class StringUtils {
 	public static final String MSG_PROBLEMA_SALVAR = "Problema ao salvar, contate o administrador";
 
 	public static final String MSG_REMOVIDO_SUCESSO = "Removido com sucesso!";
+	
+	public static final String USUARIO = "usuario";
+	
+	public static final String NIVEL = "nivel";
 
 }

@@ -34,6 +34,8 @@ public class AdicionarUsuarioController {
 
 	private UsuarioBean usuario;
 
+	private Integer nivelUsuario;
+
 	public AdicionarUsuarioController() {
 		nomeUsuario = StringUtils.STRING_VAZIA;
 		username = StringUtils.STRING_VAZIA;
@@ -48,6 +50,7 @@ public class AdicionarUsuarioController {
 		usuario.setNome(nomeUsuario);
 		usuario.setLogin(username);
 		usuario.setSenha(gerarSenha(senha));
+		usuario.setNivel(nivelUsuario);
 
 		String msg = PersistenceUtils.salvar(usuario);
 		limpar();
@@ -160,6 +163,14 @@ public class AdicionarUsuarioController {
 
 	public void setUsernameNovaSenha(String usernameNovaSenha) {
 		this.usernameNovaSenha = usernameNovaSenha;
+	}
+
+	public Integer getNivelUsuario() {
+		return nivelUsuario;
+	}
+
+	public void setNivelUsuario(Integer nivelUsuario) {
+		this.nivelUsuario = nivelUsuario;
 	}
 
 }

@@ -10,20 +10,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario")
 public class UsuarioBean {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "codigo")
 	private Integer codigo;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "username")
 	private String login;
-	
+
 	@Column(name = "password")
 	private String senha;
+
+	@Column(name = "nivel")
+	private Integer nivel;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -55,5 +58,13 @@ public class UsuarioBean {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Integer getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(Integer nivel) {
+		this.nivel = nivel;
 	}
 }

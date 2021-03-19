@@ -10,7 +10,7 @@
 	<ui:define name="content">
 		<h:form>
 			<p:messages showIcon="true" closable="true" showDetail="true" />
-			<h:panelGrid columns="3">
+			<h:panelGrid columns="4">
 
 				<h:panelGrid>
 					<p:outputLabel value="Nome: " />
@@ -28,6 +28,14 @@
 					<p:password value="#{adicionarUsuarioController.senha}" />
 				</h:panelGrid>
 
+				<h:panelGrid>
+					<p:outputLabel value="Nível de Acesso: " />
+					<p:selectOneMenu value="#{adicionarUsuarioController.nivelUsuario}">
+						<f:selectItem itemLabel="Administrador" itemValue="1" />
+						<f:selectItem itemLabel="Fucionário" itemValue="2" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
 				<h:panelGrid columns="2">
 					<p:commandButton
 						actionListener="#{adicionarUsuarioController.criarUsuario}"
@@ -35,7 +43,7 @@
 					<p:commandButton value="Alterar Senha"
 						onclick="PF('dialogAlterarSenha').show();" />
 				</h:panelGrid>
-				
+
 			</h:panelGrid>
 
 
