@@ -9,80 +9,82 @@
 
 	<ui:define name="content">
 		<h:form>
+			<p:messages showIcon="true" closable="true" showDetail="true" />
 
-			<h:panelGrid cellpadding="10" columns="4">
+			<h:panelGrid cellpadding="0" cellspacing="0">
 
-				<h:panelGrid>
-					<p:outputLabel value="Pesquisar Por:" />
-					<p:selectOneMenu id="tipoPesquisa"
-						value="#{controleChequesPesquisarController.opcaoSelecionada}">
-						<f:selectItems
-							value="#{controleChequesPesquisarController.listaOpcoes}" />
-					</p:selectOneMenu>
+				<h:panelGrid columns="2" cellpadding="5" cellspacing="0">
+
+					<h:panelGrid cellpadding="0" cellspacing="0">
+						<p:outputLabel value="De:" />
+						<p:calendar pattern="dd/MM/yyyy" id="de" readonlyInput="true"
+							value="#{controleChequesPesquisarController.dataDe}" />
+					</h:panelGrid>
+					<h:panelGrid cellpadding="0" cellspacing="0">
+						<p:outputLabel value="Até:" />
+						<p:calendar pattern="dd/MM/yyyy" id="ate" readonlyInput="true"
+							value="#{controleChequesPesquisarController.dataAte}" />
+					</h:panelGrid>
+					<h:panelGrid cellpadding="0" cellspacing="0">
+						<p:commandButton value="Pesquisar"
+							actionListener="#{controleChequesPesquisarController.pesquisar}"
+							ajax="false" />
+					</h:panelGrid>
+
+
 				</h:panelGrid>
 
 				<h:panelGrid>
-					<p:outputLabel value="Valor:" />
-					<p:inputText
-						value="#{controleChequesPesquisarController.parametro}" />
+					<p:dataTable
+						value="#{controleChequesPesquisarController.listaCheques}"
+						id="tabela" rows="15" var="cheque" paginator="true"
+						paginatorPosition="bottom">
+						<f:facet name="header">
+							<h:outputText value="Cheques" />
+						</f:facet>
+
+						<p:column headerText="Número" width="10%">
+							<h:outputText value="#{cheque.numCheque}" />
+						</p:column>
+
+						<p:column headerText="Beneficiário" width="20%">
+							<h:outputText value="#{cheque.beneficiario}" />
+						</p:column>
+
+						<p:column headerText="Valor" width="15%">
+							<h:outputText value="R$" />
+							<h:outputText style="text-align: right;" value="#{cheque.valor}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Data Emissão" width="15%">
+							<h:outputText value="#{cheque.dataEmissao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Data Pagamento" width="15%">
+							<h:outputText value="#{cheque.dataPagamento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Observação" width="25%">
+							<h:outputText value="#{cheque.observacao}" />
+						</p:column>
+
+						<f:facet name="footer">
+							<p:outputLabel value="Total: R$" />
+							<p:outputLabel
+								value="#{controleChequesPesquisarController.totalCheques}">
+								<f:convertNumber pattern="#,##0.00" />
+							</p:outputLabel>
+						</f:facet>
+
+					</p:dataTable>
 				</h:panelGrid>
 
-				<h:panelGrid>
-					<p:outputLabel value="De:" />
-					<p:calendar pattern="dd/MM/yyyy" id="de"
-						value="#{controleChequesPesquisarController.dataDe}" />
-				</h:panelGrid>
-				<h:panelGrid>
-					<p:outputLabel value=" Até:" />
-					<p:calendar pattern="dd/MM/yyyy" id="ate"
-						value="#{controleChequesPesquisarController.dataAte}" />
-				</h:panelGrid>
-				<h:panelGrid>
-					<p:commandButton value="Pesquisar" />
-				</h:panelGrid>
-
-
-			</h:panelGrid>
-
-			<h:panelGrid>
-				<p:dataTable value="" id="tabela" rows="15" var="cheque"
-					paginator="true" paginatorPosition="bottom">
-					<f:facet name="header">
-						Cheques
-					</f:facet>
-
-					<p:column headerText="Número" width="10%">
-						<h:outputText />
-					</p:column>
-
-					<p:column headerText="Beneficiário" width="20%">
-						<h:outputText />
-					</p:column>
-
-					<p:column headerText="Valor"  width="15%">
-						<h:outputText value="R$" />
-						<h:outputText style="text-align: right;">
-							<f:convertNumber pattern="#,##0.00" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Data Emissão" width="15%">
-						<h:outputText>
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Data Pagamento" width="15%">
-						<h:outputText>
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Observação" width="25%">
-						<h:outputText />
-					</p:column>
-
-				</p:dataTable>
 			</h:panelGrid>
 
 		</h:form>

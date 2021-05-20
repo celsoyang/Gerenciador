@@ -1,5 +1,6 @@
 package br.com.controler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,15 +11,17 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
+import br.com.utils.MessagesUtils;
+import br.com.utils.PersistenceUtils;
 
 @ManagedBean(name = "controleChequesPesquisarController")
 @SessionScoped
 @ViewScoped
 public class ChequesPesquisarController {
 
-	private List<ChequeBean> listaCheques;
+	private List<ChequeBean> listaCheques = new ArrayList<ChequeBean>();;
 
-	private List<SelectItem> listaOpcoes;
+	private List<SelectItem> listaOpcoes = new ArrayList<SelectItem>();;
 
 	private Integer opcaoSelecionada;
 
@@ -27,6 +30,8 @@ public class ChequesPesquisarController {
 	private Date dataAte;
 
 	private String parametro = new String();
+
+	private BigDecimal totalCheques = new BigDecimal(0);
 
 	public ChequesPesquisarController() {
 		loadOpcoes();
@@ -43,11 +48,32 @@ public class ChequesPesquisarController {
 	}
 
 	public void pesquisar() {
-		if (opcaoSelecionada.equals(1) || opcaoSelecionada.equals(2)) {
-
-		} else {
-
+		listaCheques.clear();
+		if (validarDatas()) {
+			listaCheques = PersistenceUtils.pesquisarChequesPorData(dataDe, dataAte);
+			somarCheques(listaCheques);
 		}
+	}
+
+	private void somarCheques(List<ChequeBean> listaCheques2) {
+		totalCheques = new BigDecimal(0);
+		for (ChequeBean ch : listaCheques2) {
+			totalCheques = totalCheques.add(ch.getValor());
+		}
+	}
+
+	private boolean validarDatas() {
+		Boolean valido = Boolean.TRUE;
+
+		if (dataDe == null || dataAte == null) {
+			valido = Boolean.FALSE;
+			MessagesUtils.errorMessage("Preencha todas os campos de data");
+		} else if (dataAte.before(dataDe)) {
+			valido = Boolean.FALSE;
+			MessagesUtils.errorMessage("Data inicial não pode ser maior que data final");
+		}
+
+		return valido;
 	}
 
 	public List<ChequeBean> getListaCheques() {
@@ -96,6 +122,14 @@ public class ChequesPesquisarController {
 
 	public void setDataAte(Date dataAte) {
 		this.dataAte = dataAte;
+	}
+
+	public BigDecimal getTotalCheques() {
+		return totalCheques;
+	}
+
+	public void setTotalCheques(BigDecimal totalCheques) {
+		this.totalCheques = totalCheques;
 	}
 
 }

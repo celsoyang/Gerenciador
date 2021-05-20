@@ -293,4 +293,21 @@ public class PersistenceUtils {
 		return usuarioRetorno;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static List<ChequeBean> pesquisarChequesPorData(Date dataDe, Date dataAte) {
+		List<ChequeBean> retorno = new ArrayList<ChequeBean>();
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT CHEQUE FROM ChequeBean CHEQUE");
+		sql.append(" WHERE CHEQUE.dataPagamento BETWEEN '");
+		sql.append(new SimpleDateFormat("yyyy-MM-dd").format(dataDe) + "' AND '");
+		sql.append(new SimpleDateFormat("yyyy-MM-dd").format(dataAte) + "'");
+
+		Query query = returnEntityManager().createQuery(sql.toString(), ChequeBean.class);
+
+		retorno = query.getResultList();
+
+		return retorno;
+	}
+
 }
