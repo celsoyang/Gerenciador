@@ -11,15 +11,14 @@
 		<h:form>
 			<p:messages showIcon="true" closable="true" showDetail="true" />
 
-			<h:panelGrid columns="1">
+			<h:panelGrid columns="1" cellpadding="0" cellspacing="0">
 
-				<h:panelGrid columns="6">
-
+				<h:panelGrid columns="5">
 					<h:panelGrid columns="1">
 						<p:outputLabel value="Número:" />
-						<p:inputNumber id="numero" maxValue="9999"
+						<p:inputText id="numero" maxlength="4"
 							value="#{chequesInserirController.bean.numCheque}">
-						</p:inputNumber>
+						</p:inputText>
 					</h:panelGrid>
 
 					<h:panelGrid columns="1">
@@ -48,28 +47,59 @@
 							value="#{chequesInserirController.bean.dataPagamento}"
 							readonlyInput="true" />
 					</h:panelGrid>
-
 				</h:panelGrid>
 
 				<h:panelGrid columns="1">
-
 					<h:panelGrid columns="1" width="50%">
 						<p:outputLabel value="Observação:" />
 						<p:inputTextarea cols="50" rows="5" maxlength="250"
 							value="#{chequesInserirController.bean.observacao}" />
 					</h:panelGrid>
+				</h:panelGrid>
 
-					<h:panelGrid columns="2">
-						<p:commandButton value="Inserir" id="inserir"
-							action="#{chequesInserirController.inserir}" ajax="false" />
-						<p:commandButton value="Limpar"
-							action="#{chequesInserirController.apagarCampos}" ajax="false" />
-					</h:panelGrid>
+				<h:panelGrid width="30%">
+					<p:dataTable id="listaOutrosCompradores" var="comp" rows="10"
+						value="#{chequesInserirController.listaOutrosCompradores}">
+						<f:facet name="header">
+							<p:outputLabel value="Outros Compradores" />
+						</f:facet>
+						<p:column width="33%">
+							<f:facet name="header">
+								<p:outputLabel value="Nome" />
+							</f:facet>
+							<h:outputText value="#{comp.nome}" />
+						</p:column>
+						<p:column width="15%" style="text-align: right;">
+							<f:facet name="header">
+								<p:outputLabel value="Valor" />
+							</f:facet>
+							<h:outputText value="R$" />
+							<h:outputText value="#{comp.valor}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+						</p:column>
+						<p:column width="15%" style="text-align: right;">
+							<f:facet name="header">
+								<p:outputLabel value="Data Pagamento" />
+							</f:facet>
+							<h:outputText value="#{comp.dataPagamento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
 
+				<h:panelGrid columns="3">
+					<p:commandButton value="Inserir" id="inserir"
+						action="#{chequesInserirController.inserir}" ajax="false" />
+					<p:commandButton value="Limpar"
+						action="#{chequesInserirController.apagarCampos}" ajax="false" />
+					<p:commandButton value="Adicionar Outro Pagador"
+						onclick="PF('dialogOutroPagador').show();" />
 				</h:panelGrid>
 
 				<h:panelGrid width="100%">
-					<p:dataTable id="ultimosCheques" var="cheque"
+					<p:dataTable id="ultimosCheques" var="cheque" rows="10"
 						value="#{chequesInserirController.listaCheques}">
 						<f:facet name="header">
 							<p:outputLabel value="Últimos Cheques" />
@@ -122,6 +152,25 @@
 				</h:panelGrid>
 
 			</h:panelGrid>
+
+			<p:dialog id="dialogOutroPagador" width="14%" header="Outro Pagador"
+				widgetVar="dialogOutroPagador" resizable="false" draggable="false"
+				modal="true">
+
+				<h:panelGrid>
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{chequesInserirController.nomeOutroPagador}" />
+					<p:outputLabel value="Valor:" />
+					<p:inputNumber id="valorOutroPagador" dir="rtl"
+						value="#{chequesInserirController.valorOutroComprador}"
+						decimalSeparator="," symbol="R$" thousandSeparator=".">
+					</p:inputNumber>
+					<p:commandButton value="Adicionar" ajax="false"
+						action="#{chequesInserirController.adicionarOutroComprador}"
+						oncomplete="submit()" />
+				</h:panelGrid>
+
+			</p:dialog>
 
 		</h:form>
 	</ui:define>

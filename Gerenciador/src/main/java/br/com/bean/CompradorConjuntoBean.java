@@ -27,6 +27,9 @@ public class CompradorConjuntoBean {
 
 	@Column(name = "data_pagamento")
 	private Date dataPagamento;
+	
+	@Column(name = "num_cheque")
+	private Integer numCheque;
 
 	public String getNome() {
 		return nome;
@@ -62,5 +65,13 @@ public class CompradorConjuntoBean {
 
 	public String toString() {
 		return nome;
+	}
+
+	public Integer getNumCheque() {
+		return numCheque;
+	}
+
+	public void setNumCheque(Integer numCheque) {
+		this.numCheque = numCheque;
 	}
 }

@@ -12,6 +12,7 @@ import br.com.bean.ChequeBean;
 import br.com.bean.CompradorConjuntoBean;
 import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
+import br.com.utils.StringUtils;
 
 @ManagedBean(name = "chequesInserirController")
 @SessionScoped
@@ -24,58 +25,82 @@ public class ChequesInserirController {
 
 	private List<CompradorConjuntoBean> listaOutrosCompradores;
 
-	private List<CompradorConjuntoBean> listaOutrosCompradoresSelecionados;
-
-	private List<CompradorConjuntoBean> listaCombo;
-
-	private CompradorConjuntoBean compradorSelecionado;
-
 	private BigDecimal valorOutroComprador;
 
+	private String nomeOutroPagador;
+
+	private BigDecimal valorOutroPagador;
+
 	public ChequesInserirController() {
-		listaOutrosCompradoresSelecionados = new ArrayList<CompradorConjuntoBean>();
 		bean = new ChequeBean();
-		loadCompradores();
-		loadTable();
-	}
-
-	private void loadCompradores() {
 		listaOutrosCompradores = new ArrayList<CompradorConjuntoBean>();
-		listaOutrosCompradores.addAll(PersistenceUtils.retornaCompradoresConjuntos());
-
-		listaCombo = new ArrayList<CompradorConjuntoBean>();
-		for (CompradorConjuntoBean comprador : listaOutrosCompradores) {
-			listaCombo.add(comprador);
-		}
+		valorOutroComprador = new BigDecimal(0);
+		loadTable();
 	}
 
 	private void loadTable() {
 		listaCheques = PersistenceUtils.pesquisarUltimosCheques();
 	}
 
-	public String adicionarOutroComprador() {
-		CompradorConjuntoBean comp = new CompradorConjuntoBean();
-		comp.setCodigo(compradorSelecionado.getCodigo());
-		comp.setNome(compradorSelecionado.toString());
-		comp.setValor(valorOutroComprador);
-		comp.setDataPagamento(bean.getDataPagamento());
-		listaOutrosCompradoresSelecionados.add(comp);
-		
-		return "";
+	public void adicionarOutroComprador() {
+		if (validarCamposOutroPagadaor()) {
+			CompradorConjuntoBean comp = new CompradorConjuntoBean();
+			comp.setNumCheque(bean.getNumCheque());
+			comp.setNome(nomeOutroPagador);
+			comp.setValor(valorOutroComprador);
+			comp.setDataPagamento(bean.getDataPagamento());
+
+			listaOutrosCompradores.add(comp);
+			valorOutroComprador = new BigDecimal(0);
+			nomeOutroPagador = StringUtils.STRING_VAZIA;
+		}
+	}
+
+	private Boolean validarCamposOutroPagadaor() {
+		Boolean valido = Boolean.TRUE;
+
+		if (bean.getNumCheque() == null) {
+			valido = Boolean.FALSE;
+			MessagesUtils.waringMessage("Informe o número de cheque");
+		}
+
+		if (bean.getDataPagamento() == null) {
+			valido = Boolean.FALSE;
+			MessagesUtils.waringMessage("Informe a data de pagamento");
+		}
+
+		if (nomeOutroPagador.equalsIgnoreCase("")) {
+			valido = Boolean.FALSE;
+			MessagesUtils.waringMessage("Informe o nome do comprador");
+		}
+
+		if (valorOutroComprador == null) {
+			valido = Boolean.FALSE;
+			MessagesUtils.waringMessage("Informe o valor do comprador");
+		}
+
+		return valido;
 	}
 
 	public void inserir() {
 		if (validarPreenchimento()) {
 			ChequeBean cheque = new ChequeBean();
+			String msg = "";
+			try {
+				cheque.setNumCheque(bean.getNumCheque());
+				cheque.setBeneficiario(bean.getBeneficiario());
+				cheque.setValor(bean.getValor());
+				cheque.setDataEmissao(bean.getDataEmissao());
+				cheque.setDataPagamento(bean.getDataPagamento());
+				cheque.setObservacao(bean.getObservacao());
 
-			cheque.setNumCheque(bean.getNumCheque());
-			cheque.setBeneficiario(bean.getBeneficiario());
-			cheque.setValor(bean.getValor());
-			cheque.setDataEmissao(bean.getDataEmissao());
-			cheque.setDataPagamento(bean.getDataPagamento());
-			cheque.setObservacao(bean.getObservacao());
-
-			String msg = PersistenceUtils.salvar(cheque);
+				msg = PersistenceUtils.salvar(cheque);
+				for (CompradorConjuntoBean comp : listaOutrosCompradores) {
+					PersistenceUtils.salvar(comp);
+				}
+			} catch (Exception e) {
+				msg = "Problema ao inserir cheque";
+			}
 
 			MessagesUtils.infoMessage(msg);
 			update();
@@ -84,9 +109,9 @@ public class ChequesInserirController {
 
 	public void apagarCampos() {
 		setBean(new ChequeBean());
-		listaOutrosCompradoresSelecionados = new ArrayList<CompradorConjuntoBean>();
 		valorOutroComprador = new BigDecimal(0);
-		compradorSelecionado = null;
+		nomeOutroPagador = "";
+		listaOutrosCompradores.clear();
 	}
 
 	private Boolean validarPreenchimento() {
@@ -113,7 +138,7 @@ public class ChequesInserirController {
 		}
 
 		if (!retorno) {
-			MessagesUtils.errorMessage("Preencha todos os campos");
+			MessagesUtils.errorMessage("Preencha todos os campos obrigatórios");
 		}
 
 		return retorno;
@@ -148,14 +173,6 @@ public class ChequesInserirController {
 		this.listaOutrosCompradores = listaOutrosCompradores;
 	}
 
-	public List<CompradorConjuntoBean> getListaOutrosCompradoresSelecionados() {
-		return listaOutrosCompradoresSelecionados;
-	}
-
-	public void setListaOutrosCompradoresSelecionados(List<CompradorConjuntoBean> listaOutrosCompradoresSelecionados) {
-		this.listaOutrosCompradoresSelecionados = listaOutrosCompradoresSelecionados;
-	}
-
 	public BigDecimal getValorOutroComprador() {
 		return valorOutroComprador;
 	}
@@ -164,20 +181,20 @@ public class ChequesInserirController {
 		this.valorOutroComprador = valorOutroComprador;
 	}
 
-	public List<CompradorConjuntoBean> getListaCombo() {
-		return listaCombo;
+	public String getNomeOutroPagador() {
+		return nomeOutroPagador;
 	}
 
-	public void setListaCombo(List<CompradorConjuntoBean> listaCombo) {
-		this.listaCombo = listaCombo;
+	public void setNomeOutroPagador(String nomeOutroPagador) {
+		this.nomeOutroPagador = nomeOutroPagador;
 	}
 
-	public CompradorConjuntoBean getCompradorSelecionado() {
-		return compradorSelecionado;
+	public BigDecimal getValorOutroPagador() {
+		return valorOutroPagador;
 	}
 
-	public void setCompradorSelecionado(CompradorConjuntoBean compradorSelecionado) {
-		this.compradorSelecionado = compradorSelecionado;
+	public void setValorOutroPagador(BigDecimal valorOutroPagador) {
+		this.valorOutroPagador = valorOutroPagador;
 	}
 
 }

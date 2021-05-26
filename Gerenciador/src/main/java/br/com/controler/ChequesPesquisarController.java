@@ -8,7 +8,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
 
 import br.com.bean.ChequeBean;
 import br.com.utils.MessagesUtils;
@@ -19,9 +18,7 @@ import br.com.utils.PersistenceUtils;
 @ViewScoped
 public class ChequesPesquisarController {
 
-	private List<ChequeBean> listaCheques = new ArrayList<ChequeBean>();;
-
-	private List<SelectItem> listaOpcoes = new ArrayList<SelectItem>();;
+	private List<ChequeBean> listaCheques = new ArrayList<ChequeBean>();
 
 	private Integer opcaoSelecionada;
 
@@ -34,17 +31,6 @@ public class ChequesPesquisarController {
 	private BigDecimal totalCheques = new BigDecimal(0);
 
 	public ChequesPesquisarController() {
-		loadOpcoes();
-	}
-
-	private void loadOpcoes() {
-		listaOpcoes = new ArrayList<SelectItem>();
-
-		listaOpcoes.add(new SelectItem(0, "Selecione..."));
-		listaOpcoes.add(new SelectItem(1, "Data de Pagamento"));
-		listaOpcoes.add(new SelectItem(2, "Data de Emissão"));
-		listaOpcoes.add(new SelectItem(3, "Número"));
-		listaOpcoes.add(new SelectItem(4, "Beneficiário"));
 	}
 
 	public void pesquisar() {
@@ -82,14 +68,6 @@ public class ChequesPesquisarController {
 
 	public void setListaCheques(List<ChequeBean> listaCheques) {
 		this.listaCheques = listaCheques;
-	}
-
-	public List<SelectItem> getListaOpcoes() {
-		return listaOpcoes;
-	}
-
-	public void setListaOpcoes(List<SelectItem> listaOpcoes) {
-		this.listaOpcoes = listaOpcoes;
 	}
 
 	public Integer getOpcaoSelecionada() {
