@@ -85,6 +85,24 @@
 					</p:dataTable>
 				</h:panelGrid>
 
+				<h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Total Outros Compradores: R$" />
+						<p:outputLabel
+							value="#{controleChequesPesquisarController.totalOutrosCompradores}">
+							<f:convertNumber pattern="#,##0.00" />
+						</p:outputLabel>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Total Padaria: R$" />
+						<p:outputLabel
+							value="#{controleChequesPesquisarController.totalPadaria}">
+							<f:convertNumber pattern="#,##0.00" />
+						</p:outputLabel>
+					</h:panelGrid>
+				</h:panelGrid>
+
 			</h:panelGrid>
 
 		</h:form>

@@ -310,4 +310,26 @@ public class PersistenceUtils {
 		return retorno;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static List<CompradorConjuntoBean> retornaCompradoresConjuntos(List<ChequeBean> listaCheques) {
+		List<CompradorConjuntoBean> retorno = new ArrayList<CompradorConjuntoBean>();
+
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT CCB FROM CompradorConjuntoBean CCB ");
+		sql.append(" WHERE CCB.numCheque IN (");
+		for (ChequeBean cb : listaCheques) {
+			sql.append(cb.getNumCheque());
+			sql.append(",");
+		}
+		sql.deleteCharAt(sql.length() - 1);
+		sql.append(")");
+		
+		Query query = returnEntityManager().createQuery(sql.toString(), CompradorConjuntoBean.class);
+		
+		retorno = query.getResultList();
+
+		return retorno;
+	}
+
 }

@@ -10,6 +10,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import br.com.bean.ChequeBean;
+import br.com.bean.CompradorConjuntoBean;
 import br.com.utils.MessagesUtils;
 import br.com.utils.PersistenceUtils;
 
@@ -18,7 +19,7 @@ import br.com.utils.PersistenceUtils;
 @ViewScoped
 public class ChequesPesquisarController {
 
-	private List<ChequeBean> listaCheques = new ArrayList<ChequeBean>();
+	private List<ChequeBean> listaCheques;
 
 	private Integer opcaoSelecionada;
 
@@ -26,19 +27,42 @@ public class ChequesPesquisarController {
 
 	private Date dataAte;
 
-	private String parametro = new String();
+	private String parametro;
 
-	private BigDecimal totalCheques = new BigDecimal(0);
+	private BigDecimal totalCheques;
+
+	private BigDecimal totalPadaria;
+
+	private BigDecimal totalOutrosCompradores;
 
 	public ChequesPesquisarController() {
 	}
 
 	public void pesquisar() {
-		listaCheques.clear();
+		listaCheques = new ArrayList<ChequeBean>();
 		if (validarDatas()) {
 			listaCheques = PersistenceUtils.pesquisarChequesPorData(dataDe, dataAte);
 			somarCheques(listaCheques);
 		}
+
+		caucularValores(listaCheques);
+	}
+
+	private void caucularValores(List<ChequeBean> lista) {
+		totalOutrosCompradores = new BigDecimal(0);
+		totalPadaria = new BigDecimal(0);
+		BigDecimal totalCheques = new BigDecimal(0);
+		List<CompradorConjuntoBean> listaCC = PersistenceUtils.retornaCompradoresConjuntos(lista);
+
+		for (CompradorConjuntoBean cc : listaCC) {
+			totalOutrosCompradores = totalOutrosCompradores.add(cc.getValor());
+		}
+
+		for (ChequeBean cb : lista) {
+			totalCheques = totalCheques.add(cb.getValor());
+		}
+
+		totalPadaria = totalCheques.subtract(totalOutrosCompradores);
 	}
 
 	private void somarCheques(List<ChequeBean> listaCheques2) {
@@ -108,6 +132,22 @@ public class ChequesPesquisarController {
 
 	public void setTotalCheques(BigDecimal totalCheques) {
 		this.totalCheques = totalCheques;
+	}
+
+	public BigDecimal getTotalPadaria() {
+		return totalPadaria;
+	}
+
+	public void setTotalPadaria(BigDecimal totalPadaria) {
+		this.totalPadaria = totalPadaria;
+	}
+
+	public BigDecimal getTotalOutrosCompradores() {
+		return totalOutrosCompradores;
+	}
+
+	public void setTotalOutrosCompradores(BigDecimal totalOutrosCompradores) {
+		this.totalOutrosCompradores = totalOutrosCompradores;
 	}
 
 }
