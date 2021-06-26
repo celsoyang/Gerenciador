@@ -156,7 +156,7 @@ public class PersistenceUtils {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append("SELECT CHEQUE FROM ChequeBean CHEQUE");
-		sql.append(" ORDER BY CHEQUE.numCheque DESC");
+		sql.append(" ORDER BY CHEQUE.dataPagamento DESC");
 
 		Query query = returnEntityManager().createQuery(sql.toString(), ChequeBean.class);
 		query.setMaxResults(10);
@@ -164,10 +164,6 @@ public class PersistenceUtils {
 		retorno = query.getResultList();
 
 		return retorno;
-	}
-
-	public static void importarCheques(List<ChequeBean> listaCheques) {
-
 	}
 
 	public static Boolean dataCaixaExiste(Date data) {
@@ -302,6 +298,7 @@ public class PersistenceUtils {
 		sql.append(" WHERE CHEQUE.dataPagamento BETWEEN '");
 		sql.append(new SimpleDateFormat("yyyy-MM-dd").format(dataDe) + "' AND '");
 		sql.append(new SimpleDateFormat("yyyy-MM-dd").format(dataAte) + "'");
+		sql.append(" ORDER BY CHEQUE.dataPagamento");
 
 		Query query = returnEntityManager().createQuery(sql.toString(), ChequeBean.class);
 

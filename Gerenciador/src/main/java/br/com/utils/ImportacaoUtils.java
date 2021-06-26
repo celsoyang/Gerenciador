@@ -137,6 +137,10 @@ public class ImportacaoUtils {
 					case 5:
 						cheque.setObservacao(cell.getStringCellValue());
 						break;
+
+					case 6:
+						cheque.setCompensado(cell.getBooleanCellValue());
+						break;
 					}
 				}
 			}

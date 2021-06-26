@@ -30,9 +30,9 @@ public class ChequeBean {
 
 	@Column(name = "observacao")
 	private String observacao;
-
-	@Column(name = "compra_conjunta")
-	private Integer compraConjunta;
+	
+	@Column(name = "compensado")
+	private boolean compensado;
 
 	public Integer getNumCheque() {
 		return numCheque;
@@ -82,12 +82,12 @@ public class ChequeBean {
 		this.observacao = observacao;
 	}
 
-	public Integer getCompraConjunta() {
-		return compraConjunta;
+	public boolean isCompensado() {
+		return compensado;
 	}
 
-	public void setCompraConjunta(Integer compraConjunta) {
-		this.compraConjunta = compraConjunta;
+	public void setCompensado(boolean compensado) {
+		this.compensado = compensado;
 	}
 
 }

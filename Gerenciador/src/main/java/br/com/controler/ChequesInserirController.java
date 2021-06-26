@@ -93,6 +93,7 @@ public class ChequesInserirController {
 				cheque.setDataEmissao(bean.getDataEmissao());
 				cheque.setDataPagamento(bean.getDataPagamento());
 				cheque.setObservacao(bean.getObservacao());
+				cheque.setCompensado(false);
 
 				msg = PersistenceUtils.salvar(cheque);
 				for (CompradorConjuntoBean comp : listaOutrosCompradores) {

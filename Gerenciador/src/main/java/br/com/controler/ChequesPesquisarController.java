@@ -42,15 +42,18 @@ public class ChequesPesquisarController {
 		listaCheques = new ArrayList<ChequeBean>();
 		if (validarDatas()) {
 			listaCheques = PersistenceUtils.pesquisarChequesPorData(dataDe, dataAte);
-			somarCheques(listaCheques);
-		}
+			totalCheques = new BigDecimal(0);
+			totalOutrosCompradores = new BigDecimal(0);
+			totalPadaria = new BigDecimal(0);
 
-		caucularValores(listaCheques);
+			if (!listaCheques.isEmpty()) {
+				somarCheques(listaCheques);
+				caucularValores(listaCheques);
+			}
+		}
 	}
 
 	private void caucularValores(List<ChequeBean> lista) {
-		totalOutrosCompradores = new BigDecimal(0);
-		totalPadaria = new BigDecimal(0);
 		BigDecimal totalCheques = new BigDecimal(0);
 		List<CompradorConjuntoBean> listaCC = PersistenceUtils.retornaCompradoresConjuntos(lista);
 
@@ -66,7 +69,6 @@ public class ChequesPesquisarController {
 	}
 
 	private void somarCheques(List<ChequeBean> listaCheques2) {
-		totalCheques = new BigDecimal(0);
 		for (ChequeBean ch : listaCheques2) {
 			totalCheques = totalCheques.add(ch.getValor());
 		}
